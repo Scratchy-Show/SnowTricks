@@ -1,12 +1,56 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="fr">
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <title>SnowTricks - {% block title %}{% endblock %}</title>
+    <meta name="description" content="Site collaboratif de snowboard pour aider à l'apprentissage des figures." />
+    <meta name="author" content="Couret Alexandre">
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="#" />
+
+    <link rel="icon" type="image/png" href="#">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="#">
+    <link rel="icon" type="image/png" sizes="32x32" href="#">
+    <link rel="icon" type="image/png" sizes="96x96" href="#">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="#">
+
+    <link rel="apple-touch-icon" sizes="57x57"   href="#">
+    <link rel="apple-touch-icon" sizes="60x60"   href="#">
+    <link rel="apple-touch-icon" sizes="72x72"   href="#">
+    <link rel="apple-touch-icon" sizes="76x76"   href="#">
+    <link rel="apple-touch-icon" sizes="114x114" href="#">
+    <link rel="apple-touch-icon" sizes="120x120" href="#">
+    <link rel="apple-touch-icon" sizes="144x144" href="#">
+    <link rel="apple-touch-icon" sizes="152x152" href="#">
+    <link rel="apple-touch-icon" sizes="180x180" href="#">
+    <link rel="apple-touch-icon" sizes="192x192" href="#">
+
+    <link rel="manifest" href="#">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-310x310.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!--[if IE]>
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="body-container">
+        {{ include('header.html.twig') }}
+
+        <div class="site-content">{% block body %} {% endblock %}</div>
+
+        {{ include('footer.html.twig') }}
+    </div>
+
+</body>
 </html>

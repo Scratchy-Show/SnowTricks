@@ -1,0 +1,23 @@
+<header id="header">
+    <div class="header-container">
+        <div id="logo">
+            <a href="/">
+                <img src="#" alt="SnowTricks" />
+            </a>
+        </div>
+
+        <div class="nav-container">
+            <nav>
+                <ul>
+                    <li><a href="#">Accueil</a></li>
+                    <li><a href="#">Figures</a></li>
+                    {% if session.user is defined %}
+                        <li><a href="#">Déconnexion</a></li>
+                    {% else %}
+                        <li><a href="/inscription">Inscription</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
