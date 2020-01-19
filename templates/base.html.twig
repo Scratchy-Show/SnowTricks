@@ -14,56 +14,38 @@
         <!-- Custom CSS -->
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-        <link rel="icon" type="image/png" href="#">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon/favicon-16x16.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('img/favicon/favicon-96x96.png') }}">
 
-        <link rel="icon" type="image/png" sizes="16x16" href="#">
-        <link rel="icon" type="image/png" sizes="32x32" href="#">
-        <link rel="icon" type="image/png" sizes="96x96" href="#">
-
-        <link rel="icon" type="image/png" sizes="192x192" href="#">
-
-        <link rel="apple-touch-icon" sizes="57x57"   href="#">
-        <link rel="apple-touch-icon" sizes="60x60"   href="#">
-        <link rel="apple-touch-icon" sizes="72x72"   href="#">
-        <link rel="apple-touch-icon" sizes="76x76"   href="#">
-        <link rel="apple-touch-icon" sizes="114x114" href="#">
-        <link rel="apple-touch-icon" sizes="120x120" href="#">
-        <link rel="apple-touch-icon" sizes="144x144" href="#">
-        <link rel="apple-touch-icon" sizes="152x152" href="#">
-        <link rel="apple-touch-icon" sizes="180x180" href="#">
-        <link rel="apple-touch-icon" sizes="192x192" href="#">
-
-        <link rel="manifest" href="#">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="/ms-310x310.png">
-        <meta name="theme-color" content="#ffffff">
-
-        <!--[if IE]>
-        <link rel="shortcut icon" href="#" type="image/x-icon" />
-        <![endif]-->
-
+        <link rel="apple-icon" sizes="57x57"   href="{{ asset('img/favicon/apple-icon-57x57.png') }}">
+        <link rel="apple-icon" sizes="60x60"   href="{{ asset('img/favicon/apple-icon-60x60.png') }}">
+        <link rel="apple-icon" sizes="72x72"   href="{{ asset('img/favicon/apple-icon-72x72.png') }}">
+        <link rel="apple-icon" sizes="76x76"   href="{{ asset('img/favicon/apple-icon-76x76.png') }}">
+        <link rel="apple-icon" sizes="114x114" href="{{ asset('img/favicon/apple-icon-114x114.png') }}">
+        <link rel="apple-icon" sizes="120x120" href="{{ asset('img/favicon/apple-icon-120x120.png') }}">
+        <link rel="apple-icon" sizes="144x144" href="{{ asset('img/favicon/apple-icon-144x144.png') }}">
+        <link rel="apple-icon" sizes="152x152" href="{{ asset('img/favicon/apple-icon-152x152.png') }}">
+        <link rel="apple-icon" sizes="180x180" href="{{ asset('img/favicon/apple-icon-180x180.png') }}">
     </head>
 
     <body>
-
-        <div class="container py-5 mt-4">
-
-            {% for label, messages in app.flashes %}
-                <div class="container">
-                    <div class="alert alert-{{ label }} mb-0">
-                        {% for message in messages %}
-                            <p>{{ message | raw }}</p>
-                        {% endfor %}
-                    </div>
+        {% for label, messages in app.flashes %}
+            <div class="container">
+                <div class="alert alert-{{ label }} alert-dismissible">
+                    {% for message in messages %}
+                        <p>{{ message | raw }}</p>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
+        {% endfor %}
 
-            {{ include('header.html.twig') }}
+        {{ include('header.html.twig') }}
 
+        <div class="container">
             {% block body %} {% endblock %}
-
-            {{ include('footer.html.twig') }}
         </div>
 
+        {{ include('footer.html.twig') }}
     </body>
 </html>

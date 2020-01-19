@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  message = "Cet email est déjà utilisé"
  * )
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -48,7 +49,6 @@ class User
 
     /**
      * @Assert\DateTime
-     * @var string A "d-m-Y H:i:s" formatted value
      * @ORM\Column(type="datetime", name="date")
      */
     protected $date;
@@ -91,6 +91,11 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
+    protected $pictureName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     protected $profilPicturePath;
 
     /**
@@ -100,8 +105,17 @@ class User
 
     public function __construct()
     {
-
+        // Par défaut, la date d'inscription est celle d'aujourd'hui
+        $this->setDate(new \DateTime("now"));
+        // Par défaut, le compte n'est pas activé
+        $this->setActivated(false);
     }
+
+    public function getRoles() {}
+
+    public function getSalt() {}
+
+    public function eraseCredentials() {}
 
     // Getters //
 
@@ -147,6 +161,12 @@ class User
     }
 
 
+    public function getPictureName()
+    {
+        return $this->pictureName;
+    }
+
+
     public function getProfilPicturePath()
     {
         return $this->profilPicturePath;
@@ -176,7 +196,7 @@ class User
     }
 
 
-    public function setDate(string $date)
+    public function setDate($date)
     {
         $this->date = $date;
 
@@ -204,6 +224,14 @@ class User
         $this->profilPicture = $profilPicture;
 
         return $profilPicture;
+    }
+
+
+    public function setPictureName($pictureName)
+    {
+        $this->pictureName = $pictureName;
+
+        return $pictureName;
     }
 
 
