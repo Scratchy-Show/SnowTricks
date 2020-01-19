@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(
  *  fields = {"username"},
  *  message = "Ce pseudo est déjà utilisé"
@@ -99,6 +99,11 @@ class User implements UserInterface
     protected $profilPicturePath;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $token;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $activated;
@@ -173,6 +178,12 @@ class User implements UserInterface
     }
 
 
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+
     public function getActivated()
     {
         return $this->activated;
@@ -240,6 +251,14 @@ class User implements UserInterface
         $this->profilPicturePath = $profilPicturePath;
 
         return $profilPicturePath;
+    }
+
+
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $token;
     }
 
 
