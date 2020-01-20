@@ -70,10 +70,13 @@ class RegistrationController extends AbstractController // Permet d'utiliser la 
                 'success',
                 "Compte créé avec succès ! Veuillez l'activer via le mail qui vous a été envoyé."
             );
+
+            // Redirection vers la page d'accueil
+            return $this->redirectToRoute('home');
         }
 
         // Affiche la page d'inscription avec le formulaire
-        return $this->render('registration.html.twig', array(
+        return $this->render('account/registration.html.twig', array(
             'registrationForm' => $registrationForm->createView(),
         ));
     }
@@ -119,7 +122,7 @@ class RegistrationController extends AbstractController // Permet d'utiliser la 
                     "Votre compte a été activé ! Vous pouvez maintenant vous connecter."
                 );
 
-                return $this->redirectToRoute('registration');
+                return $this->redirectToRoute('home');
             }
             else // Si le jeton ne correspond pas à l'utilisateur
             {
@@ -141,5 +144,4 @@ class RegistrationController extends AbstractController // Permet d'utiliser la 
             return $this->redirectToRoute('registration');
         }
     }
-
 }
