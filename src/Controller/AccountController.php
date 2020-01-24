@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class RegistrationController extends AbstractController // Permet d'utiliser la méthode render
+class AccountController extends AbstractController // Permet d'utiliser la méthode render
 {
     /**
      * @Route("/inscription", name="registration")
@@ -21,6 +21,13 @@ class RegistrationController extends AbstractController // Permet d'utiliser la 
      */
     public function registrationPage(Request $request, UserPasswordEncoderInterface $encoder, \Swift_Mailer $mailer)
     {
+        // Si l'utilisateur est déjà connecté
+        if ($this->getUser() != null)
+        {
+            // Redirection vers la page d'accueil
+            return $this->redirectToRoute('home');
+        }
+
         // Crée une instance de User
         $user = new User();
 

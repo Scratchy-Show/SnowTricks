@@ -5,14 +5,25 @@ security:
             algorithm: auto
             cost: 12
 
+    role_hierarchy:
+        ROLE_USER: ROLE_USER
+
     providers:
-        in_memory: { memory: null }
+        database_users:
+            entity: { class: App\Entity\User, property: username }
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
+            pattern: ^/
+            anonymous: true
+            logout:
+                path: logout
+            guard:
+                authenticators:
+                    - App\Controller\AuthenticatorController
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

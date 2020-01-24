@@ -1,7 +1,15 @@
 home:
-     path: /accueil
+     path: /
      controller: App\Controller\HomeController::homePage
 
 registration:
      path: /inscription
-     controller : App\Controller\RegistrationController::registrationPage
+     controller : App\Controller\AccountController::registrationPage
+
+login:
+     path: /connexion
+     controller: App\Controller\LoginController::login
+
+logout:
+     path: /deconnexion
+     controller: App\Controller\LoginController::logout

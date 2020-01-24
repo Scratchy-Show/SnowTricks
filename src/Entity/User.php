@@ -108,6 +108,11 @@ class User implements UserInterface
      */
     protected $activated;
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
     public function __construct()
     {
         // Par défaut, la date d'inscription est celle d'aujourd'hui
@@ -115,10 +120,6 @@ class User implements UserInterface
         // Par défaut, le compte n'est pas activé
         $this->setActivated(false);
     }
-
-    public function getRoles() {}
-
-    public function getSalt() {}
 
     public function eraseCredentials() {}
 
@@ -188,6 +189,19 @@ class User implements UserInterface
     {
         return $this->activated;
     }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return array_unique($roles);
+    }
+
+    public function getSalt() {}
 
         // Setters //
 
@@ -267,5 +281,10 @@ class User implements UserInterface
         $this->activated = $activated;
 
         return $activated;
+    }
+
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
     }
 }
