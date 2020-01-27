@@ -5,6 +5,8 @@ namespace App\Controller;
 
 
 use App\Entity\User;
+use App\Form\PasswordForgotType;
+use App\Form\PasswordResetType;
 use App\Form\RegistrationType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +21,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
      * @Route("/inscription", name="registration")
      * @throws \Exception
      */
-    public function registrationPage(Request $request, UserPasswordEncoderInterface $encoder, \Swift_Mailer $mailer)
+    public function registrationPage(Request $request, UserPasswordEncoderInterface $encoder, \Swift_Mailer $mailer, MailController $mail)
     {
         // Si l'utilisateur est déjà connecté
         if ($this->getUser() != null)
@@ -69,13 +71,19 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
             // Insère une nouvelle ligne dans la table User
             $entityManager->flush();
 
+            // Message d'en-tête du formulaire
+            $swiftMessage = 'Validation du compte SnowTricks';
+
+            // Modèle de l'email
+            $view = 'emails/validateAccount.html.twig';
+
             // Envoie du mail de validation
-            $this->sendMail($user, $mailer);
+            $mail->sendMail($user, $mailer, $swiftMessage, $view);
 
             // Message de confirmation
             $this->addFlash(
                 'success',
-                "Compte créé avec succès ! Veuillez l'activer via le mail qui vous a été envoyé."
+                "Compte créé avec succès. Veuillez l'activer via le mail qui vous a été envoyé."
             );
 
             // Redirection vers la page d'accueil
@@ -88,67 +96,138 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
         ));
     }
 
-    // Envoie un mail pour valider le compte
-    public function sendMail(User $user, \Swift_Mailer $mailer)
-    {
-        $message = (new \Swift_Message('Validation du compte SnowTricks'))
-            ->setFrom('noreply@snowtricks.com')
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->renderView('emails/validateAccount.html.twig', [
-                    'user' => $user
-                ]),
-                'text/html'
-            )
-        ;
-
-        $mailer->send($message);
-    }
 
     /**
-     * @Route("/validation-email/{username}/{token}", name="validate_email")
+     * @Route("/mot-de-passe-oublie", name="password_forgot")
+     * @throws \Exception
      */
-    public function validateEmail($username, $token, UserRepository $repository, EntityManagerInterface $manager)
+    public function passwordForgot(Request $request, EntityManagerInterface $manager, UserRepository $repository, \Swift_Mailer $mailer, MailController $mail)
     {
-        // Récupère l'utilisateur
-        $user = $repository->findOneBy(['username' => $username]);
+        // Création du formulaire
+        $form = $this->createForm(PasswordForgotType::class);
 
-        // Si l'utilisateur est trouvé
-        if ($user != null)
+        // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
+        $form->handleRequest($request);
+
+        // Si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid())
         {
-            // Si le jeton correspond à celui de l'utilisateur
-            if ($token == $user->getToken())
+            // Récupère le pseudo dans le formulaire
+            $username = $form->get('username')->getData();
+
+            // Récupère l'utilisateur correspondant au pseudo
+            $user = $repository->findOneBy(['username' => $username]);
+
+            // Si l'utilisateur est trouvé
+            if ($user != null)
             {
-                // Active le compte
-                $user->setActivated(true);
-                $manager->persist($user);
+                // Attribution d'un nouveau token pour le reset
+                $user->setToken(bin2hex(random_bytes(64)));
+
+                // Sauvegarde les modifications
                 $manager->flush();
 
+                // Message d'en-tête du formulaire
+                $swiftMessage = 'Réinitialisation du mot de passe de votre compte SnowTricks';
+
+                // Modèle de l'email
+                $view = 'emails/resetPassword.html.twig';
+
+                // Envoie du mail de validation
+                $mail->sendMail($user, $mailer, $swiftMessage, $view);
+
+                // Message de confirmation
                 $this->addFlash(
                     'success',
-                    "Votre compte a été activé ! Vous pouvez maintenant vous connecter."
+                    "Un email de réinitilisation de votre mot de passe a été envoyé sur votre boîte mail."
                 );
 
+                // Redirection vers la page d'accueil
                 return $this->redirectToRoute('home');
             }
-            else // Si le jeton ne correspond pas à l'utilisateur
+            else // Si l'utilisateur n'est pas trouvé
             {
                 $this->addFlash(
                     'danger',
-                    "La validation de votre compte a échoué. Nous n'avons pas pu vous identifier."
+                    "Ce pseudo n'existe pas"
                 );
-
-                return $this->redirectToRoute('registration');
             }
         }
-        else // Si l'utilisateur n'est pas trouvé
-        {
-            $this->addFlash(
-                'danger',
-                "La validation de votre compte a échoué. Nous n'avons pas pu vous identifier."
-            );
 
-            return $this->redirectToRoute('registration');
+        // Affiche la page d'oublie de mot de passe avec le formulaire
+        return $this->render('account/passwordForgot.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+
+    /**
+     * @Route("/mot-de-passe-reinitialise/{token}", name="password_reset")
+     */
+    public function passwordReset(Request $request, EntityManagerInterface $manager, UserRepository $repository, UserPasswordEncoderInterface $encoder, $token)
+    {
+        // Création du formulaire
+        $form = $this->createForm(PasswordResetType::class);
+
+        // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
+        $form->handleRequest($request);
+
+        // Si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            // Récupère le pseudo dans le formulaire
+            $username = $form->get('username')->getData();
+
+            // Récupère l'utilisateur correspondant au pseudo
+            $user = $repository->findOneBy(['username' => $username]);
+
+            // Si l'utilisateur est trouvé
+            if ($user != null)
+            {
+                // Si le jeton de l'utilisateur correspond au jeton du formulaire
+                if ($user->getToken() === $token)
+                {
+                    // Récupère le mot de passe dans le formulaire
+                    $password = $form->get('password')->getData();
+
+                    // Hachage du mot de passe
+                    $hashedPassword = $encoder->encodePassword($user, $password);
+
+                    // Attribution de la valeur
+                    $user->setPassword($hashedPassword);
+
+                    // Sauvegarde la modification
+                    $manager->flush();
+
+                    // Message de confirmation
+                    $this->addFlash(
+                        'success',
+                        "Votre mot de passe à bien été modifié."
+                    );
+
+                    // Redirection vers la page d'accueil
+                    return $this->redirectToRoute('home');
+                }
+                else // Si les jetons ne correspondent pas
+                {
+                    $this->addFlash(
+                        'danger',
+                        "La modification du mot de passe n'a pas pu être effectué"
+                    );
+                }
+            }
+            else // Si l'utilisateur n'est pas trouvé
+            {
+                $this->addFlash(
+                    'danger',
+                    "Nous n'avons pas réussi à vous identifier"
+                );
+            }
         }
+
+        // Affiche la page réinitialisation du mot de passe avec le formulaire
+        return $this->render('account/passwordReset.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

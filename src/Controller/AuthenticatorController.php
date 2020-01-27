@@ -70,16 +70,20 @@ class AuthenticatorController extends AbstractFormLoginAuthenticator
             throw new CustomUserMessageAuthenticationException('Erreur d\'authentification, veuillez réessayer.');
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
+        // Récupère l'utilisateur avec le pseudo et si son compte est activé
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([
+            'username' => $credentials['username'],
+            'activated' => true
+        ]);
 
-        // Si le pseudo n'a aucune correspondance
+        // Si le pseudo n'a aucune correspondance ou le compte n'est pas activé
         if (!$user) {
             // Echec de l'authentification avec une erreur personnalisée
-            throw new CustomUserMessageAuthenticationException('Login incorrect');
+            throw new CustomUserMessageAuthenticationException('Login incorrect ou compte non activé');
         }
 
         return $user;
-}
+    }
 
     // Vérifie que les informations d'authentification sont valides.
     public function checkCredentials($credentials, UserInterface $user)
