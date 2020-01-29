@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController // Permet d'utiliser la méthode render
 {
     /**
-     * @Route("/accueil", name="home")
+     * @Route("/", name="home")
      */
     public function homePage()
     {
