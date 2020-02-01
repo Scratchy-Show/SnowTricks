@@ -18,6 +18,14 @@ password_reset:
      path: /mot-de-passe-reinitialise/{token}
      controller: App\Controller\AccountController::passwordReset
 
+profile:
+     path: /profil
+     controller: App\Controller\ProfileController::profilePage
+
+profile_edit:
+     path: /modifier-profil/{token}
+     controller: App\Controller\ProfileController::profileEdit
+
 logout:
      path: /deconnexion
      controller: App\Controller\LoginController::logout
