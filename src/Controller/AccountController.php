@@ -45,7 +45,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
             $pictureFile = $registrationForm->get('profilPicture')->getData();
 
             // Chemin de destination du fichier
-            $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+            $destination = $this->getParameter('kernel.project_dir') . '/public/assets/uploads';
 
             // Redéfini le nom du fichier
             $newFilename = $user->getUsername() . '-' . uniqid() . '.' . $pictureFile->guessExtension();
@@ -175,17 +175,17 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid())
         {
-            // Récupère le pseudo dans le formulaire
-            $username = $form->get('username')->getData();
+            // Récupère l'email dans le formulaire
+            $email = $form->get('email')->getData();
 
-            // Récupère l'utilisateur correspondant au pseudo
-            $user = $repository->findOneBy(['username' => $username]);
+            // Récupère l'utilisateur correspondant a l'email
+            $user = $repository->findOneBy(['email' => $email]);
 
             // Si l'utilisateur est trouvé
             if ($user != null)
             {
                 // Si le jeton de l'utilisateur correspond au jeton du formulaire
-                if ($user->getToken() === $token)
+                if ($user->getToken() == $token)
                 {
                     // Récupère le mot de passe dans le formulaire
                     $password = $form->get('password')->getData();
@@ -220,7 +220,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
             {
                 $this->addFlash(
                     'danger',
-                    "Nous n'avons pas réussi à vous identifier"
+                    "Aucune correspondance avec cette adresse email"
                 );
             }
         }

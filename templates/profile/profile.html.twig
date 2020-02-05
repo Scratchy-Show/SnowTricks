@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page de profil{% endblock %}
+
+
+{% block body %}
+    <div class="col-lg-8 col-md-10 mx-auto">
+        <h1 class="text-primary text-center">Page de profil</h1>
+
+        <div class="mt-4 mb-3">
+            <figure class="text-center">
+                <img src="{{asset('uploads/'~ app.user.pictureName)}}" alt=""/>
+                <figcaption class="mt-2">Image du profil</figcaption>
+            </figure>
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+
+            <a href="{{ url('profile_edit', {token: app.user.token}) }}" class="d-flex justify-content-center align-items-center col-12 text-primary"><u>Modifier le profil ?</u></a>
+        </div>
+    </div>
+{% endblock %}
