@@ -29,3 +29,7 @@ profile_edit:
 logout:
      path: /deconnexion
      controller: App\Controller\LoginController::logout
+
+trick_create :
+     path: /figure/creer
+     controller: App\Controller\TrickController::createTrick

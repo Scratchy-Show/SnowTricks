@@ -3,6 +3,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -113,12 +114,41 @@ class User implements UserInterface
      */
     private $roles = [];
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Trick", mappedBy="user")
+     */
+    protected $tricks;
+
     public function __construct()
     {
         // Par défaut, la date d'inscription est celle d'aujourd'hui
         $this->setDate(new \DateTime("now"));
         // Par défaut, le compte n'est pas activé
         $this->setActivated(false);
+        $this->tricks = new ArrayCollection();
+    }
+
+    public function addTrick(Trick $trick)
+    {
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick)
+    {
+        if ($this->tricks->contains($trick)) {
+            $this->tricks->removeElement($trick);
+            // Définit le côté propriétaire sur null (sauf si déjà changé)
+            if ($trick->getUser() == $this) {
+                $trick->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
     public function eraseCredentials() {}
@@ -190,6 +220,7 @@ class User implements UserInterface
         return $this->activated;
     }
 
+
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -201,7 +232,15 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+
+    public function getTricks()
+    {
+        return $this->tricks;
+    }
+
+
     public function getSalt() {}
+
 
         // Setters //
 
@@ -283,8 +322,14 @@ class User implements UserInterface
         return $activated;
     }
 
-    public function setRoles(array $roles): void
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
+    }
+
+
+    public function setTricks($tricks)
+    {
+        $this->tricks = $tricks;
     }
 }
