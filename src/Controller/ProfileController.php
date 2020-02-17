@@ -43,6 +43,9 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
         // Récupère l'utilisateur connecté
         $user = $this->getUser();
 
+        // Récupère sont email
+        $email = $user->getEmail();
+
         // Création du formulaire avec les données de l'utilisateur
         $form = $this->createForm(ProfileEditType::class, $user);
 
@@ -56,19 +59,23 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
             if ($user->getToken() == $token)
             {
                 // Récupère l'email dans le formulaire
-                $email = $form->get('email')->getData();
+                $emailForm = $form->get('email')->getData();
 
                 // Récupère l'image du formulaire
                 $pictureFile = $form->get('profilPicture')->getData();
 
                 // Si les valeurs du formulaire ne sont pas vident
-                if (!empty($email) && !empty($pictureFile))
+                if (!empty($emailForm) && !empty($pictureFile))
                 {
                     // Vérifie si un utilisateur à la même adresse email
-                    $findEmail = $repository->findOneBy(['email' => $email]);
+                    $findEmail = $repository->findOneBy(['email' => $emailForm]);
 
-                    // Si l'adresse email n'existe pas
-                    if ($findEmail == null)
+                    var_dump($emailForm);
+
+                    var_dump($email);
+
+                    // Si l'adresse email n'existe pas ou correspond au même utilisateur
+                    if (($findEmail == null) || ($email == $emailForm))
                     {
                         // Récupère l'adresse de l'image actuelle du profil
                         $oldPicture = $user->getprofilPicturePath() . '/' . $user->getpictureName();
@@ -77,7 +84,7 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
                         unlink($oldPicture);
 
                         // Chemin de destination du fichier
-                        $destination = $this->getParameter('kernel.project_dir') . '/public/assets/uploads';
+                        $destination = $this->getParameter('profil_picture_directory');
 
                         // Redéfini le nom du fichier
                         $newFilename = $user->getUsername() . '-' . uniqid() . '.' . $pictureFile->guessExtension();

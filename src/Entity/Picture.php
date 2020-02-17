@@ -32,7 +32,7 @@ class Picture
      *  maxHeightMessage = "La hauteur de cette image est trop grande. Elle doit faire maximum {{ max_height }} pixels",
      *  )
      */
-    protected $picture;
+    protected $file;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -46,7 +46,7 @@ class Picture
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="pictures")
-     * @ORM\JoinColumn(name="trick_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="trick_id", referencedColumnName="id", onDelete = "CASCADE")
      */
     protected $trick;
 
@@ -58,9 +58,9 @@ class Picture
     }
 
 
-    public function getPicture()
+    public function getFile()
     {
-        return $this->picture;
+        return $this->file;
     }
 
 
@@ -83,11 +83,11 @@ class Picture
 
     // Setters //
 
-    public function setPicture($picture)
+    public function setFile($file)
     {
-        $this->picture = $picture;
+        $this->file = $file;
 
-        return $picture;
+        return $file;
     }
 
 

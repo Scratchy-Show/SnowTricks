@@ -7,12 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use \DateTime;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrickRepository")
  * @UniqueEntity(
- *  fields={"name"},
- *  message="Une figure possède déjà ce nom"
+ *      fields={"name"},
+ *      message="Une figure possède déjà ce nom"
  * )
  */
 class Trick
@@ -47,23 +48,22 @@ class Trick
     protected $description;
 
     /**
-     * @Assert\DateTime
-     * @ORM\Column(type="datetime", name="date")
+     * @ORM\Column(type="datetime")
      */
     protected $date;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $update;
+    protected $updateDate;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="trick", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="trick", cascade={"persist", "remove"})
      */
     protected $pictures;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", cascade={"persist", "remove"})
      */
     protected $videos;
 
@@ -72,7 +72,6 @@ class Trick
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="tricks")
@@ -83,8 +82,10 @@ class Trick
 
     public function __construct()
     {
-        // Par défaut, la date de création est celle d'aujourd'hui
-        $this->setDate(new \DateTime("now"));
+        // Définit le fuseau horaire
+        date_default_timezone_set('Europe/Paris');
+        // Par défaut, la date est la date d'aujourd'hui
+        $this->setDate(new DateTime());
         $this->pictures = new ArrayCollection();
         $this->videos = new ArrayCollection();
     }
@@ -161,9 +162,9 @@ class Trick
     }
 
 
-    public function getUpdate()
+    public function getUpdateDate()
     {
-        return $this->update;
+        return $this->updateDate;
     }
 
 
@@ -210,11 +211,11 @@ class Trick
     }
 
 
-    public function setUpdate($update)
+    public function setUpdateDate($updateDate)
     {
-        $this->update = $update;
+        $this->updateDate = $updateDate;
 
-        return $update;
+        return $updateDate;
     }
 
 
