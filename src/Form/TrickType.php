@@ -3,9 +3,7 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
 use App\Entity\Trick;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -30,10 +28,7 @@ class TrickType extends AbstractType
                     'placeholder' => 'Description de la figure'
                 ]
             ])
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name'
-            ])
+            ->add('category', CategoryType::class)
             ->add('pictures', CollectionType::class, [
                 'entry_type' => PictureType::class,
                 // Permet d'ajouter un nombre illimité d'image

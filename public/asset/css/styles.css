@@ -1,3 +1,27 @@
+/* Page - Créer une figure  */
+
+.add-trick form fieldset legend {
+    display: none;
+}
+
+.pictures, .videos {
+    list-style: none;
+}
+
+.pictures li .form-group label {
+    display: none;
+}
+.pictures li .form-group .custom-file-label {
+    display: inline-block;
+}
+
+/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
+.custom-file-input ~ .custom-file-label:lang(fr)::after {
+    content: "Choisir...";
+}
+
+/* Footer  */
+
 footer {
     height: 80px;
 }

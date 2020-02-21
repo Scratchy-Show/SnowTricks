@@ -13,7 +13,7 @@
                     <li><a href="#">Figures</a></li>
                     {% if app.user.username is defined %}
                         <li><a href="{{ path('profile') }}">Profil</a></li>
-                        <li><a href="{{ path('trick_create') }}">Créer figure</a></li>
+                        <li><a href="{{ path('trick_create') }}">Créer une figure</a></li>
                         <li><a href="{{ path('logout') }}">Déconnexion</a></li>
                     {% else %}
                         <li><a href="{{ path('login') }}">Connexion</a></li>

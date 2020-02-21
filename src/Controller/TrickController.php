@@ -3,7 +3,7 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Category;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Service\FileUploader;
@@ -32,10 +32,6 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid())
         {
-
-            // Récupère le gestionnaire d'entités
-            $entityManager = $this->getDoctrine()->getManager();
-
             // Chemin de destination de l'image
             $destination = $this->getParameter('trick_picture_directory') . '/' . $trick->getName();
 
@@ -62,6 +58,47 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 $video->setTrick($trick);
             }
 
+            // Récupère le gestionnaire d'entités
+            $entityManager = $this->getDoctrine()->getManager();
+
+            // Crée une instance de Category
+            $category = new Category();
+
+            // Récupère la nouvelle catégorie
+            $newCategory = $trick->getCategory()->getAdd();
+
+            // Si une nouvelle catégorie à été ajouté
+            if ($newCategory != null )
+            {
+                // Attribut la valeur
+                $category->setName($newCategory);
+
+                // Doctrine gère maintenant l'objet
+                $entityManager->persist($category);
+
+                // Insère une nouvelle ligne dans la table Category
+                $entityManager->flush();
+
+                // Récupère la dernier entrée dans la table Category
+                $findNewCategory = $entityManager->getRepository(Category::class)->findBy(
+                    [],
+                    ['id' => 'desc'],
+                    1,
+                    0
+                );
+
+                // Attribution de la valeur
+                $trick->setCategory($findNewCategory[0]);
+            }
+            else // Si aucune nouvelle catégorie n'à été ajouté
+            {
+                // Récupère la catégorie déjà existante
+                $oldCategory = $trick->getCategory();
+
+                // Attribution de la valeur
+                $trick->setCategory($oldCategory->getName());
+            }
+
             // Par défaut, l'utilisateur est celui connecté
             $trick->setUser($this->getUser());
 
@@ -77,7 +114,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 "La figure <strong>" . $trick->getName() . "</strong> a bien été ajouté"
             );
 
-            // Redirection vers la page d'accueil
+            // Redirection vers la page listant les figures
             return $this->redirectToRoute('home');
         }
 

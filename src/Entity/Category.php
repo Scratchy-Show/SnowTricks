@@ -21,12 +21,14 @@ class Category
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $name;
+    protected $name;
+
+    protected $add;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Trick", mappedBy="category")
      */
-    private $tricks;
+    protected $tricks;
 
     public function __construct()
     {
@@ -70,6 +72,12 @@ class Category
     }
 
 
+    public function getAdd()
+    {
+        return $this->add;
+    }
+
+
     public function getTricks()
     {
         return $this->tricks;
@@ -82,6 +90,14 @@ class Category
         $this->name = $name;
 
         return $name;
+    }
+
+
+    public function setAdd($add)
+    {
+        $this->add = $add;
+
+        return $add;
     }
 
 
