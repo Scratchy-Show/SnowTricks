@@ -4,8 +4,12 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Picture;
 use App\Entity\Trick;
+use App\Entity\Video;
+use App\Form\PictureType;
 use App\Form\TrickType;
+use App\Form\VideoType;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -123,4 +127,143 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/figure/modifier/{id}", name="trick_edit")
+     * @IsGranted("ROLE_USER")
+     */
+    public function editTrick(Request $request, $id)
+    {
+        // Récupère le gestionnaire d'entités
+        $entityManager = $this->getDoctrine()->getManager();
+
+        // Récupère la figure
+        $trick = $entityManager->getRepository(Trick::class)->find($id);
+
+        // Si une figure correspond à l'id
+        if ($trick != null)
+        {
+            // Création du formulaire de figure
+            $formTrickType = $this->createForm(TrickType::class, $trick);
+            // Création du formulaire d'image
+            $formPictureType = $this->createForm(PictureType::class);
+            // Création du formulaire des videos
+            $formVideoType = $this->createForm(VideoType::class);
+
+            // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
+            $formTrickType->handleRequest($request);
+            // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
+            $formPictureType->handleRequest($request);
+            // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
+            $formVideoType->handleRequest($request);
+
+            // Récupère les images liées à la figure
+            $pictures = $entityManager->getRepository(Picture::class)->findBy(['trick' => $id]);
+            // Récupère les urls liées à la figure
+            $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $id]);
+
+
+            // Si le formulaire de modification d'une image est soumis et valide
+            if ($formPictureType->isSubmitted() && $formPictureType->isValid())
+            {
+                // Récupère la nouvelle image
+                $pictureFile = $formPictureType->get('file')->getData();
+                dump($pictureFile);
+            }
+            elseif ($formPictureType->isSubmitted() && ($formPictureType->isValid() == false)) // Si le formulaire contient des erreurs
+            {
+                // Message d'erreur
+                $this->addFlash(
+                    'danger',
+                    "L'image doit être de type jpeg, jpg ou png. 
+                    Elle doit faire minimum 500px de large et 300px de haut.
+                    Et faire maximum 1500px de large et 1200px de haut."
+                );
+
+                // Affiche la page de création d'une figure avec le formulaire
+                return $this->render('trick/edit.html.twig', [
+                    'formTrickType' => $formTrickType->createView(),
+                    'formPictureType' => $formPictureType->createView(),
+                    'formVideoType' => $formVideoType->createView(),
+                    'trick' => $trick,
+                    'pictures' => $pictures,
+                    'videos' => $videos
+                ]);
+            }
+
+            // Affiche la page de création d'une figure avec le formulaire
+            return $this->render('trick/edit.html.twig', [
+                'formTrickType' => $formTrickType->createView(),
+                'formPictureType' => $formPictureType->createView(),
+                'formVideoType' => $formVideoType->createView(),
+                'trick' => $trick,
+                'pictures' => $pictures,
+                'videos' => $videos
+            ]);
+        }
+        else // Si aucune figure ne correspond à l'id
+        {
+
+            // Message d'erreur
+            $this->addFlash(
+                'danger',
+                "Aucune figure ne correspond."
+            );
+
+            // Redirection vers la page listant les figures
+            return $this->redirectToRoute('home');
+        }
+    }
+
+    /**
+     * @Route("/figure/modifier/image/{trick}/{picture}", name="trick_picture_edit")
+     * @IsGranted("ROLE_USER")
+     *//*
+    public function editPictureTrick(Request $request, FileUploader $fileUploader, $trick, $picture)
+    {
+        // Si les id $trick et $picture ne sont pas vide et correspondent à des chiffres
+        if ((!empty($trick) && !empty($picture)) && (is_numeric($trick) && is_numeric($picture)))
+        {
+            // Récupère le gestionnaire d'entités
+            $entityManager = $this->getDoctrine()->getManager();
+
+            // Récupère la figure
+            $trick = $entityManager->getRepository(Trick::class)->find($trick);
+
+            // Récupère l'image
+            $picture = $entityManager->getRepository(Picture::class)->find($picture);
+
+            // Si une figure et une image correspondent
+            if ($trick != null && $picture != null)
+            {
+
+
+
+
+
+            }
+            else // Si il n'y a pas de correspondance
+            {
+                // Message d'erreur
+                $this->addFlash(
+                    'danger',
+                    "La figure ou l'image non pas été trouvé."
+                );
+
+                // Redirection vers la page d'accueil
+                return $this->redirectToRoute('home');
+            }
+        }
+        else // Si l'une des deux est vide ou contient autres que des chiffres
+        {
+            // Message d'erreur
+            $this->addFlash(
+                'danger',
+                "Veuiller ne pas modifier l'Url."
+            );
+
+            // Redirection vers la page d'accueil
+            return $this->redirectToRoute('home');
+        }
+    }*/
 }

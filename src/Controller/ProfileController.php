@@ -70,10 +70,6 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
                     // Vérifie si un utilisateur à la même adresse email
                     $findEmail = $repository->findOneBy(['email' => $emailForm]);
 
-                    var_dump($emailForm);
-
-                    var_dump($email);
-
                     // Si l'adresse email n'existe pas ou correspond au même utilisateur
                     if (($findEmail == null) || ($email == $emailForm))
                     {

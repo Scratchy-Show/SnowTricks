@@ -33,3 +33,11 @@ logout:
 trick_create :
      path: /figure/creer
      controller: App\Controller\TrickController::createTrick
+
+trick_edit :
+     path: /figure/modifier/{id}
+     controller: App\Controller\TrickController::editTrick
+
+trick_picture_edit:
+     path: /figure/modifier/image/{trick}/{picture}
+     controller: App\Controller\TrickController::editPictureTrick
