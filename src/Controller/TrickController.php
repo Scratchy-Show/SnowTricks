@@ -11,8 +11,10 @@ use App\Form\PictureType;
 use App\Form\TrickType;
 use App\Form\VideoType;
 use App\Service\FileUploader;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -163,35 +165,164 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $id]);
 
 
-            // Si le formulaire de modification d'une image est soumis et valide
+            // Si le formulaire d'ajout d'image est soumis et valide
             if ($formPictureType->isSubmitted() && $formPictureType->isValid())
             {
                 // Récupère la nouvelle image
                 $pictureFile = $formPictureType->get('file')->getData();
-                dump($pictureFile);
+                // Récupère l'id de la figure
+                $trickId = $_POST['trickId'];
+
+                // Transfère ces deux variables à la méthode addPictureTrick
+                $response = $this->forward('App\Controller\TrickController::addPictureTrick', [
+                    'pictureFile'  => $pictureFile,
+                    'trickId' => $trickId,
+                ]);
+
+                return $response;
             }
             elseif ($formPictureType->isSubmitted() && ($formPictureType->isValid() == false)) // Si le formulaire contient des erreurs
             {
                 // Message d'erreur
                 $this->addFlash(
                     'danger',
-                    "L'image doit être de type jpeg, jpg ou png. 
+                    "L'image doit être de type jpeg, jpg ou png.
                     Elle doit faire minimum 500px de large et 300px de haut.
                     Et faire maximum 1500px de large et 1200px de haut."
                 );
-
-                // Affiche la page de création d'une figure avec le formulaire
-                return $this->render('trick/edit.html.twig', [
-                    'formTrickType' => $formTrickType->createView(),
-                    'formPictureType' => $formPictureType->createView(),
-                    'formVideoType' => $formVideoType->createView(),
-                    'trick' => $trick,
-                    'pictures' => $pictures,
-                    'videos' => $videos
-                ]);
             }
 
-            // Affiche la page de création d'une figure avec le formulaire
+            // Si le formulaire d'ajout de vidéo est soumis et valide
+            if ($formVideoType->isSubmitted() && $formVideoType->isValid())
+            {
+                // Récupère l'Url
+                $url = $formVideoType->get('url')->getData();
+                // Récupère l'id de la figure
+                $trickId = $_POST['trickId'];
+
+                // Transfère ces deux variables à la méthode addVideoTrick
+                $response = $this->forward('App\Controller\TrickController::addVideoTrick', [
+                    'url'  => $url,
+                    'trickId' => $trickId,
+                ]);
+
+                return $response;
+            }
+
+            // Si le formulaire de modification d'une figure est soumis
+            if ($formTrickType->isSubmitted())
+            {
+                // Récupère l'id de la figure
+                $trickId = $_POST['trickId'];
+
+                // Récupère le nom de la figure
+                $trickName = $formTrickType->get('name')->getData();
+
+                // Récupère le gestionnaire d'entités
+                $entityManager = $this->getDoctrine()->getManager();
+
+                // Récupère la figure
+                $trick = $entityManager->getRepository(Trick::class)->findOneBy(
+                    ['id' => $trickId, 'name' => $trickName],
+                    []
+                );
+
+                // Si la figure est trouvé
+                if ($trick != null)
+                {
+                    // Récupère la description
+                    $description = $formTrickType->get('description')->getData();
+
+                    // Récupère l'id de la catégorie
+                    $categoryId = $formTrickType->get('category')->getData()->getId();
+
+                    // Récupère la catégorie
+                    $category = $entityManager->getRepository(Category::class)->find($categoryId);
+
+                    // Si $description et $category ne sont pas vident
+                    if (!empty($description) && !empty($category))
+                    {
+
+                        $arrayPicture = $trick->getPictures();
+
+                        $arrayVideo = $trick->getVideos();
+
+                        dump($arrayPicture);
+                        dump($arrayVideo);
+
+                        foreach($arrayPicture as $picture)
+                        {
+                            dump($picture->setTrick($trick));
+                            $picture->setTrick($trick);
+                            $entityManager->flush();
+                        }
+
+                        foreach($arrayVideo as $video)
+                        {
+                            dump($video->setTrick($trick));
+                            $video->setTrick($trick);
+                            $entityManager->flush();
+                        }
+
+
+
+
+
+
+
+
+                        // Par défaut, l'utilisateur est celui connecté
+                        $user = $this->getUser();
+
+                        // Attribution des valeurs
+                        $trick->setDescription($description);
+                        $trick->setCategory($category->getName());
+                        $trick->setUser($user);
+                        $trick->setUpdateDate(new DateTime());
+                        $trick->setName($trickName);
+
+
+                        // Modifie la figure en BDD
+                        $entityManager->flush();
+
+                        // Message de confirmation
+                        $this->addFlash(
+                            'success',
+                            "La figure <strong>" . $trickName . "</strong> a bien été modifiée"
+                        );
+
+                        // Redirection vers la page listant les figures
+                        return $this->redirectToRoute('home');
+                    }
+                    else // Si $description ou $category sont vident
+                    {
+                        // Message d'erreur
+                        $this->addFlash(
+                            'danger',
+                            "Tous les champs n'ont pas été renseignés."
+                        );
+
+                        // Renvoie vers la page du profil
+                        header("Location: /figure/modifier/" . $trickId);
+
+                        // Empêche l'exécution du reste du script
+                        die();
+                    }
+                }
+                else // Si Si la figure n'est pas trouvée
+                {
+                    // Message d'erreur
+                    $this->addFlash(
+                        'danger',
+                        "On ne touche pas aux champs cachés."
+                    );
+
+                    // Redirection vers la page d'accueil
+                    return $this->redirectToRoute('home');
+                }
+            }
+
+            // Affiche par défaut la page de création d'une figure
             return $this->render('trick/edit.html.twig', [
                 'formTrickType' => $formTrickType->createView(),
                 'formPictureType' => $formPictureType->createView(),
@@ -203,7 +334,6 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         }
         else // Si aucune figure ne correspond à l'id
         {
-
             // Message d'erreur
             $this->addFlash(
                 'danger',
@@ -216,45 +346,68 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
     }
 
     /**
-     * @Route("/figure/modifier/image/{trick}/{picture}", name="trick_picture_edit")
+     * @Route("/figure/ajouter/image/{trick}", name="trick_picture_add")
      * @IsGranted("ROLE_USER")
-     *//*
-    public function editPictureTrick(Request $request, FileUploader $fileUploader, $trick, $picture)
+     */
+    public function addPictureTrick(FileUploader $fileUploader, $trickId, $pictureFile)
     {
-        // Si les id $trick et $picture ne sont pas vide et correspondent à des chiffres
-        if ((!empty($trick) && !empty($picture)) && (is_numeric($trick) && is_numeric($picture)))
+        // Si $trick n'est pas vide et est numérique
+        if ((!empty($trickId)) && (is_numeric($trickId)))
         {
             // Récupère le gestionnaire d'entités
             $entityManager = $this->getDoctrine()->getManager();
 
             // Récupère la figure
-            $trick = $entityManager->getRepository(Trick::class)->find($trick);
+            $trick = $entityManager->getRepository(Trick::class)->find($trickId);
 
-            // Récupère l'image
-            $picture = $entityManager->getRepository(Picture::class)->find($picture);
-
-            // Si une figure et une image correspondent
-            if ($trick != null && $picture != null)
+            // Si la figure est trouvé
+            if ($trick != null)
             {
+                // Chemin de destination de l'image
+                $destination = $this->getParameter('trick_picture_directory') . '/' . $trick->getName();
 
+                // Défini son nom et la déplace dans le dossier cible
+                $fileName = $fileUploader->upload($pictureFile, $destination);
 
+                // Crée une instance de Picture
+                $picture = new Picture();
 
+                // Attribution des valeurs
+                $picture->setName($fileName);
+                $picture->setPath($destination);
+                $picture->setTrick($trick);
 
+                // Doctrine gère maintenant l'objet
+                $entityManager->persist($picture);
 
+                // Insère une nouvelle ligne dans la table Trick
+                $entityManager->flush();
+
+                // Message de confirmation
+                $this->addFlash(
+                    'success',
+                    "L'image a bien été ajouté"
+                );
+
+                // Renvoie vers la page du profil
+                header("Location: /figure/modifier/" . $trickId);
+
+                // Empêche l'exécution du reste du script
+                die();
             }
             else // Si il n'y a pas de correspondance
             {
                 // Message d'erreur
                 $this->addFlash(
                     'danger',
-                    "La figure ou l'image non pas été trouvé."
+                    "La figure n'a pas été trouvé."
                 );
 
                 // Redirection vers la page d'accueil
                 return $this->redirectToRoute('home');
             }
         }
-        else // Si l'une des deux est vide ou contient autres que des chiffres
+        else // Si $trick est vide ou n'est pas numérique
         {
             // Message d'erreur
             $this->addFlash(
@@ -265,5 +418,256 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             // Redirection vers la page d'accueil
             return $this->redirectToRoute('home');
         }
-    }*/
+    }
+
+    /**
+     * @Route("/figure/supprimer/image/{picture}/{trick}", name="trick_picture_delete")
+     * @IsGranted("ROLE_USER")
+     */
+    public function deletePictureTrick($pictureId, $trickId)
+    {
+        // Si $picture et $trick ne sont pas vident et sont numérique
+        if ((!empty($pictureId)) && (is_numeric($pictureId)) && (!empty($trickId)) && (is_numeric($trickId)))
+        {
+            // Récupère l'image
+            $picture = $this->getDoctrine()->getRepository(Picture::class)->find($pictureId);
+
+            // Récupère la figure
+            $trick = $this->getDoctrine()->getRepository(Trick::class)->find($trickId);
+
+            // Si la figure éxiste
+            if ($trick != null)
+            {
+                // Si l'image est trouvée
+                if ($picture != null)
+                {
+                    // Récupère le chemin de l'image
+                    $path = $picture->getPath();
+
+                    // Récupère le nom de l'image
+                    $name = $picture->getName();
+
+                    // Concatène le chemin et le nom
+                    $filePicture = $path . '/' . $name;
+
+                    // Crée une instance de Filesystem
+                    $filesystem = new Filesystem();
+
+                    // Supprime le fichier
+                    $filesystem->remove($filePicture);
+
+                    // Récupère le gestionnaire d'entités
+                    $entityManager = $this->getDoctrine()->getManager();
+
+                    // Supprime l'image de la table Picture
+                    $entityManager->remove($picture);
+
+                    // Persiste les données dans la BDD
+                    $entityManager->flush();
+
+                    // Message de confirmation
+                    $this->addFlash(
+                        'success',
+                        "L'image a bien été supprimé"
+                    );
+
+                    // Renvoie vers la page du profil
+                    header("Location: /figure/modifier/" . $trickId);
+
+                    // Empêche l'exécution du reste du script
+                    die();
+                }
+                else // Si l'image n'est pas trouvé
+                {
+                    // Message d'erreur
+                    $this->addFlash(
+                        'danger',
+                        "L'image n'a pas été trouvé."
+                    );
+
+                    // Renvoie vers la page du profil
+                    header("Location: /figure/modifier/" . $trickId);
+
+                    // Empêche l'exécution du reste du script
+                    die();
+                }
+            }
+            else
+            {
+                // Message d'erreur
+                $this->addFlash(
+                    'danger',
+                    "La figure n'existe pas."
+                );
+
+                // Redirection vers la page d'accueil
+                return $this->redirectToRoute('home');
+            }
+        }
+        else // Si $picture et $trick sont vident ou non numérique
+        {
+            // Message d'erreur
+            $this->addFlash(
+                'danger',
+                "Veuiller ne pas modifier l'Url."
+            );
+
+            // Redirection vers la page d'accueil
+            return $this->redirectToRoute('home');
+        }
+    }
+
+    /**
+     * @Route("/figure/ajouter/video/{url}/{trickId}", name="trick_video_add")
+     * @IsGranted("ROLE_USER")
+     */
+    public function addVideoTrick($url, $trickId)
+    {
+        // Si l'Url n'est pas vide
+        if (!empty($url))
+        {
+            // Récupère le gestionnaire d'entités
+            $entityManager = $this->getDoctrine()->getManager();
+
+            // Récupère la figure
+            $trick = $entityManager->getRepository(Trick::class)->find($trickId);
+
+            // Si la figure est trouvé
+            if ($trick != null)
+            {
+                // Crée une instance de Video
+                $video = new Video();
+
+                // Attribution des valeurs
+                $video->setUrl($url);
+                $video->setTrick($trick);
+
+                // Doctrine gère maintenant l'objet
+                $entityManager->persist($video);
+
+                // Insère une nouvelle ligne dans la table Video
+                $entityManager->flush();
+
+                // Message de confirmation
+                $this->addFlash(
+                    'success',
+                    "La vidéo a bien été ajouté"
+                );
+
+                // Renvoie vers la page du profil
+                header("Location: /figure/modifier/" . $trickId);
+
+                // Empêche l'exécution du reste du script
+                die();
+            }
+            else // Si il n'y a pas de correspondance
+            {
+                // Message d'erreur
+                $this->addFlash(
+                    'danger',
+                    "La figure n'a pas été trouvé."
+                );
+
+                // Redirection vers la page d'accueil
+                return $this->redirectToRoute('home');
+            }
+        }
+        else
+        {
+            // Message d'erreur
+            $this->addFlash(
+                'danger',
+                "Veuiller indiquer une Url."
+            );
+
+            // Renvoie vers la page du profil
+            header("Location: /figure/modifier/" . $trickId);
+
+            // Empêche l'exécution du reste du script
+            die();
+        }
+    }
+
+    /**
+     * @Route("/figure/supprimer/video/{videoId}/{trickIid}", name="trick_video_delete")
+     * @IsGranted("ROLE_USER")
+     */
+    public function deleteVideoTrick($videoId, $trickId)
+    {
+
+        // Si $videoId et $trick ne sont pas vident et $trick est bien numérique
+        if ((!empty($videoId)) && (!empty($trickId)) && (is_numeric($trickId)))
+        {
+            // Récupère la vidéo
+            $url = $this->getDoctrine()->getRepository(Video::class)->find($videoId);
+
+            // Récupère la figure
+            $trick = $this->getDoctrine()->getRepository(Trick::class)->find($trickId);
+
+            // Si la figure éxiste
+            if ($trick != null)
+            {
+                // Si l'Url est trouvée
+                if ($url != null)
+                {
+                    // Récupère le gestionnaire d'entités
+                    $entityManager = $this->getDoctrine()->getManager();
+
+                    // Supprime la vidéo de la table Video
+                    $entityManager->remove($url);
+
+                    // Persiste les données dans la BDD
+                    $entityManager->flush();
+
+                    // Message de confirmation
+                    $this->addFlash(
+                        'success',
+                        "La vidéo a bien été supprimé"
+                    );
+
+                    // Renvoie vers la page du profil
+                    header("Location: /figure/modifier/" . $trickId);
+
+                    // Empêche l'exécution du reste du script
+                    die();
+                }
+                else // Si l'Url n'est pas trouvé
+                {
+                    // Message d'erreur
+                    $this->addFlash(
+                        'danger',
+                        "La vidéo n'a pas été trouvé."
+                    );
+
+                    // Renvoie vers la page du profil
+                    header("Location: /figure/modifier/" . $trickId);
+
+                    // Empêche l'exécution du reste du script
+                    die();
+                }
+            }
+            else
+            {
+                // Message d'erreur
+                $this->addFlash(
+                    'danger',
+                    "La figure n'existe pas."
+                );
+
+                // Redirection vers la page d'accueil
+                return $this->redirectToRoute('home');
+            }
+        }
+        else // Si $picture et $trick sont vident ou non numérique
+        {
+            // Message d'erreur
+            $this->addFlash(
+                'danger',
+                "Veuiller ne pas modifier l'Url."
+            );
+
+            // Redirection vers la page d'accueil
+            return $this->redirectToRoute('home');
+        }
+    }
 }

@@ -18,7 +18,7 @@ $(document).ready(function() {
     });
 });
 
-/* Modal pour les liens de modifications et suppression d'un media */
+/* Modal pour les liens d'ajout et de suppression d'un media */
 $(document).ready(function() {
     const numbs = ["a","b"];
 

@@ -22,11 +22,11 @@ class Picture
      * @Assert\Image(
      *  mimeTypes        = {"image/jpeg", "image/jpg", "image/png"},
      *  mimeTypesMessage = "Le fichier ne possède pas une extension valide. Veuillez insérer une image en .jpg, .jpeg ou .png",
-     *  minWidth         = 500,
+     *  minWidth         = 480,
      *  minWidthMessage  = "La largeur de cette image est trop petite. Elle doit faire minimum {{ min_width }} pixels",
      *  maxWidth         = 1500,
      *  maxWidthMessage  = "La largeur de cette image est trop grande. Elle doit faire maximum {{ max_width }} pixels",
-     *  minHeight        = 300,
+     *  minHeight        = 270,
      *  minHeightMessage = "La hauteur de cette image est trop petite. Elle doit faire minimum {{ min_height }} pixels",
      *  maxHeight        = 1200,
      *  maxHeightMessage = "La hauteur de cette image est trop grande. Elle doit faire maximum {{ max_height }} pixels",
