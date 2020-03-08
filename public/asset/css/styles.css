@@ -60,8 +60,55 @@
 /* Page - Modifier une figure  */
 
 
-.edit-trick h2 {
-    text-align: center;
+/* Titre et image principal */
+.edit-trick .main-title {
+    position: relative;
+    max-height: 615px;
+    margin-bottom: 20px;
+}
+
+.edit-trick .main-title figure img {
+    width: 100%;
+    height: auto;
+}
+
+.edit-trick .main-title figure .buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.edit-trick .main-title figure .buttons button {
+    padding: 10px 10px 0 0;
+}
+
+.edit-trick .main-title figure .buttons button img {
+    width: 30px;
+    height: 30px;
+}
+
+.edit-trick .main-title figure figcaption {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.edit-trick .main-title figure figcaption .title {
+    border: 5px solid white;
+    border-radius: 15px;
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 25px 15px white;
+}
+
+.edit-trick .main-title figure figcaption .title h2 {
+    font-size: 2.5vw;
 }
 
 /* Modal pour afficher une image en grand */

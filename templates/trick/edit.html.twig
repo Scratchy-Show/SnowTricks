@@ -10,7 +10,22 @@
 
         <div class="edit-trick col-12">
 
-            <h2>{{ trick.name }}</h2>
+            <div class="main-title">
+                <!-- Image principal -->
+                <figure>
+                    <img src="{{ asset('uploads/trick/'~ trick.name ~ '/'  ~ mainPicture.name) }}"  class="rounded" alt="" />
+                    <figcaption>
+                        <div class="title">
+                            <h2>{{ trick.name }}</h2>
+                        </div>
+                    </figcaption>
+                    <div class="buttons">
+                        <button type="button" class="btn" data-toggle="modal" data-target="#editMainPicture{{ mainPicture.id }}" data-whatever="@editMainPic">
+                            <img src="{{ asset('img/icons/edit.png') }}" alt="" />
+                        </button>
+                    </div>
+                </figure>
+            </div>
 
             <!-- Modal pour la galerie d'image -->
             <div class="modal-picture">

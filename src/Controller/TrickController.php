@@ -41,6 +41,25 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             // Chemin de destination de l'image
             $destination = $this->getParameter('trick_picture_directory') . '/' . $trick->getName();
 
+            /*
+
+
+
+            // Récupère l'image principal
+            $mainPicture = $form->get('mainPicture')->getData();
+
+            // Défini son nom et la déplace dans le dossier cible
+            $fileName = $fileUploader->upload($mainPicture->getFile(), $destination);
+
+            // Attribution des valeurs
+            $mainPicture->setName($fileName);
+            $mainPicture->setPath($destination);
+            $mainPicture->setTrick($trick);
+
+
+
+            */
+
             // Pour chaque image de la collection
             foreach ($trick->getPictures() as $picture)
             {
@@ -164,6 +183,21 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             // Récupère les urls liées à la figure
             $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $id]);
 
+            /*
+
+            // Défini la première image de la collection comme image principal
+            $mainPicture = $pictures[0];
+
+            // Si il n'y a pas d'image
+            if ($pictures == null)
+            {
+                // L'image principal est l'image par défaut
+                $mainPicture = 'trick_picture_directory' . '/' . 'default.jpg';
+
+                return $mainPicture;
+            }
+
+            */
 
             // Si le formulaire d'ajout d'image est soumis et valide
             if ($formPictureType->isSubmitted() && $formPictureType->isValid())
@@ -329,6 +363,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 'formVideoType' => $formVideoType->createView(),
                 'trick' => $trick,
                 'pictures' => $pictures,
+                'mainPicture' => $mainPicture,
                 'videos' => $videos
             ]);
         }

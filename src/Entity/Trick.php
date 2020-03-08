@@ -63,6 +63,12 @@ class Trick
     protected $pictures;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Picture", mappedBy="trick", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="mainPicture_id", referencedColumnName="id")
+     */
+    protected $mainPicture;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Video", mappedBy="trick", cascade={"persist", "remove"})
      */
     protected $videos;
@@ -173,6 +179,11 @@ class Trick
         return $this->pictures;
     }
 
+    public function getMainPicture()
+    {
+        return $this->mainPicture;
+    }
+
 
     public function getVideos()
     {
@@ -224,6 +235,13 @@ class Trick
         $this->pictures = $pictures;
 
         return $pictures;
+    }
+
+    public function setMainPicture($mainPicture)
+    {
+        $this->mainPicture = $mainPicture;
+
+        return $mainPicture;
     }
 
     public function setVideos($videos)

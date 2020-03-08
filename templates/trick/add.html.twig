@@ -14,6 +14,7 @@
             {{ form_row(form.name) }}
             {{ form_row(form.description) }}
             {{ form_row(form.category) }}
+            {{ form_row(form.mainPicture) }}
             <ul class="pictures" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}"></ul>
             <ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}"></ul>
 
