@@ -3,10 +3,11 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Trick;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,13 +30,11 @@ class TrickType extends AbstractType
                     'placeholder' => 'Description de la figure'
                 ]
             ])
-            ->add('category', CategoryType::class)
-            ->add('mainPicture', FileType::class, [
-                'label' => "Image Principal",
-                'attr' => [
-                    'placeholder' => 'Choissiser une image'
-                ]
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'label' => "Catégorie",
             ])
+            ->add('mainPicture', PictureType::class)
             ->add('pictures', CollectionType::class, [
                 'entry_type' => PictureType::class,
                 // Permet d'ajouter un nombre illimité d'image

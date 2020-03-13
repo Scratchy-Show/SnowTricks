@@ -38,15 +38,11 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid())
         {
-            // Chemin de destination de l'image
-            $destination = $this->getParameter('trick_picture_directory') . '/' . $trick->getName();
-
-            /*
-
-
-
             // Récupère l'image principal
             $mainPicture = $form->get('mainPicture')->getData();
+
+            // Chemin de destination de l'image
+            $destination = $this->getParameter('trick_picture_directory') . '/' . $trick->getName();
 
             // Défini son nom et la déplace dans le dossier cible
             $fileName = $fileUploader->upload($mainPicture->getFile(), $destination);
@@ -56,9 +52,8 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             $mainPicture->setPath($destination);
             $mainPicture->setTrick($trick);
 
-
-
-            */
+            // Attribut l'image principal à la figure
+            $trick->setMainPicture($mainPicture);
 
             // Pour chaque image de la collection
             foreach ($trick->getPictures() as $picture)
@@ -167,27 +162,27 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             // Création du formulaire de figure
             $formTrickType = $this->createForm(TrickType::class, $trick);
             // Création du formulaire d'image
-            $formPictureType = $this->createForm(PictureType::class);
+      //      $formPictureType = $this->createForm(PictureType::class);
             // Création du formulaire des videos
-            $formVideoType = $this->createForm(VideoType::class);
+     //       $formVideoType = $this->createForm(VideoType::class);
 
             // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
             $formTrickType->handleRequest($request);
             // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
-            $formPictureType->handleRequest($request);
+     //       $formPictureType->handleRequest($request);
             // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
-            $formVideoType->handleRequest($request);
+    //        $formVideoType->handleRequest($request);
 
             // Récupère les images liées à la figure
             $pictures = $entityManager->getRepository(Picture::class)->findBy(['trick' => $id]);
             // Récupère les urls liées à la figure
             $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $id]);
 
-            /*
+
 
             // Défini la première image de la collection comme image principal
-            $mainPicture = $pictures[0];
-
+        //    $mainPicture = $pictures[0];
+/*
             // Si il n'y a pas d'image
             if ($pictures == null)
             {
@@ -196,9 +191,9 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
                 return $mainPicture;
             }
+*/
 
-            */
-
+/*
             // Si le formulaire d'ajout d'image est soumis et valide
             if ($formPictureType->isSubmitted() && $formPictureType->isValid())
             {
@@ -225,7 +220,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                     Et faire maximum 1500px de large et 1200px de haut."
                 );
             }
-
+*//*
             // Si le formulaire d'ajout de vidéo est soumis et valide
             if ($formVideoType->isSubmitted() && $formVideoType->isValid())
             {
@@ -242,24 +237,18 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
                 return $response;
             }
-
-            // Si le formulaire de modification d'une figure est soumis
-            if ($formTrickType->isSubmitted())
+*/
+            // Si le formulaire de modification d'une figure est soumis et valide
+            if ($formTrickType->isSubmitted() )
             {
                 // Récupère l'id de la figure
                 $trickId = $_POST['trickId'];
-
-                // Récupère le nom de la figure
-                $trickName = $formTrickType->get('name')->getData();
 
                 // Récupère le gestionnaire d'entités
                 $entityManager = $this->getDoctrine()->getManager();
 
                 // Récupère la figure
-                $trick = $entityManager->getRepository(Trick::class)->findOneBy(
-                    ['id' => $trickId, 'name' => $trickName],
-                    []
-                );
+                $trick = $entityManager->getRepository(Trick::class)->find($trickId);
 
                 // Si la figure est trouvé
                 if ($trick != null)
@@ -273,29 +262,40 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                     // Récupère la catégorie
                     $category = $entityManager->getRepository(Category::class)->find($categoryId);
 
-                    // Si $description et $category ne sont pas vident
-                    if (!empty($description) && !empty($category))
+                    // Récupère le nom de la figure
+                    $trickName = $formTrickType->get('name')->getData();
+
+                    // Si $description, $category et $trickName ne sont pas vident
+                    if (!empty($description) && !empty($category) && !empty($trickName))
                     {
 
+
+
                         $arrayPicture = $trick->getPictures();
+                        dump($arrayPicture);
+
 
                         $arrayVideo = $trick->getVideos();
-
-                        dump($arrayPicture);
                         dump($arrayVideo);
 
-                        foreach($arrayPicture as $picture)
+
+
+                        $test = $arrayPicture->getValues();
+                        dump($test);
+
+                        foreach($arrayPicture->toArray() as $picture)
                         {
                             dump($picture->setTrick($trick));
                             $picture->setTrick($trick);
-                            $entityManager->flush();
+                            $entityManager->persist($picture);
                         }
 
-                        foreach($arrayVideo as $video)
+                        foreach($trick->getVideos() as $video)
                         {
-                            dump($video->setTrick($trick));
+
                             $video->setTrick($trick);
-                            $entityManager->flush();
+                            dump($video->setTrick($trick));
+                            $entityManager->persist($video);
                         }
 
 
@@ -310,14 +310,14 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
                         // Attribution des valeurs
                         $trick->setDescription($description);
-                        $trick->setCategory($category->getName());
+                        $trick->setCategory($category);
                         $trick->setUser($user);
                         $trick->setUpdateDate(new DateTime());
                         $trick->setName($trickName);
 
 
                         // Modifie la figure en BDD
-                        $entityManager->flush();
+                        $entityManager->fush();
 
                         // Message de confirmation
                         $this->addFlash(
@@ -328,7 +328,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                         // Redirection vers la page listant les figures
                         return $this->redirectToRoute('home');
                     }
-                    else // Si $description ou $category sont vident
+                    else // Si $description, $category ou $trickName sont vident
                     {
                         // Message d'erreur
                         $this->addFlash(
@@ -359,11 +359,11 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             // Affiche par défaut la page de création d'une figure
             return $this->render('trick/edit.html.twig', [
                 'formTrickType' => $formTrickType->createView(),
-                'formPictureType' => $formPictureType->createView(),
-                'formVideoType' => $formVideoType->createView(),
+           //     'formPictureType' => $formPictureType->createView(),
+          //      'formVideoType' => $formVideoType->createView(),
                 'trick' => $trick,
                 'pictures' => $pictures,
-                'mainPicture' => $mainPicture,
+           //     'mainPicture' => $mainPicture,
                 'videos' => $videos
             ]);
         }

@@ -13,14 +13,18 @@
             <div class="main-title">
                 <!-- Image principal -->
                 <figure>
-                    <img src="{{ asset('uploads/trick/'~ trick.name ~ '/'  ~ mainPicture.name) }}"  class="rounded" alt="" />
+                    {% if trick.mainPicture is not empty %}
+                        <img src="{{ asset('uploads/trick/'~ trick.name ~ '/'  ~ trick.mainPicture.name) }}"  class="rounded" alt="" />
+                    {% else %}
+                        <img src="{{ asset('uploads/trick/'~ 'default.jpg') }}"  class="rounded" alt="" />
+                    {% endif %}
                     <figcaption>
                         <div class="title">
                             <h2>{{ trick.name }}</h2>
                         </div>
                     </figcaption>
                     <div class="buttons">
-                        <button type="button" class="btn" data-toggle="modal" data-target="#editMainPicture{{ mainPicture.id }}" data-whatever="@editMainPic">
+                        <button type="button" class="btn" data-toggle="modal" <!-- data-target="#editMainPicture{ trick.mainPicture.id }}" --> data-whatever="@editMainPic">
                             <img src="{{ asset('img/icons/edit.png') }}" alt="" />
                         </button>
                     </div>
@@ -70,19 +74,21 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                {{ form_start(formPictureType) }}
+                                <!--
+                               {  form_start(formPictureType) }}
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <p>Choisissez une nouvelle photo.</p>
                                     </div>
-                                    {{ form_row(formPictureType.file) }}
-                                    <input id="trickId" name="trickId" type="hidden" value="{{ trick.id }}">
+                                   {  form_row(formPictureType.file) }}
+                                    <input id="trickId" name="trickId" type="hidden" value="{ trick.id }}">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                                     <button type="submit" class="btn btn-primary">Ajouter</button>
                                 </div>
-                                {{ form_end(formPictureType) }}
+                                { form_end(formPictureType) }}
+                                -->
                             </div>
                         </div>
                     </div>
@@ -198,19 +204,21 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        {{ form_start(formVideoType) }}
+                                        <!--
+                                        { form_start(formVideoType) }}
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <p>Nouvelle url :</p>
                                             </div>
-                                            {{ form_row(formVideoType.url) }}
-                                            <input id="trickId" name="trickId" type="hidden" value="{{ trick.id }}">
+                                            { form_row(formVideoType.url) }}
+                                            <input id="trickId" name="trickId" type="hidden" value="{ trick.id }}">
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                                             <button type="submit" class="btn btn-primary">Ajouter</button>
                                         </div>
-                                        {{ form_end(formVideoType) }}
+                                        { form_end(formVideoType) }}
+                                        -->
                                     </div>
                                 </div>
                             </div>

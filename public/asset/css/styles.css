@@ -14,6 +14,10 @@
     display: none;
 }
 
+.add-trick form textarea {
+    height: 250px;
+}
+
 .add-trick .pictures,
 .add-trick .videos {
     padding-left: 0;
