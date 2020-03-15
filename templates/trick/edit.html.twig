@@ -11,6 +11,7 @@
         <div class="edit-trick col-12">
 
             <div class="main-title">
+
                 <!-- Image principal -->
                 <figure>
                     {% if trick.mainPicture is not empty %}
@@ -24,14 +25,14 @@
                         </div>
                     </figcaption>
                     <div class="buttons">
-                        <button type="button" class="btn" data-toggle="modal" <!-- data-target="#editMainPicture{ trick.mainPicture.id }}" --> data-whatever="@editMainPic">
+                        <button type="button" class="btn" data-toggle="modal" <!-- data-target="#editMainPicture{ trick.mainPicture.id }}" data-whatever="@editMainPic" --> >
                             <img src="{{ asset('img/icons/edit.png') }}" alt="" />
                         </button>
                     </div>
                 </figure>
             </div>
 
-            <!-- Modal pour la galerie d'image -->
+            <!-- Modal Affiche en grand une image -->
             <div class="modal-picture">
                 <div id="pictureModal" class="modal">
                     <span class="close">&times;</span>
@@ -54,7 +55,9 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                            <a href="{{ path('trick_delete', {'trickId': trick.id}) }}">
+                                <button type="button" class="btn btn-danger">Supprimer</button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -62,37 +65,6 @@
 
             <!-- Section gallerie -->
             <div class="container-gallery">
-
-                <!-- Modal pour l'ajout d'une image -->
-                <div class="modal-container" >
-                    <div class="modal fade add-picture" id="addPicture" tabindex="-1" role="dialog" aria-labelledby="modalAddPicture" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modalAddPicture">Ajouter une image à la figure {{ trick.name }}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <!--
-                               {  form_start(formPictureType) }}
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <p>Choisissez une nouvelle photo.</p>
-                                    </div>
-                                   {  form_row(formPictureType.file) }}
-                                    <input id="trickId" name="trickId" type="hidden" value="{ trick.id }}">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary">Ajouter</button>
-                                </div>
-                                { form_end(formPictureType) }}
-                                -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Gallerie images -->
                 {% if pictures is not empty %}
@@ -134,16 +106,15 @@
                             </div>
                         {% endfor %}
 
-                        <button type="button" class="btn add" data-toggle="modal" data-target="#addPicture" data-whatever="@addPic">
+                        <a href="{{ path('trick_picture_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une image">
                             <img src="{{ asset('img/icons/add.png') }}" alt="" />
-                        </button>
-
+                        </a>
                     </div>
                 {% elseif pictures is empty %}
                     <div class="empty-picture">
-                        <button type="button" class="btn" data-toggle="modal" data-target="#addPicture" data-whatever="@addPic">
-                            <a href="#">Ajouter une image</a>
-                        </button>
+                        <a href="{{ path('trick_picture_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une image">
+                            <img src="{{ asset('img/icons/add.png') }}" alt="" />
+                        </a>
                     </div>
                 {% endif %}
 
@@ -189,45 +160,15 @@
                             </div>
                         {% endfor %}
 
-                        <button type="button" class="btn add" data-toggle="modal" data-target="#addVideo" data-whatever="@addVideo">
+                        <a href="{{ path('trick_video_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une vidéo">
                             <img src="{{ asset('img/icons/add.png') }}" alt="" />
-                        </button>
-
-                        <!-- Modal pour l'ajout d'une Url -->
-                        <div class="modal-container" >
-                            <div class="modal fade add-url" id="addVideo" tabindex="-1" role="dialog" aria-labelledby="modalAddVideo" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="modalAddVideo">Ajouter une url à {{ trick.name }}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <!--
-                                        { form_start(formVideoType) }}
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <p>Nouvelle url :</p>
-                                            </div>
-                                            { form_row(formVideoType.url) }}
-                                            <input id="trickId" name="trickId" type="hidden" value="{ trick.id }}">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                            <button type="submit" class="btn btn-primary">Ajouter</button>
-                                        </div>
-                                        { form_end(formVideoType) }}
-                                        -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        </a>
                     </div>
                 {% elseif videos is empty %}
                     <div class="empty-video">
-                        <a href="#">Ajouter une Url</a>
+                        <a href="{{ path('trick_video_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une vidéo">
+                            <img src="{{ asset('img/icons/add.png') }}" alt="" />
+                        </a>
                     </div>
                 {% endif %}
             </div>
@@ -256,7 +197,8 @@
                 {{ form_row(formTrickType.name) }}
 
                 <input type="hidden" name="trickId" value="{{ trick.id }}" />
-                <input type="hidden" name="form[_token]" value="{{ formTrickType._token.vars.value }}" />
+
+                {{ form_row(formTrickType._token) }}
 
                 <div class="buttons">
                     <button type="button" class="btn btn-outline-danger btn-lg col-6" data-toggle="modal" data-target="#deleteTrick{{ trick.id }}" data-whatever="@deleteTrick">Supprimer</button>

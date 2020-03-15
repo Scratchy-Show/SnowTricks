@@ -63,8 +63,7 @@ class Trick
     protected $pictures;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Picture", mappedBy="trick", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="mainPicture_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist", "remove"})
      */
     protected $mainPicture;
 
@@ -250,7 +249,6 @@ class Trick
 
         return $videos;
     }
-
 
     public function setUser($user)
     {

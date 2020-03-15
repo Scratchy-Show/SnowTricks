@@ -38,19 +38,23 @@ trick_edit :
      path: /figure/modifier/{id}
      controller: App\Controller\TrickController::editTrick
 
+trick_delete :
+     path: /figure/supprimer/{trickId}
+     controller: App\Controller\TrickController::deleteTrick
+
 trick_picture_add:
-     path: /figure/ajouter/image/{trick}
-     controller: App\Controller\TrickController::addPictureTrick
+     path: /figure/ajouter/image/{trickId}
+     controller: App\Controller\PictureController::addPictureTrick
 
 trick_picture_delete:
      path: /figure/supprimer/image/{pictureId}/{trickId}
-     controller: App\Controller\TrickController::deletePictureTrick
+     controller: App\Controller\PictureController::deletePictureTrick
 
 trick_video_add:
-     path: /figure/ajouter/video/{url}/{trickId}
-     controller: App\Controller\TrickController::addVideoTrick
+     path: /figure/ajouter/video/{trickId}
+     controller: App\Controller\VideoController::addVideoTrick
 
 trick_video_delete:
      path: /figure/supprimer/video/{videoId}/{trickId}
-     controller: App\Controller\TrickController::deleteVideoTrick
+     controller: App\Controller\VideoController::deleteVideoTrick
 

@@ -30,10 +30,7 @@ class TrickType extends AbstractType
                     'placeholder' => 'Description de la figure'
                 ]
             ])
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'label' => "Catégorie",
-            ])
+            ->add('category', CategoryType::class)
             ->add('mainPicture', PictureType::class)
             ->add('pictures', CollectionType::class, [
                 'entry_type' => PictureType::class,

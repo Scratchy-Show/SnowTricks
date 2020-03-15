@@ -35,15 +35,6 @@ class Category
         $this->tricks = new ArrayCollection();
     }
 
-    /**
-     * Generates the magic method
-     *
-     */
-    public function __toString()
-    {
-        return (string) $this->getName();
-    }
-
     public function addTrick(Trick $trick)
     {
         if (!$this->tricks->contains($trick)) {

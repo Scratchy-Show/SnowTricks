@@ -18,6 +18,8 @@
     height: 250px;
 }
 
+
+/* Champ d'ajout d'image et d'url  */
 .add-trick .pictures,
 .add-trick .videos {
     padding-left: 0;
@@ -53,11 +55,15 @@
     display: inline-block;
 }
 
+
 /* Modifie le contenu du bouton (Browser) généré par Bootstrap */
 .add-trick .custom-file-input ~ .custom-file-label:lang(fr)::after {
     content: "Choisir...";
 }
 
+.add-picture .custom-file-input ~ .custom-file-label:lang(fr)::after {
+    content: "Choisir...";
+}
 
 
 
@@ -74,6 +80,7 @@
 .edit-trick .main-title figure img {
     width: 100%;
     height: auto;
+    max-height: 600px;
 }
 
 .edit-trick .main-title figure .buttons {
@@ -261,6 +268,7 @@
     border: 2px solid black;
     width: 200px;
     padding: 0;
+    cursor: pointer;
 }
 
 .edit-trick .container-gallery .pictures-trick .add:hover,
@@ -276,8 +284,10 @@ background-color: grey;
 }
 
 /* Icon d'ajout */
-.edit-trick .container-gallery .pictures-trick button img,
-.edit-trick .container-gallery .videos-trick button img {
+.edit-trick .container-gallery .pictures-trick a img,
+.edit-trick .container-gallery .videos-trick a img,
+.edit-trick .container-gallery .empty-picture img,
+.edit-trick .container-gallery .empty-video img {
     width: 40px;
     height: 40px;
 }
