@@ -115,6 +115,13 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                 // Si l'image est trouvée
                 if ($picture != null)
                 {
+                    // Si l'image a supprimer est l'image principal de la figure
+                    if ($trick->getMainPicture()->getId() == $picture->getId())
+                    {
+                        // Supprime l'image en tant qu'image principal
+                        $trick->setMainPicture(null);
+                    }
+
                     // Récupère le chemin de l'image
                     $path = $picture->getPath();
 

@@ -14,21 +14,35 @@
 
                 <!-- Image principal -->
                 <figure>
+                    <!-- Si une image principal est défini -->
                     {% if trick.mainPicture is not empty %}
                         <img src="{{ asset('uploads/trick/'~ trick.name ~ '/'  ~ trick.mainPicture.name) }}"  class="rounded" alt="" />
-                    {% else %}
-                        <img src="{{ asset('uploads/trick/'~ 'default.jpg') }}"  class="rounded" alt="" />
-                    {% endif %}
                     <figcaption>
                         <div class="title">
                             <h2>{{ trick.name }}</h2>
                         </div>
                     </figcaption>
                     <div class="buttons">
-                        <button type="button" class="btn" data-toggle="modal" <!-- data-target="#editMainPicture{ trick.mainPicture.id }}" data-whatever="@editMainPic" --> >
+                        <button type="button" class="btn" data-toggle="modal" data-target="#editMainPicture{ trick.mainPicture.id }}" data-whatever="@editMainPic" >
                             <img src="{{ asset('img/icons/edit.png') }}" alt="" />
                         </button>
+                        <button type="button" class="btn" data-toggle="modal" data-target="#deletePicture{{ trick.mainPicture.id }}" data-whatever="@deletePic">
+                            <img src="{{ asset('img/icons/delete.png') }}" alt="" />
+                        </button>
                     </div>
+                    {% else %} <!-- Si aucune image principal n'est défini -->
+                        <img src="{{ asset('uploads/trick/'~ 'default.jpg') }}"  class="rounded" alt="" />
+                        <figcaption>
+                            <div class="title">
+                                <h2>{{ trick.name }}</h2>
+                            </div>
+                        </figcaption>
+                        <div class="buttons">
+                            <button type="button" class="btn" data-toggle="modal" data-target="#editMainPicture{ picture.id }}" data-whatever="@editMainPic" >
+                            <img src="{{ asset('img/icons/edit.png') }}" alt="" />
+                            </button>
+                        </div>
+                    {% endif %}
                 </figure>
             </div>
 
@@ -71,14 +85,29 @@
                     <div class="pictures-trick">
 
                         {% for picture in pictures %}
-                            <div class="picture">
-                                <img src="{{ asset('uploads/trick/'~ trick.name ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
-                                <div class="buttons">
-                                    <button type="button" class="btn" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
-                                        <img src="{{ asset('img/icons/delete.png') }}" alt="" />
-                                    </button>
+                            <!-- Si une image principal est défini -->
+                            {% if trick.mainPicture.id is defined  %}
+                                <!-- Evite d'afficher l'image principal dans la gallerie -->
+                                {% if picture.id != trick.mainPicture.id %}
+                                    <div class="picture">
+                                        <img src="{{ asset('uploads/trick/'~ trick.name ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
+                                        <div class="buttons">
+                                            <button type="button" class="btn" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
+                                                <img src="{{ asset('img/icons/delete.png') }}" alt="" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% elseif trick.mainPicture.id is not defined %}
+                                <div class="picture">
+                                    <img src="{{ asset('uploads/trick/'~ trick.name ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
+                                    <div class="buttons">
+                                        <button type="button" class="btn" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
+                                            <img src="{{ asset('img/icons/delete.png') }}" alt="" />
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
 
                             <!-- Modal pour la suppression d'une image -->
                             <div class="modal-container" >

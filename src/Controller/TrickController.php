@@ -12,6 +12,7 @@ use App\Service\FileUploader;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -145,7 +146,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
      * @Route("/figure/modifier/{id}", name="trick_edit")
      * @IsGranted("ROLE_USER")
      */
-    public function editTrick(Request $request, $id)
+    public function editTrick(Request $request, FileUploader $fileUploader, $id)
     {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
@@ -156,6 +157,9 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         // Si une figure correspond à l'id
         if ($trick != null)
         {
+            // Actuel nom du dossier où se trouve les images
+            $oldNameFolder = $trick->getName();
+
             // Création du formulaire de figure
             $formTrickType = $this->createForm(TrickType::class, $trick);
 
@@ -164,6 +168,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
             // Récupère les images liées à la figure
             $pictures = $entityManager->getRepository(Picture::class)->findBy(['trick' => $id]);
+
             // Récupère les urls liées à la figure
             $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $id]);
 
@@ -173,14 +178,8 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 // Récupère l'id de la figure
                 $trickId = $_POST['trickId'];
 
-                // Récupère le gestionnaire d'entités
-                $entityManager = $this->getDoctrine()->getManager();
-
-                // Récupère la figure
-                $trick = $entityManager->getRepository(Trick::class)->find($trickId);
-
-                // Si la figure est trouvé
-                if ($trick != null)
+                // Vérifie si l'id de la figure correspond à l'id donné par le formulaire
+                if ($trick->getId() == $trickId)
                 {
                     // Récupère la description
                     $description = $formTrickType->get('description')->getData();
@@ -195,31 +194,69 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                     $trickName = $formTrickType->get('name')->getData();
 
                     // Si $description, $category et $trickName ne sont pas vident
-                    if (!empty($description) && !empty($category) && !empty($trickName))
-                    {
+                    if (!empty($description) && !empty($category) && !empty($trickName)) {
+                        // Nouveau chemin de destination des images
+                        $destination = $this->getParameter('trick_picture_directory') . '/' . $trickName;
 
-
-                        $arrayPicture = $trick->getPictures();
-                        dump($arrayPicture);
-
-                        $arrayVideo = $trick->getVideos();
-                        dump($arrayVideo);
-
-                        $test = $arrayPicture->getValues();
-                        dump($test);
-
-                        foreach($arrayPicture->toArray() as $picture)
+                        // Si le nom de la figure a changé
+                        if ($oldNameFolder != $trick->getName())
                         {
-                            dump($picture->setTrick($trick));
-                            $picture->setTrick($trick);
-                            $entityManager->persist($picture);
+                            // Création du nouveau dossier
+                            mkdir($destination);
+
+                            // Pour chaque image
+                            foreach($pictures as $picture)
+                            {
+                                // Récupère l'actuel chemin de l'image
+                                $oldPath = $picture->getPath();
+
+                                // Récupère l'actuel nom de l'image
+                                $name = $picture->getName();
+
+                                // Concatène l'ancien chemin et le nom de l'image
+                                $oldPathNamePicture = $oldPath . '/' . $name;
+
+                                // Concatène le nouveau chemin et le nom de l'image
+                                $newPathNamePicture = $destination . '/' . $name;
+
+                                // Copie les fichiers dans le nouveau dossier
+                                copy($oldPathNamePicture, $newPathNamePicture);
+
+                                // Attributions des valeurs
+                                $picture->setPath($destination);
+                                $picture->setTrick($trick);
+                                $picture->setName($name);
+
+                                // Enregistre la modification en BDD
+                                $entityManager->persist($picture);
+                            }
+
+                            // Crée une instance de Filesystem
+                            $filesystem = new Filesystem();
+
+                            // Supprime l'ancien dossier
+                            $filesystem->remove($oldPath);
+                        }
+                        else // Si le nom de la figure n'a pas changé
+                        {
+                            // Pour chaque image
+                            foreach($pictures as $picture)
+                            {
+                                // Lie l'image à la figure
+                                $picture->setTrick($trick);
+
+                                // Enregistre la modification en BDD
+                                $entityManager->persist($picture);
+                            }
                         }
 
-                        foreach($trick->getVideos() as $video)
+                        // Pour chaque video
+                        foreach($videos as $video)
                         {
-
+                            // Lie la vidéo à la figure
                             $video->setTrick($trick);
-                            dump($video->setTrick($trick));
+
+                            // Enregistre la modification en BDD
                             $entityManager->persist($video);
                         }
 
@@ -263,12 +300,12 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                         die();
                     }
                 }
-                else // Si Si la figure n'est pas trouvée
+                else // Si les id ne correspondent pas
                 {
                     // Message d'erreur
                     $this->addFlash(
                         'danger',
-                        "On ne touche pas aux champs cachés."
+                        "On ne touche pas aux champs cachés !"
                     );
 
                     // Redirection vers la page d'accueil
@@ -278,10 +315,8 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             // Affiche par défaut la page de création d'une figure
             return $this->render('trick/edit.html.twig', [
                 'formTrickType' => $formTrickType->createView(),
-          //      'formVideoType' => $formVideoType->createView(),
                 'trick' => $trick,
                 'pictures' => $pictures,
-           //     'mainPicture' => $mainPicture,
                 'videos' => $videos
             ]);
         }
@@ -310,64 +345,60 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         // Récupère la figure
         $trick = $entityManager->getRepository(Trick::class)->find($trickId);
 
-      /*
-
-        $fileSystem = new Filesystem();
-
-        dump($trick->getPictures());
-
-        dump(sizeof($trick->getPictures()));
-        dump($trick->getPictures());
-
-
-        $array = $trick->getPictures();
-
-
-        $array = $array->getValues();
-        foreach ($array as $obj) {
-            dump($obj);
-        }
-
-        foreach($trick->getPictures() as $picture)
+        // Si une figure correspond à l'id
+        if ($trick != null)
         {
-            dump($picture);
+            // Si la figure possède une image principal
+            if ($trick->getMainPicture() != null)
+            {
+                // Récupère l'id de l'image principal
+                $mainPictureId = $trick->getMainPicture()->getId();
 
-            $fileSystem->remove($picture->getPath() . '/' . $picture->getName());
+                // Récupère l'image principal
+                $mainPicture = $entityManager->getRepository(Picture::class)->findOneBy(
+                    array('id' => $mainPictureId)
+                );
+
+                // Supprime l'association de l'image principal à la figure
+                $trick->setMainPicture(null);
+
+                // Persiste les données dans la BDD
+                $entityManager->flush();
+
+                // Récupère le chemin des images
+                $oldPath = $mainPicture->getPath();
+
+                // Crée une instance de Filesystem
+                $filesystem = new Filesystem();
+
+                // Supprime l'ancien dossier
+                $filesystem->remove($oldPath);
+            }
+
+            // Supprime la figure
+            $entityManager->remove($trick);
+
+            // Persiste les données dans la BDD
+            $entityManager->flush();
+
+            $this->addflash(
+                'success',
+                "La figure <strong>{$trick->getName()}</strong> a bien été supprimé"
+            );
+
+            // redirection vers l'accueil
+            return $this->redirectToRoute('home');
         }
-      */
+        else // Si aucune figure ne correspond à l'id
+        {
+            // Message d'erreur
+            $this->addFlash(
+                'danger',
+                "Aucune figure ne correspond."
+            );
 
-
-/*
-        // Récupère le chemin de l'image
-        $path = $picture->getPath();
-
-        // Récupère le nom de l'image
-        $name = $picture->getName();
-
-        // Concatène le chemin et le nom
-        $filePicture = $path . '/' . $name;
-
-        // Crée une instance de Filesystem
-        $filesystem = new Filesystem();
-
-        // Supprime le fichier
-        $filesystem->remove($filePicture);
-
-
-*/
-
-
-        // Supprime la figure
-        $entityManager->remove($trick);
-
-        // Persiste les données dans la BDD
-        $entityManager->flush();
-
-        $this->addflash(
-            'success',
-            "La figure <strong>{$trick->getName()}</strong> a été supprimé"
-        );
-
-        return $this->redirectToRoute('home');
+            // Redirection vers la page listant les figures
+            return $this->redirectToRoute('home');
+        }
     }
 }
