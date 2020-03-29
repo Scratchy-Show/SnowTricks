@@ -44,7 +44,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                 $pictureFile = $form->get('file')->getData();
 
                 // Chemin de destination de l'image
-                $destination = $this->getParameter('trick_picture_directory') . '/' . $trick->getName();
+                $destination = $this->getParameter('trick_picture_directory');
 
                 // Défini son nom et la déplace dans le dossier cible
                 $fileName = $fileUploader->upload($pictureFile, $destination);
@@ -54,7 +54,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
 
                 // Attribution des valeurs
                 $picture->setName($fileName);
-                $picture->setPath($destination);
+                $picture->setPath('uploads/trick');
                 $picture->setTrick($trick);
 
                 // Doctrine gère maintenant l'objet
@@ -122,14 +122,8 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                         $trick->setMainPicture(null);
                     }
 
-                    // Récupère le chemin de l'image
-                    $path = $picture->getPath();
-
-                    // Récupère le nom de l'image
-                    $name = $picture->getName();
-
-                    // Concatène le chemin et le nom
-                    $filePicture = $path . '/' . $name;
+                    // Récupère l'image
+                    $filePicture = $this->getParameter('trick_picture_directory') . '/' . $picture->getName();
 
                     // Crée une instance de Filesystem
                     $filesystem = new Filesystem();

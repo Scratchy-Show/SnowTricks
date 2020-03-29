@@ -16,7 +16,7 @@
                 <figure>
                     <!-- Si une image principal est défini -->
                     {% if trick.mainPicture is not empty %}
-                        <img src="{{ asset('uploads/trick/'~ trick.name ~ '/'  ~ trick.mainPicture.name) }}"  class="rounded" alt="" />
+                        <img src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}"  class="rounded" alt="" />
                     <figcaption>
                         <div class="title">
                             <h2>{{ trick.name }}</h2>
@@ -77,8 +77,18 @@
                 </div>
             </div>
 
+            <!-- Bouton Afficher/Masquer les médias -->
+            <div class="text-center" id="button-show-hidden-medias">
+                <a href="#" id="showMedia">
+                    <button class="btn btn-outline-secondary">Afficher les médias</button>
+                </a>
+                <a href="#" id="hideMedia" class="d-none">
+                    <button class="btn btn-outline-secondary">Masquer les médias</button>
+                </a>
+            </div>
+
             <!-- Section gallerie -->
-            <div class="container-gallery">
+            <div class="container-gallery medias">
 
                 <!-- Gallerie images -->
                 {% if pictures is not empty %}
@@ -90,7 +100,7 @@
                                 <!-- Evite d'afficher l'image principal dans la gallerie -->
                                 {% if picture.id != trick.mainPicture.id %}
                                     <div class="picture">
-                                        <img src="{{ asset('uploads/trick/'~ trick.name ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
+                                        <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
                                         <div class="buttons">
                                             <button type="button" class="btn" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
                                                 <img src="{{ asset('img/icons/delete.png') }}" alt="" />
@@ -100,7 +110,7 @@
                                 {% endif %}
                             {% elseif trick.mainPicture.id is not defined %}
                                 <div class="picture">
-                                    <img src="{{ asset('uploads/trick/'~ trick.name ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
+                                    <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
                                     <div class="buttons">
                                         <button type="button" class="btn" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
                                             <img src="{{ asset('img/icons/delete.png') }}" alt="" />

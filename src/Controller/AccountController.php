@@ -59,7 +59,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
             // Attribution des valeurs
             $user->setPassword($hashedPassword);
             $user->setPictureName($newFilename);
-            $user->setProfilPicturePath($destination);
+            $user->setProfilPicturePath('uploads/profil');
             $user->setToken(bin2hex(random_bytes(64)));
 
             // Récupère le gestionnaire d'entités

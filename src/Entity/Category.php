@@ -58,6 +58,13 @@ class Category
         return $this;
     }
 
+    public function __toString()
+    {
+        dump($this->name);
+
+        return $this->name;
+    }
+
     // Getters //
 
     public function getId()

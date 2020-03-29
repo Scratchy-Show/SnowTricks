@@ -197,6 +197,27 @@
     flex-direction: row;
 }
 
+/* Masque le bouton "Afficher/Masquer les médias" si écran supérieur et/ou égale à 721px */
+@media only screen and (min-width: 721px) {
+    .edit-trick #button-show-hidden-medias {
+        display: none;
+    }
+}
+
+/* Masque les medias si écran inférieur et/ou égale à 720px  */
+@media only screen and (max-width: 720px) {
+    .edit-trick .medias {
+        display: none;
+    }
+}
+
+/* Permet de conserver la mise en forme des medias quand le bouton "Afficher/Masquer les médias" est cliqué */
+@media only screen and (min-width: 721px) {
+    .clicked {
+        display: flex !important;
+    }
+}
+
 .edit-trick .container-gallery .pictures-trick,
 .edit-trick .container-gallery .videos-trick  {
     display: flex;

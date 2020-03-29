@@ -73,14 +73,14 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
                     // Si l'adresse email n'existe pas ou correspond au même utilisateur
                     if (($findEmail == null) || ($email == $emailForm))
                     {
-                        // Récupère l'adresse de l'image actuelle du profil
-                        $oldPicture = $user->getprofilPicturePath() . '/' . $user->getpictureName();
+                        // Chemin du fichier
+                        $destination = $this->getParameter('profil_picture_directory');
+
+                        // Récupère le chemin complet de l'image actuelle du profil
+                        $oldPicture = $destination . '/' . $user->getpictureName();
 
                         // Supprime l'ancienne image de profil
                         unlink($oldPicture);
-
-                        // Chemin de destination du fichier
-                        $destination = $this->getParameter('profil_picture_directory');
 
                         // Redéfini le nom du fichier
                         $newFilename = $user->getUsername() . '-' . uniqid() . '.' . $pictureFile->guessExtension();
@@ -90,7 +90,7 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
 
                         // Attribution des valeurs
                         $user->setPictureName($newFilename);
-                        $user->setProfilPicturePath($destination);
+                        $user->setProfilPicturePath('uploads/profil');
 
                         // Attribution d'un nouveau token
                         $user->setToken(bin2hex(random_bytes(64)));

@@ -9,7 +9,7 @@
 
         <div class="mt-4 mb-3">
             <figure class="text-center">
-                <img src="{{asset('uploads/profil/'~ app.user.pictureName)}}" alt=""/>
+                <img src="{{asset(app.user.profilPicturePath ~ '/' ~ app.user.pictureName)}}" alt=""/>
                 <figcaption class="mt-2">Image du profil</figcaption>
             </figure>
 
