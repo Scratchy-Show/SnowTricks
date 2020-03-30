@@ -216,15 +216,30 @@
             <div class="container-infos">
 
                 <div class="infos">
-                    <p><span>Ajouter le</span> : {{ trick.date|date("d/m/Y à s:m:H") }}</p>
 
+                    <p>
+                        <span class="title">Ajouter le :</span>
+                        <span class="content">{{ trick.date|date("d/m/Y à H:m:s") }}</span>
+                    </p>
+
+                    <!-- Si il y a une date de mise à jour -->
                     {% if trick.updateDate is not null %}
-                        <p><span>Modifier le</span> : {{ trick.updateDate|date("d/m/Y à s:m:H") }}</p>
+                    <p>
+                        <span class="title">Modifier le :</span>
+                        <span class="content">{{ trick.updateDate|date("d/m/Y à H:m:s") }}</span>
+                    </p>
                     {% endif %}
 
-                    <p><span>Catégorie</span> : {{ trick.category.name }}</p>
+                    <p>
+                        <span class="title">Catégorie :</span>
+                        <span class="content">{{ trick.category.name }}</span>
+                    </p>
 
-                    <p><span>Auteur</span> : {{ trick.user.username }}</p>
+                    <p>
+                        <span class="title">Auteur :</span>
+                        <span class="content">{{ trick.user.username }}</span>
+                    </p>
+
                 </div>
 
                 {{ form_start(formTrickType) }}

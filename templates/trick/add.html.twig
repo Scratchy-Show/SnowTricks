@@ -16,6 +16,7 @@
             {{ form_row(form.category) }}
             {{ form_row(form.mainPicture) }}
             <ul class="pictures" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}"></ul>
+            <p class="text-center mt-5">Pour ajouter une vidéo, coller une balise embed provenant de la plateforme de votre choix (Youtube, Dailymotion…)</p>
             <ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}"></ul>
 
             {{ form_row(form._token) }}

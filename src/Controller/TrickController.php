@@ -39,19 +39,23 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             // Récupère l'image principal
             $mainPicture = $form->get('mainPicture')->getData();
 
-            // Chemin de destination de l'image
-            $destination = $this->getParameter('trick_picture_directory');
+            // Si une image principal est présente
+            if ($mainPicture != null)
+            {
+                // Chemin de destination de l'image
+                $destination = $this->getParameter('trick_picture_directory');
 
-            // Défini son nom et la déplace dans le dossier cible
-            $fileName = $fileUploader->upload($mainPicture->getFile(), $destination);
+                // Défini son nom et la déplace dans le dossier cible
+                $fileName = $fileUploader->upload($mainPicture->getFile(), $destination);
 
-            // Attribution des valeurs
-            $mainPicture->setName($fileName);
-            $mainPicture->setPath('uploads/trick');
-            $mainPicture->setTrick($trick);
+                // Attribution des valeurs
+                $mainPicture->setName($fileName);
+                $mainPicture->setPath('uploads/trick');
+                $mainPicture->setTrick($trick);
 
-            // Attribut l'image principal à la figure
-            $trick->setMainPicture($mainPicture);
+                // Attribut l'image principal à la figure
+                $trick->setMainPicture($mainPicture);
+            }
 
             // Pour chaque image de la collection
             foreach ($trick->getPictures() as $picture)
@@ -114,7 +118,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 $oldCategory = $trick->getCategory();
 
                 // Attribution de la valeur
-                $trick->setCategory($oldCategory->getName());
+                $trick->setCategory($oldCategory);
             }
 
             // Par défaut, l'utilisateur est celui connecté
@@ -140,6 +144,46 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         return $this->render('trick/add.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/figure/afficher/{trickId}", name="trick")
+     */
+    public function showTrick(Request $request, $trickId)
+    {
+        // Récupère le gestionnaire d'entités
+        $entityManager = $this->getDoctrine()->getManager();
+
+        // Récupère la figure
+        $trick = $entityManager->getRepository(Trick::class)->find($trickId);
+
+        // Si une figure correspond à l'id
+        if ($trick != null)
+        {
+            // Récupère les images liées à la figure
+            $pictures = $entityManager->getRepository(Picture::class)->findBy(['trick' => $trickId]);
+
+            // Récupère les urls liées à la figure
+            $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $trickId]);
+
+            // Affiche par défaut la page de création d'une figure
+            return $this->render('trick/show.html.twig', [
+                'trick' => $trick,
+                'pictures' => $pictures,
+                'videos' => $videos
+            ]);
+        }
+        else // Si aucune figure ne correspond à l'id
+        {
+            // Message d'erreur
+            $this->addFlash(
+                'danger',
+                "Aucune figure ne correspond."
+            );
+
+            // Redirection vers la page listant les figures
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
@@ -178,12 +222,6 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 // Vérifie si l'id de la figure correspond à l'id donné par le formulaire
                 if ($trick->getId() == $trickId)
                 {
-                    // Récupère l'id de la catégorie
-                 //   $categoryId = $formTrickType->get('category')->getData()->getName()->getId();
-
-                    // Récupère la catégorie
-                //    $category = $entityManager->getRepository(Category::class)->find($categoryId);
-
                     // Lie chaque image à la figure
                     foreach ($pictures as $picture)
                     {
@@ -215,8 +253,8 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                         "La figure <strong>" . $trickName . "</strong> a bien été modifiée"
                     );
 
-                    // Renvoie vers la page du profil
-                    header("Location: /figure/modifier/" . $trickId);
+                    // Renvoie vers la page de la figure
+                    header("Location: /figure/afficher/" . $trickId);
 
                     // Empêche l'exécution du reste du script
                     die();

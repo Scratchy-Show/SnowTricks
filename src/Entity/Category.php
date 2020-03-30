@@ -4,6 +4,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,7 +36,44 @@ class Category
         $this->tricks = new ArrayCollection();
     }
 
-    public function addTrick(Trick $trick)
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getAdd()
+    {
+        return $this->add;
+    }
+
+    public function setAdd($add)
+    {
+        $this->add = $add;
+
+        return $add;
+    }
+
+    /**
+     * @return Collection|Trick[]
+     */
+    public function getTricks(): Collection
+    {
+        return $this->tricks;
+    }
+
+    public function addTrick(Trick $trick): self
     {
         if (!$this->tricks->contains($trick)) {
             $this->tricks[] = $trick;
@@ -45,71 +83,16 @@ class Category
         return $this;
     }
 
-    public function removeTrick(Trick $trick)
+    public function removeTrick(Trick $trick): self
     {
         if ($this->tricks->contains($trick)) {
             $this->tricks->removeElement($trick);
-            // Définit le côté propriétaire sur null (sauf si déjà changé)
+            // set the owning side to null (unless already changed)
             if ($trick->getCategory() === $this) {
                 $trick->setCategory(null);
             }
         }
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        dump($this->name);
-
-        return $this->name;
-    }
-
-    // Getters //
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-
-    public function getAdd()
-    {
-        return $this->add;
-    }
-
-
-    public function getTricks()
-    {
-        return $this->tricks;
-    }
-
-    // Setters //
-
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $name;
-    }
-
-
-    public function setAdd($add)
-    {
-        $this->add = $add;
-
-        return $add;
-    }
-
-
-    public function setTricks($tricks)
-    {
-        $this->tricks = $tricks;
     }
 }

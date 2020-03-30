@@ -4,6 +4,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -79,10 +80,15 @@ class Trick
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="tricks")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="tricks", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $category;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", orphanRemoval=true)
+     */
+    private $comments;
 
 
     public function __construct()
@@ -93,9 +99,71 @@ class Trick
         $this->setDate(new DateTime());
         $this->pictures = new ArrayCollection();
         $this->videos = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
-    public function addPicture(Picture $picture)
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getUpdateDate(): ?\DateTimeInterface
+    {
+        return $this->updateDate;
+    }
+
+    public function setUpdateDate(?\DateTimeInterface $updateDate): self
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Picture[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
     {
         if (!$this->pictures->contains($picture)) {
             $this->pictures[] = $picture;
@@ -105,11 +173,11 @@ class Trick
         return $this;
     }
 
-    public function removePicture(Picture $picture)
+    public function removePicture(Picture $picture): self
     {
         if ($this->pictures->contains($picture)) {
             $this->pictures->removeElement($picture);
-            // Définit le côté propriétaire sur null (sauf si déjà changé)
+            // set the owning side to null (unless already changed)
             if ($picture->getTrick() === $this) {
                 $picture->setTrick(null);
             }
@@ -118,7 +186,27 @@ class Trick
         return $this;
     }
 
-    public function addVideo(Video $video)
+    public function getMainPicture(): ?Picture
+    {
+        return $this->mainPicture;
+    }
+
+    public function setMainPicture(?Picture $mainPicture): self
+    {
+        $this->mainPicture = $mainPicture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Video[]
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
     {
         if (!$this->videos->contains($video)) {
             $this->videos[] = $video;
@@ -128,11 +216,11 @@ class Trick
         return $this;
     }
 
-    public function removeVideo(Video $video)
+    public function removeVideo(Video $video): self
     {
         if ($this->videos->contains($video)) {
             $this->videos->removeElement($video);
-            // Définit le côté propriétaire sur null (sauf si déjà changé)
+            // set the owning side to null (unless already changed)
             if ($video->getTrick() === $this) {
                 $video->setTrick(null);
             }
@@ -141,130 +229,57 @@ class Trick
         return $this;
     }
 
-    // Getters //
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-
-    public function getUpdateDate()
-    {
-        return $this->updateDate;
-    }
-
-
-    public function getPictures()
-    {
-        return $this->pictures;
-    }
-
-    public function getMainPicture()
-    {
-        return $this->mainPicture;
-    }
-
-
-    public function getVideos()
-    {
-        return $this->videos;
-    }
-
-
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    // Setters //
-
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $name;
-    }
-
-
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $description;
-    }
-
-
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $date;
-    }
-
-
-    public function setUpdateDate($updateDate)
-    {
-        $this->updateDate = $updateDate;
-
-        return $updateDate;
-    }
-
-
-    public function setPictures($pictures)
-    {
-        $this->pictures = $pictures;
-
-        return $pictures;
-    }
-
-    public function setMainPicture($mainPicture)
-    {
-        $this->mainPicture = $mainPicture;
-
-        return $mainPicture;
-    }
-
-    public function setVideos($videos)
-    {
-        $this->videos = $videos;
-
-        return $videos;
-    }
-
-    public function setUser($user)
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
-        return $user;
+        return $this;
     }
 
-    public function getCategory()
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory($category)
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getTrick() === $this) {
+                $comment->setTrick(null);
+            }
+        }
 
         return $this;
     }

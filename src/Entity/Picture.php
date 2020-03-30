@@ -50,38 +50,15 @@ class Picture
      */
     protected $trick;
 
-    // Getters //
-
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
-
 
     public function getFile()
     {
         return $this->file;
     }
-
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-
-    public function getTrick()
-    {
-        return $this->trick;
-    }
-
-    // Setters //
 
     public function setFile($file)
     {
@@ -90,27 +67,39 @@ class Picture
         return $file;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
 
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
-        return $name;
+        return $this;
     }
 
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
 
-    public function setPath($path)
+    public function setPath(string $path): self
     {
         $this->path = $path;
 
-        return $path;
+        return $this;
     }
 
+    public function getTrick(): ?Trick
+    {
+        return $this->trick;
+    }
 
-    public function setTrick($trick)
+    public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
 
-        return $trick;
+        return $this;
     }
 }

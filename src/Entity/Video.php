@@ -28,39 +28,32 @@ class Video
      */
     protected $trick;
 
-    // Getters //
-
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
 
-    public function getTrick()
+        return $this;
+    }
+
+    public function getTrick(): ?Trick
     {
         return $this->trick;
     }
 
-    // Setters //
-
-    public function setUrl($url)
-    {
-        $this->url = $url;
-
-        return $url;
-    }
-
-
-    public function setTrick($trick)
+    public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
 
-        return $trick;
+        return $this;
     }
 }
