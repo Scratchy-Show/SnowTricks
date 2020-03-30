@@ -30,8 +30,19 @@ class TrickType extends AbstractType
                     'placeholder' => 'Description de la figure'
                 ]
             ])
-            ->add('category', CategoryType::class)
-            ->add('mainPicture', PictureType::class)
+
+
+            //->add('category', CategoryType::class)
+
+
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'label' => "Catégorie"
+            ])
+            ->add('mainPicture', PictureType::class, [
+                'required'   => false
+            ])
             ->add('pictures', CollectionType::class, [
                 'entry_type' => PictureType::class,
                 // Permet d'ajouter un nombre illimité d'image

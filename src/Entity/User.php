@@ -4,6 +4,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -119,6 +120,11 @@ class User implements UserInterface
      */
     protected $tricks;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true)
+     */
+    private $comments;
+
     public function __construct()
     {
         // Par défaut, la date d'inscription est celle d'aujourd'hui
@@ -126,100 +132,138 @@ class User implements UserInterface
         // Par défaut, le compte n'est pas activé
         $this->setActivated(false);
         $this->tricks = new ArrayCollection();
-    }
-
-    public function addTrick(Trick $trick)
-    {
-        if (!$this->tricks->contains($trick)) {
-            $this->tricks[] = $trick;
-            $trick->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTrick(Trick $trick)
-    {
-        if ($this->tricks->contains($trick)) {
-            $this->tricks->removeElement($trick);
-            // Définit le côté propriétaire sur null (sauf si déjà changé)
-            if ($trick->getUser() == $this) {
-                $trick->setUser(null);
-            }
-        }
-
-        return $this;
+        $this->comments = new ArrayCollection();
     }
 
     public function eraseCredentials() {}
 
-    // Getters //
+    public function getSalt() {}
 
-    public function getId()
+
+    public function getId(): ?int
     {
         return $this->id;
     }
-
 
     public function getUsername()
     {
         return $this->username;
     }
 
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
 
-    public function getEmail()
+        return $this;
+    }
+
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
-    public function getDate()
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
 
     public function getPassword()
     {
         return $this->password;
     }
 
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
 
     public function getPasswordConfirm()
     {
         return $this->passwordConfirm;
     }
 
+    public function setPasswordConfirm($passwordConfirm)
+    {
+        $this->passwordConfirm = $passwordConfirm;
+
+        return $passwordConfirm;
+    }
 
     public function getProfilPicture()
     {
         return $this->profilPicture;
     }
 
+    public function setProfilPicture($profilPicture)
+    {
+        $this->profilPicture = $profilPicture;
 
-    public function getPictureName()
+        return $profilPicture;
+    }
+
+    public function getPictureName(): ?string
     {
         return $this->pictureName;
     }
 
+    public function setPictureName(string $pictureName): self
+    {
+        $this->pictureName = $pictureName;
 
-    public function getProfilPicturePath()
+        return $this;
+    }
+
+    public function getProfilPicturePath(): ?string
     {
         return $this->profilPicturePath;
     }
 
+    public function setProfilPicturePath(string $profilPicturePath): self
+    {
+        $this->profilPicturePath = $profilPicturePath;
 
-    public function getToken()
+        return $this;
+    }
+
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
 
-    public function getActivated()
+        return $this;
+    }
+
+    public function getActivated(): ?bool
     {
         return $this->activated;
     }
 
+    public function setActivated(bool $activated): self
+    {
+        $this->activated = $activated;
+
+        return $this;
+    }
 
     public function getRoles(): array
     {
@@ -232,104 +276,74 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
-    public function getTricks()
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trick[]
+     */
+    public function getTricks(): Collection
     {
         return $this->tricks;
     }
 
-
-    public function getSalt() {}
-
-
-        // Setters //
-
-    public function setUsername($username)
+    public function addTrick(Trick $trick): self
     {
-        $this->username = $username;
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setUser($this);
+        }
 
-        return $username;
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick): self
+    {
+        if ($this->tricks->contains($trick)) {
+            $this->tricks->removeElement($trick);
+            // set the owning side to null (unless already changed)
+            if ($trick->getUser() === $this) {
+                $trick->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $email;
-    }
-
-
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $date;
-    }
-
-
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $password;
-    }
-
-    public function setPasswordConfirm($passwordConfirm)
-    {
-        $this->passwordConfirm = $passwordConfirm;
-
-        return $passwordConfirm;
-    }
-
-
-    public function setProfilPicture($profilPicture)
-    {
-        $this->profilPicture = $profilPicture;
-
-        return $profilPicture;
-    }
-
-
-    public function setPictureName($pictureName)
-    {
-        $this->pictureName = $pictureName;
-
-        return $pictureName;
-    }
-
-
-    public function setProfilPicturePath($profilPicturePath)
-    {
-        $this->profilPicturePath = $profilPicturePath;
-
-        return $profilPicturePath;
-    }
-
-
-    public function setToken($token)
-    {
-        $this->token = $token;
-
-        return $token;
-    }
-
-
-    public function setActivated($activated)
-    {
-        $this->activated = $activated;
-
-        return $activated;
-    }
-
-    public function setRoles(array $roles)
-    {
-        $this->roles = $roles;
-    }
-
-
-    public function setTricks($tricks)
-    {
-        $this->tricks = $tricks;
-    }
 }

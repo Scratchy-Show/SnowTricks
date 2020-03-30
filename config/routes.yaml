@@ -30,6 +30,10 @@ logout:
      path: /deconnexion
      controller: App\Controller\LoginController::logout
 
+trick:
+     path: /figure/afficher/{trickId}
+     controller: App\Controller\TrickController::showTrick
+
 trick_create :
      path: /figure/creer
      controller: App\Controller\TrickController::createTrick

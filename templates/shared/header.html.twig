@@ -10,7 +10,7 @@
             <nav>
                 <ul>
                     <li><a href="{{ path('home') }}">Accueil</a></li>
-                    <li><a href="#">Figures</a></li>
+                    <li><a href="{{ path('trick', {trickId: '43'}) }}">Figures</a></li>
                     {% if app.user.username is defined %}
                         <li><a href="{{ path('profile') }}">Profil</a></li>
                         <li><a href="{{ path('trick_create') }}">Créer une figure</a></li>

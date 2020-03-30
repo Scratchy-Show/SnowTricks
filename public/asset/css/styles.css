@@ -1,3 +1,12 @@
+/* Base */
+
+.container {
+    min-width: 345px;
+}
+
+
+
+
 /* Page - Modifier le profil*/
 
 /* Modifie le contenu du bouton (Browser) généré par Bootstrap */
@@ -68,6 +77,13 @@
 
 
 /* Page - Modifier une figure  */
+
+
+@media only screen and (max-width: 991px) {
+    .edit-trick {
+        padding: 0;
+    }
+}
 
 
 /* Titre et image principal */
@@ -191,28 +207,40 @@
     width: 50%;
 }
 
+/* Bouton pour afficher/masquer les médias */
+#button-show-hidden-medias {
+    margin-bottom: 15px;
+}
+
 /* Alignement des images et videos */
 .edit-trick .container-gallery  {
     display: flex;
     flex-direction: row;
 }
 
+/* Alignement des images et videos responsive */
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-gallery {
+        flex-direction: column;
+    }
+}
+
 /* Masque le bouton "Afficher/Masquer les médias" si écran supérieur et/ou égale à 721px */
-@media only screen and (min-width: 721px) {
+@media only screen and (min-width: 992px) {
     .edit-trick #button-show-hidden-medias {
         display: none;
     }
 }
 
 /* Masque les medias si écran inférieur et/ou égale à 720px  */
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 991px) {
     .edit-trick .medias {
         display: none;
     }
 }
 
 /* Permet de conserver la mise en forme des medias quand le bouton "Afficher/Masquer les médias" est cliqué */
-@media only screen and (min-width: 721px) {
+@media only screen and (min-width: 992px) {
     .clicked {
         display: flex !important;
     }
@@ -226,7 +254,7 @@
     width: 50%;
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 991px) {
     .edit-trick .container-gallery .pictures-trick,
     .edit-trick .container-gallery .videos-trick  {
         flex-direction: column;
@@ -241,6 +269,19 @@
     max-width: 50%;
     min-width: 200px;
     padding-right: 5px;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-gallery .pictures-trick .picture {
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-gallery .pictures-trick .picture img {
+        width: 80%;
+        margin: auto;
+    }
 }
 
 .imgModal {
@@ -266,6 +307,7 @@
     display: flex;
     flex-direction: column;
     padding-right: 15px;
+    height: 195px;
 }
 
 .edit-trick .container-gallery .videos-trick .video-buttons .video {
@@ -279,22 +321,37 @@
 
 /* Bouton d'ajout */
 .edit-trick .container-gallery .pictures-trick .add,
-.edit-trick .container-gallery .videos-trick .add  {
+.edit-trick .container-gallery .videos-trick .add,
+.edit-trick .container-gallery .empty-picture .add,
+.edit-trick .container-gallery .empty-video .add {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    min-width: 200px;
     margin-right: 40px;
     align-items: center;
     border: 2px solid black;
-    width: 200px;
+    width: 100px;
+    height: 100px;
     padding: 0;
     cursor: pointer;
 }
 
 .edit-trick .container-gallery .pictures-trick .add:hover,
-.edit-trick .container-gallery .videos-trick .add:hover  {
-background-color: grey;
+.edit-trick .container-gallery .videos-trick .add:hover,
+.edit-trick .container-gallery .empty-picture .add:hover,
+.edit-trick .container-gallery .empty-video .add:hover {
+    background-color: grey;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-gallery .pictures-trick .add,
+    .edit-trick .container-gallery .videos-trick .add,
+    .edit-trick .container-gallery .empty-picture .add,
+    .edit-trick .container-gallery .empty-video .add {
+        width: 100%;
+        height: 100px;
+        margin: 15px;
+    }
 }
 
 /* Icon de suppression */
@@ -331,14 +388,20 @@ background-color: grey;
     content: "Choisir...";
 }
 
-.edit-trick .container-gallery .pictures-trick .modal-container .delete .modal-body span {
+.edit-trick .container-gallery .pictures-trick .modal-container .delete .modal-body .span {
     font-weight: bold;
 }
 
 /* Mise en page de la partie infos */
 .edit-trick .container-infos {
-    width: 80%;
+    width: 100%;
     margin: auto;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-infos {
+        width: 100%;
+    }
 }
 
 .edit-trick .container-infos .infos {
@@ -348,15 +411,44 @@ background-color: grey;
     align-items: center;
     margin: 15px 0;
     padding: 10px;
-    border: solid;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-infos .infos {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .edit-trick .container-infos .infos {
+        flex-direction: column;
+    }
 }
 
 .edit-trick .container-infos .infos p {
     margin-bottom: 0;
+    padding: 5px;
+    border: solid;
 }
 
-.edit-trick .container-infos .infos span {
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-infos .infos p {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Met en gras les titres de chaque catégorie d'infos */
+.edit-trick .container-infos .infos .title {
     font-weight: bold;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-infos .infos .content {
+        margin-left: 10px;
+    }
 }
 
 /* Mise en page de la partie formulaire */
@@ -387,12 +479,32 @@ background-color: grey;
     margin-bottom: 100px;
 }
 
+@media only screen and (max-width: 720px) {
+    .edit-trick .container-infos form .buttons {
+        flex-direction: column;
+        align-items: center;
+
+    }
+}
+
 .edit-trick .container-infos form .buttons button {
     max-width: 150px;
 }
 
+@media only screen and (max-width: 720px) {
+    .edit-trick .container-infos form .buttons button {
+        margin-bottom: 15px;
+    }
+}
+
 .edit-trick .container-infos form .buttons button:first-child {
     margin-right: 20px;
+}
+
+@media only screen and (max-width: 720px) {
+    .edit-trick .container-infos form .buttons button:first-child {
+        margin-right: 0;
+    }
 }
 
 
