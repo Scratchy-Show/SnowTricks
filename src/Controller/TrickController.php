@@ -4,10 +4,13 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Picture;
 use App\Entity\Trick;
 use App\Entity\Video;
+use App\Form\CommentType;
 use App\Form\TrickType;
+use App\Repository\CommentRepository;
 use App\Service\FileUploader;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -147,9 +150,9 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
     }
 
     /**
-     * @Route("/figure/afficher/{trickId}", name="trick")
+     * @Route("/figure/details/{trickId}/{page}", name="trick_details")
      */
-    public function showTrick(Request $request, $trickId)
+    public function detailsTrick(Request $request, $trickId)
     {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
@@ -157,20 +160,55 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         // Récupère la figure
         $trick = $entityManager->getRepository(Trick::class)->find($trickId);
 
+        // Récupère tous les commentaires de la figure du plus récent au plus anciens
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([], ['date' => 'desc']);
+
         // Si une figure correspond à l'id
         if ($trick != null)
         {
-            // Récupère les images liées à la figure
-            $pictures = $entityManager->getRepository(Picture::class)->findBy(['trick' => $trickId]);
+            // Crée une instance de Comment
+            $comment = new Comment();
 
-            // Récupère les urls liées à la figure
-            $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $trickId]);
+            // Création du formulaire
+            $form = $this->createForm(CommentType::class, $comment);
 
-            // Affiche par défaut la page de création d'une figure
-            return $this->render('trick/show.html.twig', [
+            // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
+            $form->handleRequest($request);
+
+            // Si le formulaire est soumis et valide
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Attribution des valeurs
+                $comment->setTrick($trick);
+                // Par défaut, l'utilisateur est celui connecté
+                $comment->setUser($this->getUser());
+
+                // Doctrine gère maintenant l'objet
+                $entityManager->persist($comment);
+
+                // Insère une nouvelle ligne dans la table Trick
+                $entityManager->flush();
+
+                // Message de confirmation
+                $this->addFlash(
+                    'success',
+                    'Votre commentaire a bien été enregistré'
+                );
+
+                // Redirection vers la page de la figure
+                return $this->redirectToRoute('trick_details', [
+                    'trickId' => $trick->getId()
+                ]);
+            }
+
+
+            dump($comments);
+
+
+            // Affiche par défaut la page de la figure
+            return $this->render('trick/details.html.twig', [
                 'trick' => $trick,
-                'pictures' => $pictures,
-                'videos' => $videos
+                'comments' => $comments,
+                'form' => $form->createView()
             ]);
         }
         else // Si aucune figure ne correspond à l'id
@@ -271,7 +309,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                     return $this->redirectToRoute('home');
                 }
             }
-            // Affiche par défaut la page de création d'une figure
+            // Affiche par défaut la page de modification d'une figure
             return $this->render('trick/edit.html.twig', [
                 'formTrickType' => $formTrickType->createView(),
                 'trick' => $trick,

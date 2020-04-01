@@ -31,7 +31,7 @@ class CategoryType extends AbstractType
         ;
     }
 
-    // Associe le formulaire à la classe Picture afin d'adapter le type de champ
+    // Associe le formulaire à la classe Category afin d'adapter le type de champ
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

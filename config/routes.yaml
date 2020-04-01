@@ -30,19 +30,19 @@ logout:
      path: /deconnexion
      controller: App\Controller\LoginController::logout
 
-trick:
-     path: /figure/afficher/{trickId}
-     controller: App\Controller\TrickController::showTrick
+trick_details:
+     path: /figure/details/{trickId}
+     controller: App\Controller\TrickController::detailsTrick
 
-trick_create :
+trick_create:
      path: /figure/creer
      controller: App\Controller\TrickController::createTrick
 
-trick_edit :
+trick_edit:
      path: /figure/modifier/{id}
      controller: App\Controller\TrickController::editTrick
 
-trick_delete :
+trick_delete:
      path: /figure/supprimer/{trickId}
      controller: App\Controller\TrickController::deleteTrick
 
