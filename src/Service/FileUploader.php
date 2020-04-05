@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploader
@@ -20,13 +19,10 @@ class FileUploader
         // Redéfini le nom du fichier
         $newFilename =  uniqid() . '.' . $file->guessExtension();
 
-        try {
-            // Déplace le fichier dans le dossier cible et le renomme
-            $file->move($this->getTargetDirectory($destination), $newFilename);
-        } catch (FileException $e) {
-            // ... handle exception if something happens during file upload
-        }
+        // Déplace le fichier dans le dossier cible et le renomme
+        $file->move($this->getTargetDirectory($destination), $newFilename);
 
+        // Retourne le nouveau nom du fichier
         return $newFilename;
     }
 

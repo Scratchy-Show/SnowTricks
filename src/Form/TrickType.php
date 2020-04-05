@@ -30,11 +30,6 @@ class TrickType extends AbstractType
                     'placeholder' => 'Description de la figure'
                 ]
             ])
-
-
-            //->add('category', CategoryType::class)
-
-
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',

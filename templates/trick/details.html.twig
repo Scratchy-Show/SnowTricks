@@ -23,10 +23,10 @@
                         </figcaption>
                         {% if app.user.username is defined %}
                             <div class="buttons">
-                                <button type="button" class="btn" data-toggle="modal" data-target="#editMainPicture{ trick.mainPicture.id }}" data-whatever="@editMainPic" >
+                                <button type="button" class="btn" title="Modifier la figure" data-toggle="modal" data-target="#editMainPicture{ trick.mainPicture.id }}" data-whatever="@editMainPic" >
                                     <img src="{{ asset('img/icons/edit.png') }}" alt="" />
                                 </button>
-                                <button type="button" class="btn" data-toggle="modal" data-target="#deletePicture{{ trick.mainPicture.id }}" data-whatever="@deletePic">
+                                <button type="button" class="btn" title="Supprimer la figure" data-toggle="modal" data-target="#deletePicture{{ trick.mainPicture.id }}" data-whatever="@deletePic">
                                     <img src="{{ asset('img/icons/delete.png') }}" alt="" />
                                 </button>
                             </div>
@@ -40,7 +40,7 @@
                         </figcaption>
                         {% if app.user.username is defined %}
                             <div class="buttons">
-                                <button type="button" class="btn" data-toggle="modal" data-target="#editMainPicture{ picture.id }}" data-whatever="@editMainPic" >
+                                <button type="button" class="btn" title="Modifier la figure" data-toggle="modal" data-target="#editMainPicture{ picture.id }}" data-whatever="@editMainPic" >
                                     <img src="{{ asset('img/icons/edit.png') }}" alt="" />
                                 </button>
                             </div>

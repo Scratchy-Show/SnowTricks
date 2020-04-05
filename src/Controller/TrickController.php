@@ -10,7 +10,6 @@ use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\CommentType;
 use App\Form\TrickType;
-use App\Repository\CommentRepository;
 use App\Service\FileUploader;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -75,54 +74,11 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             // Pour chaque Url de la collection
             foreach($trick->getVideos() as $video)
             {
-                // Récupère l'Url de chaque vidéo
-                $url = $video->getUrl();
-
-                // Attribution des valeurs
-                $video->setUrl($url);
                 $video->setTrick($trick);
             }
 
             // Récupère le gestionnaire d'entités
             $entityManager = $this->getDoctrine()->getManager();
-
-            // Crée une instance de Category
-            $category = new Category();
-
-            // Récupère la nouvelle catégorie
-            $newCategory = $trick->getCategory()->getAdd();
-
-            // Si une nouvelle catégorie à été ajouté
-            if ($newCategory != null )
-            {
-                // Attribut la valeur
-                $category->setName($newCategory);
-
-                // Doctrine gère maintenant l'objet
-                $entityManager->persist($category);
-
-                // Insère une nouvelle ligne dans la table Category
-                $entityManager->flush();
-
-                // Récupère la dernier entrée dans la table Category
-                $findNewCategory = $entityManager->getRepository(Category::class)->findBy(
-                    [],
-                    ['id' => 'desc'],
-                    1,
-                    0
-                );
-
-                // Attribution de la valeur
-                $trick->setCategory($findNewCategory[0]);
-            }
-            else // Si aucune nouvelle catégorie n'à été ajouté
-            {
-                // Récupère la catégorie déjà existante
-                $oldCategory = $trick->getCategory();
-
-                // Attribution de la valeur
-                $trick->setCategory($oldCategory);
-            }
 
             // Par défaut, l'utilisateur est celui connecté
             $trick->setUser($this->getUser());
@@ -150,7 +106,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
     }
 
     /**
-     * @Route("/figure/details/{trickId}/{page}", name="trick_details")
+     * @Route("/figure/details/{trickId}", name="trick_details")
      */
     public function detailsTrick(Request $request, $trickId)
     {
@@ -199,11 +155,6 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                     'trickId' => $trick->getId()
                 ]);
             }
-
-
-            dump($comments);
-
-
             // Affiche par défaut la page de la figure
             return $this->render('trick/details.html.twig', [
                 'trick' => $trick,
@@ -275,12 +226,10 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                     // Récupère le nom de la figure
                     $trickName = $formTrickType->get('name')->getData();
 
-                    // Par défaut, l'utilisateur est celui connecté
-                    $user = $this->getUser();
-
                     // Attribution des valeurs
-                    $trick->setUser($user);
                     $trick->setUpdateDate(new DateTime());
+                    // Par défaut, l'utilisateur est celui connecté
+                    $trick->setUser($this->getUser());
 
                     // Modifie la figure en BDD
                     $entityManager->flush();
@@ -291,11 +240,10 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                         "La figure <strong>" . $trickName . "</strong> a bien été modifiée"
                     );
 
-                    // Renvoie vers la page de la figure
-                    header("Location: /figure/afficher/" . $trickId);
-
-                    // Empêche l'exécution du reste du script
-                    die();
+                    // Redirection vers la page de la figure
+                    return $this->redirectToRoute('trick_details', [
+                        'trickId' => $trick->getId()
+                    ]);
                 }
                 else // Si les id ne correspondent pas
                 {

@@ -23,10 +23,10 @@
                         </div>
                     </figcaption>
                     <div class="buttons">
-                        <button type="button" class="btn" data-toggle="modal" data-target="#editMainPicture{ trick.mainPicture.id }}" data-whatever="@editMainPic" >
+                        <button type="button" class="btn" title="Modifier l'image" data-toggle="modal" data-target="#editMainPicture" data-whatever="@editMainPic" >
                             <img src="{{ asset('img/icons/edit.png') }}" alt="" />
                         </button>
-                        <button type="button" class="btn" data-toggle="modal" data-target="#deletePicture{{ trick.mainPicture.id }}" data-whatever="@deletePic">
+                        <button type="button" class="btn" title="Supprimer l'image" data-toggle="modal" data-target="#deletePicture{{ trick.mainPicture.id }}" data-whatever="@deletePic">
                             <img src="{{ asset('img/icons/delete.png') }}" alt="" />
                         </button>
                     </div>
@@ -38,7 +38,7 @@
                             </div>
                         </figcaption>
                         <div class="buttons">
-                            <button type="button" class="btn" data-toggle="modal" data-target="#editMainPicture{ picture.id }}" data-whatever="@editMainPic" >
+                            <button type="button" class="btn" title="Modifier l'image" data-toggle="modal" data-target="#editMainPicture" data-whatever="@editMainPic" >
                             <img src="{{ asset('img/icons/edit.png') }}" alt="" />
                             </button>
                         </div>
@@ -51,6 +51,50 @@
                 <div id="pictureModal" class="modal">
                     <span class="close">&times;</span>
                     <img src="" class="modal-content" id="img" alt="" />
+                </div>
+            </div>
+
+            <!-- Modal pour la modification de l'image principal -->
+            <div class="modal-container" >
+                <div class="modal fade" id="editMainPicture" tabindex="-1" role="dialog" aria-labelledby="modalEditMainPicture" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalEditMainPicture">Choisissez la nouvelle image principal</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="{{ path('trick_main_picture_edit', {'trickId': trick.id}) }}">
+                                    <!-- Si il y a des images dans la gallerie -->
+                                    {% if pictures is not empty %}
+                                        {% for picture in pictures %}
+                                            <!-- Evite d'afficher l'image principal dans la gallerie -->
+                                            {% if picture.id != trick.mainPicture.id %}
+                                                <div>
+                                                    <input type="radio" id="{{ picture.id }}" name="editMainPicture" value="{{ picture.id }}">
+                                                    <label for="editMainPicture">
+                                                        <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
+                                                    </label>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <button type="submit" class="btn btn-success">Modifier</button>
+                                            </div>
+                                        <!-- Si il n'y a pas d'image dans la gallerie -->
+                                    {% elseif pictures is empty %}
+                                        <p>Veuillez ajouter une image !</p>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        </div>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -102,7 +146,7 @@
                                     <div class="picture">
                                         <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
                                         <div class="buttons">
-                                            <button type="button" class="btn" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
+                                            <button type="button" class="btn" title="Supprimer l'image" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
                                                 <img src="{{ asset('img/icons/delete.png') }}" alt="" />
                                             </button>
                                         </div>
@@ -112,7 +156,7 @@
                                 <div class="picture">
                                     <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
                                     <div class="buttons">
-                                        <button type="button" class="btn" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
+                                        <button type="button" class="btn" title="Supprimer l'image" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
                                             <img src="{{ asset('img/icons/delete.png') }}" alt="" />
                                         </button>
                                     </div>
@@ -167,7 +211,7 @@
                                     <iframe class="embed-responsive-item" src="{{ video.url }}" allowfullscreen></iframe>
                                 </div>
                                 <div class="buttons">
-                                    <button type="button" class="btn" data-toggle="modal" data-target="#deleteVideo{{ video.id }}" data-whatever="@deleteUrl">
+                                    <button type="button" class="btn" title="Supprimer la vidéo" data-toggle="modal" data-target="#deleteVideo{{ video.id }}" data-whatever="@deleteUrl">
                                         <img src="{{ asset('img/icons/delete.png') }}" alt="" />
                                     </button>
                                 </div>

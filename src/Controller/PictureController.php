@@ -191,4 +191,55 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
             return $this->redirectToRoute('home');
         }
     }
+
+    /**
+     * @Route("/figure/modifier/image-principal/{trickId}", name="trick_main_picture_edit")
+     * @IsGranted("ROLE_USER")
+     */
+    public function editMainPicture(Request $request, $trickId)
+    {
+        if($request->isMethod('post')) {
+            // Récupère l'id de l'image
+            $mainPictureId = $request->request->get("editMainPicture");
+
+            // Récupère la figure
+            $trick = $this->getDoctrine()->getRepository(Trick::class)->find($trickId);
+
+            if ($mainPictureId != null)
+            {
+                // Récupère l'image
+                $picture = $this->getDoctrine()->getRepository(Picture::class)->find($mainPictureId);
+
+                // Défini l'image en tant qu'image principal
+                $trick->setMainPicture($picture);
+
+                // Récupère le gestionnaire d'entités
+                $entityManager = $this->getDoctrine()->getManager();
+
+                // Persiste les données dans la BDD
+                $entityManager->flush();
+
+                // Message de confirmation
+                $this->addFlash(
+                    'success',
+                    "L'image principal a bien été modifié"
+                );
+
+                // Redirection vers la page de la figure
+                return $this->redirectToRoute('trick_details', [
+                    'trickId' => $trick->getId()
+                ]);
+            }
+            // Message de confirmation
+            $this->addFlash(
+                'danger',
+                "Aucune image sélectionnée"
+            );
+
+            // Redirection vers la page de la figure
+            return $this->redirectToRoute('trick_edit', [
+                'id' => $trick->getId()
+            ]);
+        }
+    }
 }

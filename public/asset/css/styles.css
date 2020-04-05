@@ -5,6 +5,13 @@
 }
 
 
+/* Page - Inscription */
+
+/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
+#registration .custom-file-input ~ .custom-file-label:lang(fr)::after {
+    content: "Choisir...";
+}
+
 
 
 /* Page - Modifier le profil*/
