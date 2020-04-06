@@ -532,7 +532,6 @@
     overflow-wrap: break-word;
 }
 
-
 #loadMore {
     width: 200px;
     color: #fff;
@@ -545,12 +544,15 @@
     background-color: blue;
     transition: .3s;
 }
+
 #loadMore:hover {
     color: blue;
     background-color: #fff;
     border: 1px solid blue;
     text-decoration: none;
 }
+
+/* Classe ajouté par le fichier load-more-comments.js */
 .noContent {
     color: #000 !important;
     background-color: transparent !important;
@@ -577,6 +579,68 @@
 
 
 
+
+/* Pagination */
+
+.paging-container {
+    display: none;
+}
+
+/* Classe ajouté par le fichier load-more-comments.js */
+.paging-block {
+    display: block;
+}
+
+.paging-container {
+    margin-top: 25px;
+}
+
+.paging-container .paging {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+.paging-container .paging li {
+    margin: 0 8px;
+    padding: 10px 0;
+    border: 1px solid blue;
+    border-radius: 5px;
+    background-color: blue;
+}
+
+.paging-container .paging li:hover:not(.active) {
+     background-color: white;
+     transition: background-color .5s;
+}
+
+.paging-container .paging li a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: white;
+}
+
+.paging-container .paging li a:hover:not(.active) {
+     color: blue;
+     transition: color .5s;
+}
+
+.paging-container .paging .active {
+    background-color: white;
+}
+
+.paging-container .paging .active a {
+    color: blue;
+}
+
+.paging-container .paging .prev,
+.paging-container .paging .next {
+    display: flex;
+}
+
+.paging-container .paging .numbers {
+    display: flex;
+}
 
 
 /* Footer  */

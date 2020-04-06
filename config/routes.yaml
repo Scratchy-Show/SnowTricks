@@ -31,7 +31,7 @@ logout:
      controller: App\Controller\LoginController::logout
 
 trick_details:
-     path: /figure/details/{trickId}
+     path: /figure/details/{trickId}/{page}
      controller: App\Controller\TrickController::detailsTrick
 
 trick_create:

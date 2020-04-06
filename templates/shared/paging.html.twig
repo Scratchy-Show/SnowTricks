@@ -1,0 +1,47 @@
+{% if paging.nbPages > 0 %}
+    <ul class="paging">
+        {% if paging.page > 1 %}
+            <div class="prev">
+                <li>
+                    <a href="{{ path(paging.path, paging.pathSettings|merge({'page': 1})) }}">
+                        <<
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path(paging.path,
+                        paging.pathSettings|merge({'page': paging.page-1})) }}">
+                        <
+                    </a>
+                </li>
+            </div>
+        {% endif %}
+
+        <div class="numbers">
+            {# Affichage de toutes les pages entre p-2 et p+2 sauf si < 1 ou > nbPages #}
+            {% for p in range(max(paging.page-2, 1), min(paging.page+2, paging.nbPages)) %}
+                <li {% if p == paging.page %}class="active"{% endif %}>
+                    <a href="{{ path(paging.path, paging.pathSettings|merge({'page': p})) }}">
+                        {{ p }}
+                    </a>
+                </li>
+            {% endfor %}
+        </div>
+
+        {% if paging.page < paging.nbPages %}
+            <div class="next">
+                <li>
+                    <a href="{{ path(paging.path,
+                        paging.pathSettings|merge({'page': paging.page+1})) }}">
+                        >
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path(paging.path,
+                        paging.pathSettings|merge({'page': paging.nbPages})) }}">
+                        >>
+                    </a>
+                </li>
+            </div>
+        {% endif %}
+    </ul>
+{% endif %}

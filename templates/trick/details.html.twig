@@ -136,7 +136,7 @@
             </div>
 
             <!-- Section commentaires -->
-            <div class="comments-container text-center">
+            <div class="text-center">
                 {% if app.user.username is not defined %}
                     <p>
                         <a href="{{ path('registration') }}">Inscrivez-vous</a> ou <a href="{{ path('login') }}">connectez vous</a> pour commenter l'article.
@@ -166,9 +166,13 @@
                     </div>
                 {% endfor %}
 
+                <div class="paging-container">
+                    <!-- Pagination des commentaires -->
+                    {{ include('shared/paging.html.twig') }}
+                </div>
+
                 <a href="#" id="loadMore">Plus de commentaires</a>
             </section>
-
         </div>
     </div>
 {% endblock %}

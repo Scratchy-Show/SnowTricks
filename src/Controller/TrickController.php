@@ -106,9 +106,9 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
     }
 
     /**
-     * @Route("/figure/details/{trickId}", name="trick_details")
+     * @Route("/figure/details/{trickId}/{page}", requirements={"page" = "\d+"}, name="trick_details")
      */
-    public function detailsTrick(Request $request, $trickId)
+    public function detailsTrick(Request $request, $trickId, $page)
     {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
@@ -116,8 +116,24 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         // Récupère la figure
         $trick = $entityManager->getRepository(Trick::class)->find($trickId);
 
-        // Récupère tous les commentaires de la figure du plus récent au plus anciens
-        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy([], ['date' => 'desc']);
+        // Nombre de commentaires maximum par page
+        $nbCommentsPerPage = 10;
+
+        // Récupère les commentaires du plus récent au plus anciens avec une pagination
+        $comments = $entityManager->getRepository(Comment::class)
+            ->getAllCommentsWithPaging($page, $nbCommentsPerPage, $trick);
+
+        // Pagination
+        $paging = array(
+            // Numéro de la page souhaitée
+            'page' => $page,
+            // Nombre de page total
+            'nbPages' => ceil(count($comments) / $nbCommentsPerPage),
+            // Le nom de la route
+            'path' => 'trick_details',
+            // Paramètres supplémentaire nécessaires pour la route
+            'pathSettings' => array('trickId' => $trick->getId())
+        );
 
         // Si une figure correspond à l'id
         if ($trick != null)
@@ -159,6 +175,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             return $this->render('trick/details.html.twig', [
                 'trick' => $trick,
                 'comments' => $comments,
+                'paging' => $paging,
                 'form' => $form->createView()
             ]);
         }
@@ -242,7 +259,8 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
                     // Redirection vers la page de la figure
                     return $this->redirectToRoute('trick_details', [
-                        'trickId' => $trick->getId()
+                        'trickId' => $trick->getId(),
+                        'page' => 1
                     ]);
                 }
                 else // Si les id ne correspondent pas
