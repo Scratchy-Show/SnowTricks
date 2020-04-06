@@ -227,7 +227,8 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
 
                 // Redirection vers la page de la figure
                 return $this->redirectToRoute('trick_details', [
-                    'trickId' => $trick->getId()
+                    'trickId' => $trick->getId(),
+                    'page' => 1
                 ]);
             }
             // Message de confirmation
