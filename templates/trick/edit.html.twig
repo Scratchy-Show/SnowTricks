@@ -1,0 +1,308 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Modifier une figure{% endblock %}
+
+
+{% block body %}
+
+    <div class="col-lg-12 col-md-10 mx-auto">
+        <h1 class="text-primary text-center">Modifier une figure</h1>
+
+        <div class="edit-trick col-12">
+
+            <div class="main-title">
+
+                <!-- Image principal -->
+                <figure>
+                    <!-- Si une image principal est défini -->
+                    {% if trick.mainPicture is not empty %}
+                        <img src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}"  class="rounded" alt="" />
+                    <figcaption>
+                        <div class="title">
+                            <h2>{{ trick.name }}</h2>
+                        </div>
+                    </figcaption>
+                    <div class="buttons">
+                        <button type="button" class="btn" title="Modifier l'image" data-toggle="modal" data-target="#editMainPicture" data-whatever="@editMainPic" >
+                            <img src="{{ asset('img/icons/edit.png') }}" alt="" />
+                        </button>
+                        <button type="button" class="btn" title="Supprimer l'image" data-toggle="modal" data-target="#deletePicture{{ trick.mainPicture.id }}" data-whatever="@deletePic">
+                            <img src="{{ asset('img/icons/delete.png') }}" alt="" />
+                        </button>
+                    </div>
+                    {% else %} <!-- Si aucune image principal n'est défini -->
+                        <img src="{{ asset('uploads/trick/'~ 'default.jpg') }}"  class="rounded" alt="" />
+                        <figcaption>
+                            <div class="title">
+                                <h2>{{ trick.name }}</h2>
+                            </div>
+                        </figcaption>
+                        <div class="buttons">
+                            <button type="button" class="btn" title="Modifier l'image" data-toggle="modal" data-target="#editMainPicture" data-whatever="@editMainPic" >
+                            <img src="{{ asset('img/icons/edit.png') }}" alt="" />
+                            </button>
+                        </div>
+                    {% endif %}
+                </figure>
+            </div>
+
+            <!-- Modal Affiche en grand une image -->
+            <div class="modal-picture">
+                <div id="pictureModal" class="modal">
+                    <span class="close">&times;</span>
+                    <img src="" class="modal-content" id="img" alt="" />
+                </div>
+            </div>
+
+            <!-- Modal pour la modification de l'image principal -->
+            <div class="modal-container" >
+                <div class="modal fade" id="editMainPicture" tabindex="-1" role="dialog" aria-labelledby="modalEditMainPicture" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalEditMainPicture">Choisissez la nouvelle image principal</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="{{ path('trick_main_picture_edit', {'trickId': trick.id}) }}">
+                                    <!-- Si il y a des images dans la gallerie -->
+                                    {% if pictures is not empty %}
+                                        {% for picture in pictures %}
+                                            <!-- Evite d'afficher l'image principal dans la gallerie -->
+                                            {% if picture.id != trick.mainPicture.id %}
+                                                <div>
+                                                    <input type="radio" id="{{ picture.id }}" name="editMainPicture" value="{{ picture.id }}">
+                                                    <label for="editMainPicture">
+                                                        <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
+                                                    </label>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <button type="submit" class="btn btn-success">Modifier</button>
+                                            </div>
+                                        <!-- Si il n'y a pas d'image dans la gallerie -->
+                                    {% elseif pictures is empty %}
+                                        <p>Veuillez ajouter une image !</p>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        </div>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal pour la suppression d'une figure -->
+            <div class="modal fade delete-trick" id="deleteTrick{{ trick.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteTrick{{ trick.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDeleteTrick{{ trick.id }}">Supprimer la figure {{ trick.name }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Voulez-vous supprimer la figure <span>{{ trick.name }}</span> ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <a href="{{ path('trick_delete', {'trickId': trick.id}) }}">
+                                <button type="button" class="btn btn-danger">Supprimer</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bouton Afficher/Masquer les médias -->
+            <div class="text-center" id="button-show-hidden-medias">
+                <a href="#" id="showMedia">
+                    <button class="btn btn-outline-secondary">Afficher les médias</button>
+                </a>
+                <a href="#" id="hideMedia" class="d-none">
+                    <button class="btn btn-outline-secondary">Masquer les médias</button>
+                </a>
+            </div>
+
+            <!-- Section gallerie -->
+            <div class="container-gallery medias">
+
+                <!-- Gallerie images -->
+                {% if pictures is not empty %}
+                    <div class="pictures-trick">
+
+                        {% for picture in pictures %}
+                            <!-- Si une image principal est défini -->
+                            {% if trick.mainPicture.id is defined  %}
+                                <!-- Evite d'afficher l'image principal dans la gallerie -->
+                                {% if picture.id != trick.mainPicture.id %}
+                                    <div class="picture">
+                                        <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
+                                        <div class="buttons">
+                                            <button type="button" class="btn" title="Supprimer l'image" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
+                                                <img src="{{ asset('img/icons/delete.png') }}" alt="" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% elseif trick.mainPicture.id is not defined %}
+                                <div class="picture">
+                                    <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
+                                    <div class="buttons">
+                                        <button type="button" class="btn" title="Supprimer l'image" data-toggle="modal" data-target="#deletePicture{{ picture.id }}" data-whatever="@deletePic">
+                                            <img src="{{ asset('img/icons/delete.png') }}" alt="" />
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <!-- Modal pour la suppression d'une image -->
+                            <div class="modal-container" >
+                                <div class="modal fade delete" id="deletePicture{{ picture.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeletePicture{{ picture.id }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalDeletePicture{{ picture.id }}">Supprimer l'image {{ picture.id }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Voulez-vous supprimer l'image <span>{{ picture.id }}</span> ?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <a href="{{ path('trick_picture_delete', {'pictureId': picture.id, 'trickId': trick.id}) }}">
+                                                    <button type="button" class="btn btn-danger">Supprimer</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <a href="{{ path('trick_picture_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une image">
+                            <img src="{{ asset('img/icons/add.png') }}" alt="" />
+                        </a>
+                    </div>
+                {% elseif pictures is empty %}
+                    <div class="empty-picture">
+                        <a href="{{ path('trick_picture_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une image">
+                            <img src="{{ asset('img/icons/add.png') }}" alt="" />
+                        </a>
+                    </div>
+                {% endif %}
+
+                <!-- Gallerie vidéos -->
+                {% if videos is not empty %}
+                    <div class="videos-trick">
+
+                        {% for video in videos %}
+                            <div class="video-buttons">
+                                <div class="video embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item" src="{{ video.url }}" allowfullscreen></iframe>
+                                </div>
+                                <div class="buttons">
+                                    <button type="button" class="btn" title="Supprimer la vidéo" data-toggle="modal" data-target="#deleteVideo{{ video.id }}" data-whatever="@deleteUrl">
+                                        <img src="{{ asset('img/icons/delete.png') }}" alt="" />
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Modal pour la suppression d'une Url -->
+                            <div class="modal-container" >
+                                <div class="modal fade delete" id="deleteVideo{{ video.id }}" tabindex="-1" role="dialog" aria-labelledby="modalDeleteVideo{{ video.id }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalDeleteVideo{{ video.id }}">Supprimer l'url {{ video.id }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Voulez-vous supprimer l'url <span>{{ video.id }}</span> ?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <a href="{{ path('trick_video_delete', {'videoId': video.id, 'trickId': trick.id}) }}">
+                                                    <button type="button" class="btn btn-danger">Supprimer</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <a href="{{ path('trick_video_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une vidéo">
+                            <img src="{{ asset('img/icons/add.png') }}" alt="" />
+                        </a>
+                    </div>
+                {% elseif videos is empty %}
+                    <div class="empty-video">
+                        <a href="{{ path('trick_video_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une vidéo">
+                            <img src="{{ asset('img/icons/add.png') }}" alt="" />
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Section infos -->
+            <div class="container-infos">
+
+                <div class="infos">
+
+                    <p>
+                        <span class="title">Ajouter le :</span>
+                        <span class="content">{{ trick.date|date("d/m/Y à H:m:s") }}</span>
+                    </p>
+
+                    <!-- Si il y a une date de mise à jour -->
+                    {% if trick.updateDate is not null %}
+                    <p>
+                        <span class="title">Modifier le :</span>
+                        <span class="content">{{ trick.updateDate|date("d/m/Y à H:m:s") }}</span>
+                    </p>
+                    {% endif %}
+
+                    <p>
+                        <span class="title">Catégorie :</span>
+                        <span class="content">{{ trick.category.name }}</span>
+                    </p>
+
+                    <p>
+                        <span class="title">Auteur :</span>
+                        <span class="content">{{ trick.user.username }}</span>
+                    </p>
+
+                </div>
+
+                {{ form_start(formTrickType) }}
+
+                {{ form_row(formTrickType.description) }}
+
+                {{ form_row(formTrickType.category) }}
+
+                {{ form_row(formTrickType.name) }}
+
+                <input type="hidden" name="trickId" value="{{ trick.id }}" />
+
+                {{ form_row(formTrickType._token) }}
+
+                <div class="buttons">
+                    <button type="button" class="btn btn-outline-danger btn-lg col-6" data-toggle="modal" data-target="#deleteTrick{{ trick.id }}" data-whatever="@deleteTrick">Supprimer</button>
+                    <button type="submit" class="btn btn-outline-success btn-lg col-6">Sauvegarder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

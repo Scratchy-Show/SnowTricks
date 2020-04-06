@@ -1,0 +1,592 @@
+/* Base */
+
+.container {
+    min-width: 345px;
+}
+
+
+/* Page - Inscription */
+
+/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
+#registration .custom-file-input ~ .custom-file-label:lang(fr)::after {
+    content: "Choisir...";
+}
+
+
+
+/* Page - Modifier le profil*/
+
+/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
+.edit-profile .custom-file-input ~ .custom-file-label:lang(fr)::after {
+    content: "Choisir...";
+}
+
+
+
+
+/* Page - Créer une figure  */
+
+.add-trick form fieldset legend {
+    display: none;
+}
+
+.add-trick form textarea {
+    height: 250px;
+}
+
+
+/* Champ d'ajout d'image et d'url  */
+.add-trick .pictures,
+.add-trick .videos {
+    padding-left: 0;
+    list-style: none;
+}
+
+.add-trick .pictures li,
+.add-trick .videos li {
+    margin-bottom: 10px;
+}
+
+.add-trick .pictures li:last-child,
+.add-trick .videos li:last-child {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.add-trick .pictures li button,
+.add-trick .videos li button {
+    padding: .375rem .75rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+}
+
+.add-trick .pictures li .form-group label {
+    display: none;
+}
+
+.add-trick .pictures li .form-group .custom-file-label {
+    display: inline-block;
+}
+
+
+/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
+.add-trick .custom-file-input ~ .custom-file-label:lang(fr)::after {
+    content: "Choisir...";
+}
+
+.add-picture .custom-file-input ~ .custom-file-label:lang(fr)::after {
+    content: "Choisir...";
+}
+
+
+
+/* Page - Modifier une figure  */
+
+
+@media only screen and (max-width: 991px) {
+    .edit-trick {
+        padding: 0;
+    }
+}
+
+
+/* Titre et image principal */
+.edit-trick .main-title {
+    position: relative;
+    max-height: 615px;
+    margin-bottom: 20px;
+}
+
+.edit-trick .main-title figure img {
+    width: 100%;
+    height: auto;
+    max-height: 600px;
+}
+
+.edit-trick .main-title figure .buttons {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.edit-trick .main-title figure .buttons button {
+    padding: 10px 10px 0 0;
+}
+
+.edit-trick .main-title figure .buttons button img {
+    width: 30px;
+    height: 30px;
+}
+
+.edit-trick .main-title figure figcaption {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.edit-trick .main-title figure figcaption .title {
+    border: 5px solid white;
+    border-radius: 15px;
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 25px 15px white;
+}
+
+.edit-trick .main-title figure figcaption .title h2 {
+    font-size: 2.5vw;
+}
+
+/* Modal pour afficher une image en grand */
+.edit-trick .modal-picture .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+}
+
+.edit-trick .modal-picture .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.edit-trick .modal-picture .modal-content {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+}
+
+.edit-trick .modal-picture .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.edit-trick .modal-picture .close:hover,
+.edit-trick .modal-picture .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 700px){
+    .edit-trick .modal-picture .modal-content {
+        width: 100%;
+    }
+}
+
+/* Modal pour supprimer une figure */
+.edit-trick .delete-trick .modal-body span {
+    font-weight: bold;
+}
+
+/* Si aucune images ou vidéos */
+.edit-trick .container-gallery .empty-picture,
+.edit-trick .container-gallery .empty-video {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+/* Bouton pour afficher/masquer les médias */
+#button-show-hidden-medias {
+    margin-bottom: 15px;
+}
+
+/* Alignement des images et videos */
+.edit-trick .container-gallery  {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Alignement des images et videos responsive */
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-gallery {
+        flex-direction: column;
+    }
+}
+
+/* Masque le bouton "Afficher/Masquer les médias" si écran supérieur et/ou égale à 721px */
+@media only screen and (min-width: 992px) {
+    .edit-trick #button-show-hidden-medias {
+        display: none;
+    }
+}
+
+/* Masque les medias si écran inférieur et/ou égale à 720px  */
+@media only screen and (max-width: 991px) {
+    .edit-trick .medias {
+        display: none;
+    }
+}
+
+/* Permet de conserver la mise en forme des medias quand le bouton "Afficher/Masquer les médias" est cliqué */
+@media only screen and (min-width: 992px) {
+    .clicked {
+        display: flex !important;
+    }
+}
+
+.edit-trick .container-gallery .pictures-trick,
+.edit-trick .container-gallery .videos-trick  {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 50%;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-gallery .pictures-trick,
+    .edit-trick .container-gallery .videos-trick  {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+.edit-trick .container-gallery .pictures-trick .picture {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 50%;
+    min-width: 200px;
+    padding-right: 5px;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-gallery .pictures-trick .picture {
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-gallery .pictures-trick .picture img {
+        width: 80%;
+        margin: auto;
+    }
+}
+
+.imgModal {
+    width: 200px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.imgModal:hover {opacity: 0.9;}
+
+/* Bouttons pour afficher une popup ajout ou suppression d'un media */
+.edit-trick .container-gallery .pictures-trick .picture .buttons,
+.edit-trick .container-gallery .videos-trick .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-self: flex-end;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.edit-trick .container-gallery .videos-trick .video-buttons {
+    display: flex;
+    flex-direction: column;
+    padding-right: 15px;
+    height: 195px;
+}
+
+.edit-trick .container-gallery .videos-trick .video-buttons .video {
+    min-width: 200px;
+}
+
+.edit-trick .container-gallery .pictures-trick .picture .buttons button,
+.edit-trick .container-gallery .videos-trick .video-buttons .buttons button {
+    padding: 0;
+}
+
+/* Bouton d'ajout */
+.edit-trick .container-gallery .pictures-trick .add,
+.edit-trick .container-gallery .videos-trick .add,
+.edit-trick .container-gallery .empty-picture .add,
+.edit-trick .container-gallery .empty-video .add {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 40px;
+    align-items: center;
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.edit-trick .container-gallery .pictures-trick .add:hover,
+.edit-trick .container-gallery .videos-trick .add:hover,
+.edit-trick .container-gallery .empty-picture .add:hover,
+.edit-trick .container-gallery .empty-video .add:hover {
+    background-color: grey;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-gallery .pictures-trick .add,
+    .edit-trick .container-gallery .videos-trick .add,
+    .edit-trick .container-gallery .empty-picture .add,
+    .edit-trick .container-gallery .empty-video .add {
+        width: 100%;
+        height: 100px;
+        margin: 15px;
+    }
+}
+
+/* Icon de suppression */
+.edit-trick .container-gallery .pictures-trick .picture .buttons img,
+.edit-trick .container-gallery .videos-trick .buttons img {
+    width: 15px;
+    height: 15px;
+}
+
+/* Icon d'ajout */
+.edit-trick .container-gallery .pictures-trick a img,
+.edit-trick .container-gallery .videos-trick a img,
+.edit-trick .container-gallery .empty-picture img,
+.edit-trick .container-gallery .empty-video img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Modal pour ajouter ou supprimer un media */
+
+.edit-trick .container-gallery .modal-container .add-picture .modal-body .form-group label,
+.edit-trick .container-gallery .modal-container .add-url .modal-body .form-group label {
+    display: none;
+}
+
+.edit-trick .container-gallery .modal-container .add-picture .modal-body .form-group .custom-file-label,
+.edit-trick .container-gallery .modal-container .add-url .modal-body .form-group .custom-file-label {
+    display: inline-block;
+}
+
+/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
+.edit-trick .container-gallery .modal-container .add-picture .custom-file-input ~ .custom-file-label:lang(fr)::after,
+.edit-trick .container-gallery .modal-container .add-url .custom-file-input ~ .custom-file-label:lang(fr)::after {
+    content: "Choisir...";
+}
+
+.edit-trick .container-gallery .pictures-trick .modal-container .delete .modal-body .span {
+    font-weight: bold;
+}
+
+/* Mise en page de la partie infos */
+.edit-trick .container-infos {
+    width: 100%;
+    margin: auto;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-infos {
+        width: 100%;
+    }
+}
+
+.edit-trick .container-infos .infos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 15px 0;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-infos .infos {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .edit-trick .container-infos .infos {
+        flex-direction: column;
+    }
+}
+
+.edit-trick .container-infos .infos p {
+    margin-bottom: 0;
+    padding: 5px;
+    border: solid;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-infos .infos p {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Met en gras les titres de chaque catégorie d'infos */
+.edit-trick .container-infos .infos .title {
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 991px) {
+    .edit-trick .container-infos .infos .content {
+        margin-left: 10px;
+    }
+}
+
+/* Mise en page de la partie formulaire */
+.edit-trick .container-infos form label {
+    width: 100%;
+}
+
+.edit-trick .container-infos form .form-group #trick_description {
+    min-height: 250px;
+}
+
+.edit-trick .container-infos form fieldset legend{
+    display: none;
+}
+
+.edit-trick .container-infos form #trick_category .form-group {
+    max-width: 150px;
+}
+
+.edit-trick .container-infos form #trick_category .form-group:last-child {
+    display: none;
+}
+
+.edit-trick .container-infos form .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 100px;
+}
+
+@media only screen and (max-width: 720px) {
+    .edit-trick .container-infos form .buttons {
+        flex-direction: column;
+        align-items: center;
+
+    }
+}
+
+.edit-trick .container-infos form .buttons button {
+    max-width: 150px;
+}
+
+@media only screen and (max-width: 720px) {
+    .edit-trick .container-infos form .buttons button {
+        margin-bottom: 15px;
+    }
+}
+
+.edit-trick .container-infos form .buttons button:first-child {
+    margin-right: 20px;
+}
+
+@media only screen and (max-width: 720px) {
+    .edit-trick .container-infos form .buttons button:first-child {
+        margin-right: 0;
+    }
+}
+
+
+
+/* Details Trick  */
+
+.userImage {
+    text-align: center;
+}
+
+.comment {
+    display: none;
+}
+
+.comment p {
+    border: 1px solid black;
+    padding:5px 15px;
+    overflow-wrap: break-word;
+}
+
+
+#loadMore {
+    width: 200px;
+    color: #fff;
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background-color: blue;
+    transition: .3s;
+}
+#loadMore:hover {
+    color: blue;
+    background-color: #fff;
+    border: 1px solid blue;
+    text-decoration: none;
+}
+.noContent {
+    color: #000 !important;
+    background-color: transparent !important;
+    pointer-events: none;
+}
+
+
+
+
+
+
+
+.avatar {
+    max-width: 128px;
+    max-height: 128px;
+    border-radius: 50%;
+}
+
+.avatar-medium {
+    max-width: 64px;
+    max-height: 64px;
+}
+
+
+
+
+
+
+/* Footer  */
+
+
+footer {
+    height: 80px;
+}
+
+footer img {
+    width: 30px;
+    height: 30px;
+}

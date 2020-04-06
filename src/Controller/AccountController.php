@@ -44,8 +44,8 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
             // Récupère l'image de l'utilisateur
             $pictureFile = $registrationForm->get('profilPicture')->getData();
 
-            // Chemin de destination du fichier
-            $destination = $this->getParameter('kernel.project_dir') . '/public/assets/uploads';
+            // Chemin de destination du fichier qui se trouve dans services.yaml
+            $destination = $this->getParameter('profil_picture_directory');
 
             // Redéfini le nom du fichier
             $newFilename = $user->getUsername() . '-' . uniqid() . '.' . $pictureFile->guessExtension();
@@ -59,7 +59,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
             // Attribution des valeurs
             $user->setPassword($hashedPassword);
             $user->setPictureName($newFilename);
-            $user->setProfilPicturePath($destination);
+            $user->setProfilPicturePath('uploads/profil');
             $user->setToken(bin2hex(random_bytes(64)));
 
             // Récupère le gestionnaire d'entités

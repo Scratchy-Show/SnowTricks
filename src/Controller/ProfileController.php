@@ -43,6 +43,9 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
         // Récupère l'utilisateur connecté
         $user = $this->getUser();
 
+        // Récupère sont email
+        $email = $user->getEmail();
+
         // Création du formulaire avec les données de l'utilisateur
         $form = $this->createForm(ProfileEditType::class, $user);
 
@@ -56,28 +59,28 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
             if ($user->getToken() == $token)
             {
                 // Récupère l'email dans le formulaire
-                $email = $form->get('email')->getData();
+                $emailForm = $form->get('email')->getData();
 
                 // Récupère l'image du formulaire
                 $pictureFile = $form->get('profilPicture')->getData();
 
                 // Si les valeurs du formulaire ne sont pas vident
-                if (!empty($email) && !empty($pictureFile))
+                if (!empty($emailForm) && !empty($pictureFile))
                 {
                     // Vérifie si un utilisateur à la même adresse email
-                    $findEmail = $repository->findOneBy(['email' => $email]);
+                    $findEmail = $repository->findOneBy(['email' => $emailForm]);
 
-                    // Si l'adresse email n'existe pas
-                    if ($findEmail == null)
+                    // Si l'adresse email n'existe pas ou correspond au même utilisateur
+                    if (($findEmail == null) || ($email == $emailForm))
                     {
-                        // Récupère l'adresse de l'image actuelle du profil
-                        $oldPicture = $user->getprofilPicturePath() . '/' . $user->getpictureName();
+                        // Chemin du fichier
+                        $destination = $this->getParameter('profil_picture_directory');
+
+                        // Récupère le chemin complet de l'image actuelle du profil
+                        $oldPicture = $destination . '/' . $user->getpictureName();
 
                         // Supprime l'ancienne image de profil
                         unlink($oldPicture);
-
-                        // Chemin de destination du fichier
-                        $destination = $this->getParameter('kernel.project_dir') . '/public/assets/uploads';
 
                         // Redéfini le nom du fichier
                         $newFilename = $user->getUsername() . '-' . uniqid() . '.' . $pictureFile->guessExtension();
@@ -87,7 +90,7 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
 
                         // Attribution des valeurs
                         $user->setPictureName($newFilename);
-                        $user->setProfilPicturePath($destination);
+                        $user->setProfilPicturePath('uploads/profil');
 
                         // Attribution d'un nouveau token
                         $user->setToken(bin2hex(random_bytes(64)));

@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Créer une figure{% endblock %}
+
+
+{% block body %}
+    <div class="col-lg-8 col-md-10 mx-auto">
+        <h1 class="text-primary text-center">Créer une nouvelle figure</h1>
+
+        <div class="mt-4 mb-3 add-trick">
+
+            {{ form_start(form) }}
+
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.category) }}
+            {{ form_row(form.mainPicture) }}
+            <ul class="pictures" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}"></ul>
+            <p class="text-center mt-5">Pour ajouter une vidéo, coller une balise embed provenant de la plateforme de votre choix (Youtube, Dailymotion…)</p>
+            <ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}"></ul>
+
+            {{ form_row(form._token) }}
+
+            <button type="submit" class="btn btn-success btn-lg col-12">Créer</button>
+        </div>
+    </div>
+{% endblock %}
