@@ -82,6 +82,7 @@ class Trick
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="tricks", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @Assert\NotBlank(message = "Une catégorie doit être indiquée")
      */
     protected $category;
 

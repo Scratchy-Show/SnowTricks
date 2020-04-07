@@ -1,8 +1,9 @@
-/* Base */
-
+/*
 .container {
     min-width: 345px;
 }
+*/
+
 
 
 /* Page - Inscription */
@@ -21,65 +22,6 @@
     content: "Choisir...";
 }
 
-
-
-
-/* Page - Créer une figure  */
-
-.add-trick form fieldset legend {
-    display: none;
-}
-
-.add-trick form textarea {
-    height: 250px;
-}
-
-
-/* Champ d'ajout d'image et d'url  */
-.add-trick .pictures,
-.add-trick .videos {
-    padding-left: 0;
-    list-style: none;
-}
-
-.add-trick .pictures li,
-.add-trick .videos li {
-    margin-bottom: 10px;
-}
-
-.add-trick .pictures li:last-child,
-.add-trick .videos li:last-child {
-    margin-top: 25px;
-    margin-bottom: 25px;
-}
-
-.add-trick .pictures li button,
-.add-trick .videos li button {
-    padding: .375rem .75rem;
-    border: 1px solid transparent;
-    border-radius: .25rem;
-    color: #fff;
-    background-color: #007bff;
-    cursor: pointer;
-}
-
-.add-trick .pictures li .form-group label {
-    display: none;
-}
-
-.add-trick .pictures li .form-group .custom-file-label {
-    display: inline-block;
-}
-
-
-/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
-.add-trick .custom-file-input ~ .custom-file-label:lang(fr)::after {
-    content: "Choisir...";
-}
-
-.add-picture .custom-file-input ~ .custom-file-label:lang(fr)::after {
-    content: "Choisir...";
-}
 
 
 
@@ -214,11 +156,6 @@
     width: 50%;
 }
 
-/* Bouton pour afficher/masquer les médias */
-#button-show-hidden-medias {
-    margin-bottom: 15px;
-}
-
 /* Alignement des images et videos */
 .edit-trick .container-gallery  {
     display: flex;
@@ -232,26 +169,7 @@
     }
 }
 
-/* Masque le bouton "Afficher/Masquer les médias" si écran supérieur et/ou égale à 721px */
-@media only screen and (min-width: 992px) {
-    .edit-trick #button-show-hidden-medias {
-        display: none;
-    }
-}
 
-/* Masque les medias si écran inférieur et/ou égale à 720px  */
-@media only screen and (max-width: 991px) {
-    .edit-trick .medias {
-        display: none;
-    }
-}
-
-/* Permet de conserver la mise en forme des medias quand le bouton "Afficher/Masquer les médias" est cliqué */
-@media only screen and (min-width: 992px) {
-    .clicked {
-        display: flex !important;
-    }
-}
 
 .edit-trick .container-gallery .pictures-trick,
 .edit-trick .container-gallery .videos-trick  {
@@ -514,143 +432,514 @@
     }
 }
 
+/*// Home picture //*/
 
-
-/* Details Trick  */
-
-.userImage {
-    text-align: center;
+.home-bg {
+    background-image: url('../uploads/trick/default.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 100%;
+    height: 100vh;
 }
 
-.comment {
-    display: none;
-}
-
-.comment p {
-    border: 1px solid black;
-    padding:5px 15px;
-    overflow-wrap: break-word;
-}
-
-#loadMore {
-    width: 200px;
-    color: #fff;
-    display: block;
-    text-align: center;
-    margin: 20px auto;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    background-color: blue;
-    transition: .3s;
-}
-
-#loadMore:hover {
-    color: blue;
-    background-color: #fff;
-    border: 1px solid blue;
-    text-decoration: none;
-}
-
-/* Classe ajouté par le fichier load-more-comments.js */
-.noContent {
-    color: #000 !important;
-    background-color: transparent !important;
-    pointer-events: none;
-}
-
-
-
-
-
-
-
-.avatar {
-    max-width: 128px;
-    max-height: 128px;
-    border-radius: 50%;
-}
-
-.avatar-medium {
-    max-width: 64px;
-    max-height: 64px;
-}
-
-
-
-
-
-/* Pagination */
-
-.paging-container {
-    display: none;
-}
-
-/* Classe ajouté par le fichier load-more-comments.js */
-.paging-block {
-    display: block;
-}
-
-.paging-container {
-    margin-top: 25px;
-}
-
-.paging-container .paging {
+.slogan {
+    height: 100vh;
+    text-align: left;
+    width: 100%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    text-transform: uppercase;
+    color: black;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.slogan-p {
+    align-self: flex-start;
+    font-family: 'Shadows Into Light', cursive;
+}
+
+.chevron-down {
+    position: absolute;
+    right: 0.5%;
+    bottom: 0%;
+}
+
+.cup {
+    position: relative;
+}
+
+.chevron-up {
+    position: absolute;
+    right: 0.5%;
+    bottom: 0%;
+}
+
+.tricks-anchor {
+    /* Anchor and fixed navbar */
+    display: block;
+    height: 98.75px;
+    margin-top: -98.75px;
+    visibility: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*// Base  //*/
+
+ul {
+    padding-left: 0;
     list-style: none;
 }
 
-.paging-container .paging li {
-    margin: 0 8px;
-    padding: 10px 0;
-    border: 1px solid blue;
-    border-radius: 5px;
-    background-color: blue;
+/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
+.add-trick .custom-file-input ~ .custom-file-label:lang(fr)::after,
+.add-picture .custom-file-input ~ .custom-file-label:lang(fr)::after {
+    content: "Choisir...";
 }
-
-.paging-container .paging li:hover:not(.active) {
-     background-color: white;
-     transition: background-color .5s;
-}
-
-.paging-container .paging li a {
-    padding: 10px 15px;
-    text-decoration: none;
-    color: white;
-}
-
-.paging-container .paging li a:hover:not(.active) {
-     color: blue;
-     transition: color .5s;
-}
-
-.paging-container .paging .active {
-    background-color: white;
-}
-
-.paging-container .paging .active a {
-    color: blue;
-}
-
-.paging-container .paging .prev,
-.paging-container .paging .next {
-    display: flex;
-}
-
-.paging-container .paging .numbers {
-    display: flex;
-}
+/*// Fin Base  //*/
 
 
-/* Footer  */
 
+
+/*// Footer  //*/
 
 footer {
     height: 80px;
 }
+/*// Fin Footer  //*/
 
-footer img {
-    width: 30px;
-    height: 30px;
+
+
+
+/*// Page - Créer une figure  //*/
+
+.add-trick .form-group label {
+    font-weight: bold;
 }
+
+.add-trick .custom-file label {
+    font-weight: normal;
+}
+
+.add-trick #trick_description {
+    height: 250px;
+}
+
+.add-trick .pictures li,
+.add-trick .videos li {
+    margin-bottom: 10px;
+}
+
+.add-trick .pictures li button,
+.add-trick .videos li button {
+    padding: 12px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+}
+
+.add-trick .pictures li button:nth-child(even),
+.add-trick .videos li button:nth-child(even) {
+    background-color: darkred;
+}
+/*// Fin Page - Créer une figure  //*/
+
+
+
+
+/*// Page - Details Trick  //*/
+
+.details-trick {
+    max-width: 1250px;
+}
+
+/* Modal pour supprimer la figure */
+.details-trick .delete-trick .modal-dialog {
+    height: 60%;
+    display: flex;
+    align-items: center;
+}
+/* Fin Modal pour supprimer la figure */
+
+/* Modal pour afficher une image en grand */
+.details-trick .modal-picture .modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 100px;
+    z-index: 1;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+}
+
+.details-trick .modal-picture .modal-content {
+    display: block;
+    margin: auto;
+    width: 80%;
+    max-width: 700px;
+}
+
+.details-trick .modal-picture .modal-content {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+}
+
+.details-trick .modal-picture .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.details-trick .modal-picture .close:hover,
+.details-trick .modal-picture .close:focus {
+    text-decoration: none;
+    cursor: pointer;
+    color: #bbb;
+}
+
+@media only screen and (max-width: 700px){
+    .details-trick .modal-picture .modal-content {
+        width: 100%;
+    }
+}
+/* Fin Modal pour afficher une image en grand */
+
+/* Image principal et titre */
+/* Titre */
+#mainPicture #title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 25px;
+    border-radius: 15px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 25px 15px white;
+}
+
+/* Boutons de modification / suppression de la figure */
+#mainPicture .buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+/* Image des boutons */
+#mainPicture .buttons img {
+    width: 15px;
+    height: 15px;
+}
+/* Fin image principal et titre */
+
+
+/* Gallerie des médias */
+.details-trick #container-gallery {
+    display: flex;
+}
+
+/* Alignement des images et vidéos */
+.details-trick #container-gallery .pictures-trick,
+.details-trick #container-gallery .videos-trick  {
+    width: 50%;
+}
+
+.details-trick #container-gallery .pictures-trick .picture {
+    padding: 2px;
+}
+
+.details-trick #container-gallery .pictures-trick .picture img {
+    max-width: 190px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Classe ajouté part le fichier popup.js pour afficher une image en grand */
+.details-trick #container-gallery .pictures-trick .picture .imgModal {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.details-trick #container-gallery .pictures-trick .picture .imgModal:hover {
+    opacity: 0.9;
+}
+
+.details-trick #container-gallery .videos-trick .video {
+    width: 200px;
+}
+
+.details-trick #container-gallery .videos-trick .video iframe {
+    width: 100%;
+}
+/* Fin gallerie des médias */
+
+/* Infos */
+.details-trick #container-infos .description,
+.details-trick #container-infos .infos {
+    border: 1px solid black;
+}
+
+.details-trick #container-infos .infos span {
+    font-variant-caps: all-small-caps;
+    max-height: 64px;
+}
+/* Fin des infos */
+
+/* Formualire des commentaires*/
+.details-trick #form-comments p {
+    font-size: 1.5rem;
+}
+
+.details-trick #form-comments a {
+    text-decoration: none;
+}
+/* Fin Formualire des commentaires*/
+
+/* Commentaires */
+/* Cache les commentaires au delà de 4 */
+.details-trick #comments .comment {
+    display: none;
+}
+
+.details-trick #comments .comment p {
+    padding:5px 15px;
+    border: 1px solid black;
+    overflow-wrap: break-word;
+}
+
+.details-trick #comments .comment img {
+    max-height: 65px;
+}
+
+.details-trick #comments .comment span {
+    font-variant-caps: all-small-caps;
+}
+/* Fin commentaires */
+
+
+/* Pagination */
+.details-trick #comments .paging-container {
+    display: none;
+}
+
+/* Classe ajouté par le fichier load-more-comments.js */
+.details-trick #comments .paging-block {
+    display: block;
+}
+
+.details-trick #comments .paging-container .paging li {
+    margin: 0 8px;
+    padding: 10px 0;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    background-color: #007bff;
+}
+
+.details-trick #comments .paging-container .paging li:hover:not(.active) {
+    background-color: #fff;
+    transition: background-color .5s;
+}
+
+.details-trick #comments .paging-container .paging li a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.details-trick #comments .paging-container .paging li a:hover:not(.active) {
+    color: #007bff;
+    transition: color .5s;
+}
+
+.details-trick #comments .paging-container .paging .active {
+    background-color: #fff;
+}
+
+.details-trick #comments .paging-container .paging .active a {
+    color: #007bff;
+}
+/* Fin de la pagination*/
+
+/* Bouton charger plus de commentaires */
+.details-trick #comments #loadMore {
+    width: 200px;
+    border: 1px solid transparent;
+    color: #fff;
+    background-color: #007bff;
+    transition: .3s;
+}
+
+.details-trick #comments #loadMore:hover {
+    border: 1px solid #007bff;
+    text-decoration: none;
+    color: #007bff;
+    background-color: #fff;
+}
+
+/* Classe ajouté par le fichier load-more-comments.js */
+.details-trick #comments .noContent {
+    border: 1px solid black !important;
+    color: #000 !important;
+    background-color: transparent !important;
+    pointer-events: none;
+}
+/* Fin bouton charger plus de commentaires */
+
+
+/* Responsive 1230px */
+@media only screen and (max-width: 1230px) {
+    .details-trick #container-gallery .picture img {
+        width: 170px;
+    }
+}
+
+@media only screen and (max-width: 1230px) {
+    .details-trick #container-gallery .videos-trick .video {
+        width: 250px;
+    }
+}
+
+/* Responsive 1175px */
+@media only screen and (max-width: 1175px) {
+    .details-trick #container-gallery .picture img {
+        width: 160px;
+    }
+}
+
+/* Responsive 1050px */
+@media only screen and (max-width: 1050px) {
+    .details-trick #container-gallery {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+    .details-trick #container-gallery .pictures-trick,
+    .details-trick #container-gallery .videos-trick  {
+        justify-content: flex-start;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+    .details-trick #container-gallery .pictures-trick .picture {
+        padding: 10px;
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+    .details-trick #container-gallery .videos-trick .video {
+        width: 200px;
+        margin: 10px;
+    }
+}
+
+/* Responsive 991px */
+@media only screen and (max-width: 991px) {
+    .details-trick #container-gallery .pictures-trick,
+    .details-trick #container-gallery .videos-trick  {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .details-trick #container-gallery .pictures-trick .picture {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .details-trick #container-gallery .pictures-trick .picture img {
+        max-width: 90%;
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .details-trick #container-gallery .videos-trick .video {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .details-trick #container-gallery .videos-trick .video iframe {
+        height: 200px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .details-trick #container-infos .infos {
+        flex-direction: column;
+    }
+}
+/* Fin Responsive */
+/*// Fin Page - Details Trick  //*/
+
+
+
+
+/*// Bouton afficher/masquer les médias  //*/
+
+/* Masque le bouton si écran supérieur et/ou égale à 992px */
+@media only screen and (min-width: 992px) {
+    #button-show-hidden-medias {
+        display: none;
+    }
+}
+
+/* Permet de conserver la mise en forme des medias quand le bouton "Afficher/Masquer les médias" est cliqué */
+@media only screen and (min-width: 992px) {
+    .clicked {
+        display: flex !important;
+    }
+}
+
+/* Masque les medias si écran inférieur et/ou égale à 991px  */
+@media only screen and (max-width: 991px) {
+    .details-trick #container-gallery {
+        display: none;
+    }
+}
+/*// Fin Bouton afficher/masquer les médias  //*/

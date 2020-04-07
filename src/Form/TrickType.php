@@ -36,7 +36,8 @@ class TrickType extends AbstractType
                 'label' => "Catégorie"
             ])
             ->add('mainPicture', PictureType::class, [
-                'required'   => false
+                'required'   => false,
+                'label' => false
             ])
             ->add('pictures', CollectionType::class, [
                 'entry_type' => PictureType::class,

@@ -4,20 +4,23 @@
     <head>
         <!-- Basic -->
         <meta charset="utf-8" />
-        <title>SnowTricks - {% block title %}{% endblock %}</title>
         <meta name="description" content="Site collaboratif de snowboard pour aider à l'apprentissage des figures." />
         <meta name="author" content="Couret Alexandre">
+
+        <title>SnowTricks - {% block title %}{% endblock %}</title>
+
         <!-- Mobile Metas -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <!-- Custom CSS -->
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
+        <!-- Favicon -->
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon/favicon-16x16.png') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon/favicon-32x32.png') }}">
         <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('img/favicon/favicon-96x96.png') }}">
-
         <link rel="apple-icon" sizes="57x57"   href="{{ asset('img/favicon/apple-icon-57x57.png') }}">
         <link rel="apple-icon" sizes="60x60"   href="{{ asset('img/favicon/apple-icon-60x60.png') }}">
         <link rel="apple-icon" sizes="72x72"   href="{{ asset('img/favicon/apple-icon-72x72.png') }}">
@@ -30,6 +33,7 @@
     </head>
 
     <body>
+        <!-- Message flash -->
         {% for label, messages in app.flashes %}
             <div class="container">
                 <div class="alert alert-{{ label }} alert-dismissible text-center">
@@ -40,18 +44,21 @@
             </div>
         {% endfor %}
 
+        <!-- Header -->
         {{ include('shared/header.html.twig') }}
 
-        <div class="container">
-            {% block body %} {% endblock %}
-        </div>
+        <!-- Body -->
+        {% block body %} {% endblock %}
 
+        <!-- Footer -->
         {{ include('shared/footer.html.twig') }}
 
+        <!-- Scripts -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script src="{{ asset('js/show-hide-media-responsive.js') }}"></script>
         <script src="{{ asset('js/load-more-comments.js') }}"></script>
+        <script src="{{ asset('js/paging-comments.js') }}"></script>
         <script src="{{ asset('js/add-collection-picture.js') }}"></script>
         <script src="{{ asset('js/add-collection-video.js') }}"></script>
         <script src="{{ asset('js/custom-file-input.js') }}"></script>

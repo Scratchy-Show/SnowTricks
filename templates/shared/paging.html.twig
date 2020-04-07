@@ -1,7 +1,7 @@
 {% if paging.nbPages > 0 %}
-    <ul class="paging">
+    <ul class="paging d-flex justify-content-center">
         {% if paging.page > 1 %}
-            <div class="prev">
+            <div class="prev d-flex">
                 <li>
                     <a href="{{ path(paging.path, paging.pathSettings|merge({'page': 1})) }}">
                         <<
@@ -16,7 +16,7 @@
             </div>
         {% endif %}
 
-        <div class="numbers">
+        <div class="numbers d-flex">
             {# Affichage de toutes les pages entre p-2 et p+2 sauf si < 1 ou > nbPages #}
             {% for p in range(max(paging.page-2, 1), min(paging.page+2, paging.nbPages)) %}
                 <li {% if p == paging.page %}class="active"{% endif %}>
@@ -28,7 +28,7 @@
         </div>
 
         {% if paging.page < paging.nbPages %}
-            <div class="next">
+            <div class="next d-flex">
                 <li>
                     <a href="{{ path(paging.path,
                         paging.pathSettings|merge({'page': paging.page+1})) }}">

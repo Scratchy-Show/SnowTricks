@@ -4,10 +4,11 @@
 
 
 {% block body %}
-    <div class="col-lg-8 col-md-10 mx-auto">
-        <h1 class="text-primary text-center">Créer une nouvelle figure</h1>
+    <div class="add-trick col-lg-8 col-md-10 mx-auto">
 
-        <div class="mt-4 mb-3 add-trick">
+        <h1 class="h1 text-center text-primary">Créer une nouvelle figure</h1>
+
+        <div class="mt-4 mb-3">
 
             {{ form_start(form) }}
 
@@ -15,8 +16,14 @@
             {{ form_row(form.description) }}
             {{ form_row(form.category) }}
             {{ form_row(form.mainPicture) }}
+
             <ul class="pictures" data-prototype="{{ form_widget(form.pictures.vars.prototype)|e('html_attr') }}"></ul>
-            <p class="text-center mt-5">Pour ajouter une vidéo, coller une balise embed provenant de la plateforme de votre choix (Youtube, Dailymotion…)</p>
+
+            <p class="embed text-left">
+                Pour ajouter une vidéo, coller une balise <span class="font-weight-bold">embed</span>
+                provenant de la plateforme de votre choix (Youtube, Dailymotion…).
+            </p>
+
             <ul class="videos" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}"></ul>
 
             {{ form_row(form._token) }}
