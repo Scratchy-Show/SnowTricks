@@ -4,14 +4,19 @@
 
 
 {% block body %}
-    <div class="col-lg-8 col-md-10 mx-auto">
-        <h1 class="text-primary text-center">Inscription</h1>
+    <div class="registration col-lg-8 col-md-10 mx-auto">
+
+        <h1 class="h1 text-primary text-center">Inscription</h1>
 
         <div class="mt-4 mb-3">
             {{ form_start(registrationForm) }}
             {{ form_widget(registrationForm) }}
-            <button type="submit" class="btn btn-success btn-lg col-12">Créer un compte</button>
-            <a href="{{ path('login') }}" class="d-block d-md-none mt-3 text-center text-primary"><u>Déjà un compte ?</u></a>
+            <div class=" text-center">
+                <button type="submit" class="col-6 btn btn-success btn-lg">Créer un compte</button>
+            </div>
+            <a href="{{ path('login') }}" class="d-block d-md-none mt-3 text-center text-primary">
+                <u>Déjà un compte ?</u>
+            </a>
             {{ form_end(registrationForm) }}
         </div>
     </div>

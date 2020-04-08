@@ -4,8 +4,7 @@
 
 
 {% block body %}
-
-    <div class="details-trick col-lg-10 col-md-10 mx-auto">
+    <div class="details-trick col-lg-8 col-md-10 mx-auto">
 
         <!-- Modal pour la suppression de la figure -->
         <div id="deleteTrick{{ trick.id }}"
@@ -17,7 +16,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 id="modalDeleteTrick{{ trick.id }}" class="modal-title">
+                        <h4 id="modalDeleteTrick{{ trick.id }}" class="h4 modal-title">
                             Suppression de la figure <span class="font-weight-bold">{{ trick.name }}</span>
                         </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

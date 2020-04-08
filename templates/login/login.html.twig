@@ -4,8 +4,9 @@
 
 
 {% block body %}
-    <div class="col-lg-8 col-md-10 mx-auto">
-        <h1 class="text-primary text-center">Connexion</h1>
+    <div class="login col-lg-8 col-md-10 mx-auto">
+
+        <h1 class="h1 text-primary text-center">Connexion</h1>
 
         {% if error %}
             <div class="alert alert-danger">
@@ -17,18 +18,30 @@
             <form action="{{ path('login') }}" method="post">
                 <div class="form-group">
                     <label for="username">Pseudo</label>
-                    <input type="text" id="username" name="username" value="{{ last_username }}" class="form-control" placeholder="Pseudo" required/>
+                    <input type="text" id="username" name="username" value="{{ last_username }}"
+                           class="form-control" placeholder="Pseudo" required
+                    />
                 </div>
                 <div class="form-group">
                     <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe" required/>
+                    <input type="password" id="password" name="password"
+                           class="form-control" placeholder="Mot de passe" required
+                    />
                 </div>
-                <a href="{{ path('password_forgot') }}" class="d-none d-md-block mt-3 mb-3 text-center text-primary"><u>Mot de passe oublié ?</u></a>
+                <a href="{{ path('password_forgot') }}" class="d-none d-md-block mt-3 mb-3 text-center text-primary">
+                    <u>Mot de passe oublié ?</u>
+                </a>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-                <button type="submit" class="btn btn-success btn-lg col-12">Connexion</button>
+                <div class="text-center">
+                    <button type="submit" class="col-6 btn btn-success btn-lg">Connexion</button>
+                </div>
             </form>
-            <a href="{{ path('registration') }}" class="d-block d-md-none mt-3 text-center text-primary"><u>Inscription</u></a>
-            <a href="{{ path('password_forgot') }}" class="d-block d-md-none mt-3 text-center text-primary"><u>Mot de passe oublié ?</u></a>
+            <a href="{{ path('registration') }}" class="d-block d-md-none mt-3 text-center text-primary">
+                <u>Inscription</u>
+            </a>
+            <a href="{{ path('password_forgot') }}" class="d-block d-md-none mt-3 text-center text-primary">
+                <u>Mot de passe oublié ?</u>
+            </a>
         </div>
     </div>
 {% endblock %}

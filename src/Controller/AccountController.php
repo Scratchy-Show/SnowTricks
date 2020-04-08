@@ -139,7 +139,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
                 // Message de confirmation
                 $this->addFlash(
                     'success',
-                    "Un email de réinitilisation de votre mot de passe a été envoyé sur votre boîte mail."
+                    "Un email pour la réinitialisation de votre mot de passe a été envoyé sur votre boîte mail."
                 );
 
                 // Redirection vers la page d'accueil
@@ -164,7 +164,8 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
     /**
      * @Route("/mot-de-passe-reinitialise/{token}", name="password_reset")
      */
-    public function passwordReset(Request $request, EntityManagerInterface $manager, UserRepository $repository, UserPasswordEncoderInterface $encoder, $token)
+    public function passwordReset(Request $request, EntityManagerInterface $manager, UserRepository $repository,
+        UserPasswordEncoderInterface $encoder, $token)
     {
         // Création du formulaire
         $form = $this->createForm(PasswordResetType::class);

@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Form\ProfileEditType;
 use App\Form\ProfileType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +37,7 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
      * @IsGranted("ROLE_USER")
      * @throws \Exception
      */
-    public function profileEdit(Request $request, EntityManagerInterface $manager, UserRepository $repository, $token)
+    public function profileEdit(Request $request, EntityManagerInterface $manager, $token)
     {
         // Récupère l'utilisateur connecté
         $user = $this->getUser();
@@ -52,91 +51,48 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
         // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
         $form->handleRequest($request);
 
-        // Si le formulaire est soumis
-        if ($form->isSubmitted())
+        // Si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid())
         {
             // Si le jeton de l'utilisateur correspond au jeton du lien
             if ($user->getToken() == $token)
             {
-                // Récupère l'email dans le formulaire
-                $emailForm = $form->get('email')->getData();
-
                 // Récupère l'image du formulaire
                 $pictureFile = $form->get('profilPicture')->getData();
 
-                // Si les valeurs du formulaire ne sont pas vident
-                if (!empty($emailForm) && !empty($pictureFile))
-                {
-                    // Vérifie si un utilisateur à la même adresse email
-                    $findEmail = $repository->findOneBy(['email' => $emailForm]);
+                // Chemin du fichier
+                $destination = $this->getParameter('profil_picture_directory');
 
-                    // Si l'adresse email n'existe pas ou correspond au même utilisateur
-                    if (($findEmail == null) || ($email == $emailForm))
-                    {
-                        // Chemin du fichier
-                        $destination = $this->getParameter('profil_picture_directory');
+                // Récupère le chemin complet de l'image actuelle du profil
+                $oldPicture = $destination . '/' . $user->getpictureName();
 
-                        // Récupère le chemin complet de l'image actuelle du profil
-                        $oldPicture = $destination . '/' . $user->getpictureName();
+                // Supprime l'ancienne image de profil
+                unlink($oldPicture);
 
-                        // Supprime l'ancienne image de profil
-                        unlink($oldPicture);
+                // Redéfini le nom du fichier
+                $newFilename = $user->getUsername() . '-' . uniqid() . '.' . $pictureFile->guessExtension();
 
-                        // Redéfini le nom du fichier
-                        $newFilename = $user->getUsername() . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+                // Déplace le fichier dans le dossier uploads en le renommant
+                $pictureFile->move($destination, $newFilename);
 
-                        // Déplace le fichier dans le dossier uploads en le renommant
-                        $pictureFile->move($destination, $newFilename);
+                // Attribution des valeurs
+                $user->setPictureName($newFilename);
+                $user->setProfilPicturePath('uploads/profil');
 
-                        // Attribution des valeurs
-                        $user->setPictureName($newFilename);
-                        $user->setProfilPicturePath('uploads/profil');
+                // Attribution d'un nouveau token
+                $user->setToken(bin2hex(random_bytes(64)));
 
-                        // Attribution d'un nouveau token
-                        $user->setToken(bin2hex(random_bytes(64)));
+                // Sauvegarde les modifications
+                $manager->flush();
 
-                        // Sauvegarde les modifications
-                        $manager->flush();
+                // Message de confirmation
+                $this->addFlash(
+                    'success',
+                    "Votre profil à bien été modifié."
+                );
 
-                        // Message de confirmation
-                        $this->addFlash(
-                            'success',
-                            "Votre profil à bien été modifié."
-                        );
-
-                        // Renvoie vers la page du profil
-                        header("Location: /profil");
-
-                        // Empêche l'exécution du reste du script
-                        die();
-                    }
-                    else // Si l'adresse mail existe déjà
-                    {
-                        $this->addFlash(
-                            'danger',
-                            "Cet email est déjà utilisé"
-                        );
-
-                        // Renvoie vers la page du profil
-                        header("Location: /profil");
-
-                        // Empêche l'exécution du reste du script
-                        die();
-                    }
-                }
-                else // Si une des valeurs du formulaire est vide
-                {
-                    $this->addFlash(
-                        'danger',
-                        "Tous les champs n'ont pas été renseignés"
-                    );
-
-                    // Renvoie vers la page du profil
-                    header("Location: /profil");
-
-                    // Empêche l'exécution du reste du script
-                    die();
-                }
+                // Redirection vers la page du profil
+                return $this->redirectToRoute('profile');
             }
             else // Si les jetons ne correspondent pas
             {
@@ -145,11 +101,8 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
                     "La modification du profil n'a pas pu être effectué"
                 );
 
-                // Renvoie vers la page du profil
-                header("Location: /profil");
-
-                // Empêche l'exécution du reste du script
-                die();
+                // Redirection vers la page du profil
+                return $this->redirectToRoute('profile');
             }
         }
 

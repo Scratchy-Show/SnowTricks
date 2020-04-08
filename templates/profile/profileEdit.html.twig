@@ -4,13 +4,19 @@
 
 
 {% block body %}
-    <div class="col-lg-8 col-md-10 mx-auto">
-        <h1 class="text-primary text-center">Modification du profil</h1>
+    <div class="profil-edit col-lg-8 col-md-10 mx-auto">
+
+        <h1 class="h1 text-primary text-center">Modification du profil</h1>
 
         <div class="mt-4 mb-3 edit-profile">
             {{ form_start(form) }}
             {{ form_widget(form) }}
-            <button type="submit" class="btn btn-success btn-lg col-12">Modifier</button>
+
+            {{ form_row(form._token) }}
+
+            <div class="text-center">
+                <button type="submit" class="col-6 btn btn-success btn-lg">Modifier</button>
+            </div>
             {{ form_end(form) }}
         </div>
     </div>
