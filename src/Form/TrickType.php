@@ -20,12 +20,14 @@ class TrickType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => "Nom",
+                'empty_data' => ' ',
                 'attr' => [
                     'placeholder' => 'Nom de la figure'
                 ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => "Description",
+                'empty_data' => ' ',
                 'attr' => [
                     'placeholder' => 'Description de la figure'
                 ]

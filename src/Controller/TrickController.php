@@ -194,7 +194,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
      * @Route("/figure/modifier/{id}", name="trick_edit")
      * @IsGranted("ROLE_USER")
      */
-    public function editTrick(Request $request, FileUploader $fileUploader, $id)
+    public function editTrick(Request $request, $id)
     {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
@@ -208,14 +208,17 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             // Création du formulaire de figure
             $formTrickType = $this->createForm(TrickType::class, $trick);
 
-            // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
-            $formTrickType->handleRequest($request);
-
             // Récupère les images liées à la figure
             $pictures = $entityManager->getRepository(Picture::class)->findBy(['trick' => $id]);
 
+            // Récupère le nom de la figure
+            $trickName = $trick->getName();
+
             // Récupère les urls liées à la figure
             $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $id]);
+
+            // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
+            $formTrickType->handleRequest($request);
 
             // Si le formulaire de modification d'une figure est soumis et valide
             if ($formTrickType->isSubmitted() && $formTrickType->isValid())
@@ -275,10 +278,11 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             }
             // Affiche par défaut la page de modification d'une figure
             return $this->render('trick/edit.html.twig', [
-                'formTrickType' => $formTrickType->createView(),
                 'trick' => $trick,
+                'trickName' => $trickName,
                 'pictures' => $pictures,
-                'videos' => $videos
+                'videos' => $videos,
+                'formTrickType' => $formTrickType->createView()
             ]);
         }
         else // Si aucune figure ne correspond à l'id
@@ -298,7 +302,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
      * @Route("/figure/supprimer/{trickId}", name="trick_delete")
      * @IsGranted("ROLE_USER")
      */
-    public function deleteTrick(Request $request, $trickId)
+    public function deleteTrick($trickId)
     {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();

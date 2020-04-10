@@ -41,6 +41,21 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
                 // Récupère l'Url
                 $url = $form->get('url')->getData();
 
+                // Si il n'y a pas d'url
+                if (empty($url))
+                {
+                    // Message d'erreur
+                    $this->addFlash(
+                        'danger',
+                        "Aucune URL trouvée !"
+                    );
+
+                    // Redirection vers la page d'ajout de vidéo
+                    return $this->redirectToRoute('trick_video_add', [
+                        'trickId' => $trick->getId()
+                    ]);
+                }
+
                 // Crée une instance de Video
                 $video = new Video();
 
@@ -60,11 +75,10 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
                     "La vidéo a bien été ajouté"
                 );
 
-                // Renvoie vers la page du profil
-                header("Location: /figure/modifier/" . $trickId);
-
-                // Empêche l'exécution du reste du script
-                die();
+                // Redirection vers la page d'édition la figure
+                return $this->redirectToRoute('trick_edit', [
+                    'id' => $trick->getId()
+                ]);
             }
             // Affiche par défaut la page de création d'une figure
             return $this->render('trick/addVideo.html.twig', [

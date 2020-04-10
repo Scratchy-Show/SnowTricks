@@ -67,8 +67,8 @@
                                 class="btn"
                                 title="Modifier la figure"
                                 data-toggle="modal"
-                                data-target="#editMainPicture{ trick.mainPicture.id }}"
-                                data-whatever="@editMainPic" >
+                                data-target="#editTrick{ trick.id }}"
+                                data-whatever="@editTrick" >
                             <a href="{{ path('trick_edit', {'id': trick.id}) }}}">
                                 <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
                             </a>
@@ -77,8 +77,8 @@
                                 class="btn"
                                 title="Supprimer la figure"
                                 data-toggle="modal"
-                                data-target="#deletePicture{{ trick.mainPicture.id }}"
-                                data-whatever="@deletePic">
+                                data-target="#deleteTrick{{ trick.id }}"
+                                data-whatever="@deleteTrick">
                             <a href="#"
                                data-toggle="modal"
                                data-target="#deleteTrick{{ trick.id }}"
@@ -100,8 +100,8 @@
                                 class="btn"
                                 title="Modifier la figure"
                                 data-toggle="modal"
-                                data-target="#editMainPicture{ picture.id }}"
-                                data-whatever="@editMainPic">
+                                data-target="#editTrick{ trick.id }}"
+                                data-whatever="@editTrick">
                             <a href="{{ path('trick_edit', {'id': trick.id}) }}}">
                                 <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
                             </a>
@@ -179,9 +179,12 @@
                         Publié le {{ trick.date | date('d/m/Y') }} à {{ trick.date | date('H:i') }} par
                         <span class="font-weight-bold">{{ trick.user.username }}</span>
                     </p>
-                    <p class="col p-3 mb-0">
-                        Mis à jour le {{ trick.updateDate | date('d/m/Y') }} à {{ trick.updateDate | date('H:i') }}
-                    </p>
+                    <!-- Si il y a une date de mise à jour -->
+                    {% if trick.updateDate is not null %}
+                        <p class="col p-3 mb-0">
+                            Mis à jour le {{ trick.updateDate | date('d/m/Y') }} à {{ trick.updateDate | date('H:i') }}
+                        </p>
+                    {% endif %}
                     <p class="col p-3 mb-0">
                         Catégorie : <span class="font-weight-bold">{{ trick.category.name }}</span>
                     </p>
