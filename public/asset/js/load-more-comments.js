@@ -5,7 +5,7 @@ $(document).ready(function(){
         e.preventDefault();
         $(".comment:hidden").slice(0, 4).slideDown();
         if($(".comment:hidden").length === 0) {
-            $("#loadMore").text("Tous est affiché").addClass("noContent");
+            $("#loadMore").text("").addClass("noContent");
         }
     });
 });

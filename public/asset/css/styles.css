@@ -135,6 +135,16 @@ footer {
     margin-bottom: 10px;
 }
 
+/* Retire le label du champ */
+.add-trick .pictures li .form-group label {
+    display: none;
+}
+
+/* Affiche le champ */
+.add-trick .pictures li .form-group .custom-file-label {
+    display: inline-block;
+}
+
 .add-trick .pictures li button,
 .add-trick .videos li button {
     padding: 12px;
@@ -530,10 +540,7 @@ footer {
 
 /* Classe ajouté par le fichier load-more-comments.js */
 .details-trick #comments .noContent {
-    border: 1px solid black !important;
-    color: #000 !important;
-    background-color: transparent !important;
-    pointer-events: none;
+    display: none !important;
 }
 /* Fin bouton charger plus de commentaires */
 

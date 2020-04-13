@@ -32,3 +32,10 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/custom-file-input.js') }}"></script>
+    <script src="{{ asset('js/add-collection-picture.js') }}"></script>
+    <script src="{{ asset('js/add-collection-video.js') }}"></script>
+{% endblock %}

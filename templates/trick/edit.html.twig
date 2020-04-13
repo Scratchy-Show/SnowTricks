@@ -388,9 +388,9 @@
 
             {{ form_row(formTrickType.name) }}
 
-            {{ form_row(formTrickType.description) }}
-
             {{ form_row(formTrickType.category) }}
+
+            {{ form_row(formTrickType.description) }}
 
             <input type="hidden" name="trickId" value="{{ trick.id }}" />
 
@@ -405,4 +405,11 @@
             </div>
         </section>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/popup.js') }}"></script>
+    <script src="{{ asset('js/custom-file-input.js') }}"></script>
+    <script src="{{ asset('js/show-hide-media-responsive.js') }}"></script>
 {% endblock %}

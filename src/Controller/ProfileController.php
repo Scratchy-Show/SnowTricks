@@ -57,27 +57,31 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
             // Si le jeton de l'utilisateur correspond au jeton du lien
             if ($user->getToken() == $token)
             {
-                // Récupère l'image du formulaire
-                $pictureFile = $form->get('profilPicture')->getData();
+                // Si il y a une nouvelle image de profil
+                if ($form->get('profilPicture')->getData() != null)
+                {
+                    // Récupère l'image du formulaire
+                    $pictureFile = $form->get('profilPicture')->getData();
 
-                // Chemin du fichier
-                $destination = $this->getParameter('profil_picture_directory');
+                    // Chemin du fichier
+                    $destination = $this->getParameter('profil_picture_directory');
 
-                // Récupère le chemin complet de l'image actuelle du profil
-                $oldPicture = $destination . '/' . $user->getpictureName();
+                    // Récupère le chemin complet de l'image actuelle du profil
+                    $oldPicture = $destination . '/' . $user->getpictureName();
 
-                // Supprime l'ancienne image de profil
-                unlink($oldPicture);
+                    // Supprime l'ancienne image de profil
+                    unlink($oldPicture);
 
-                // Redéfini le nom du fichier
-                $newFilename = $user->getUsername() . '-' . uniqid() . '.' . $pictureFile->guessExtension();
+                    // Redéfini le nom du fichier
+                    $newFilename = $user->getUsername() . '-' . uniqid() . '.' . $pictureFile->guessExtension();
 
-                // Déplace le fichier dans le dossier uploads en le renommant
-                $pictureFile->move($destination, $newFilename);
+                    // Déplace le fichier dans le dossier uploads en le renommant
+                    $pictureFile->move($destination, $newFilename);
 
-                // Attribution des valeurs
-                $user->setPictureName($newFilename);
-                $user->setProfilPicturePath('uploads/profil');
+                    // Attribution des valeurs
+                    $user->setPictureName($newFilename);
+                    $user->setProfilPicturePath('uploads/profil');
+                }
 
                 // Attribution d'un nouveau token
                 $user->setToken(bin2hex(random_bytes(64)));

@@ -60,11 +60,13 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="trick", cascade={"persist", "remove"})
+     * @Assert\Valid
      */
     protected $pictures;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist", "remove"})
+     * @Assert\Valid
      */
     protected $mainPicture;
 

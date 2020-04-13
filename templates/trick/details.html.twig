@@ -248,3 +248,11 @@
         </section>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/popup.js') }}"></script>
+    <script src="{{ asset('js/show-hide-media-responsive.js') }}"></script>
+    <script src="{{ asset('js/load-more-comments.js') }}"></script>
+    <script src="{{ asset('js/paging-comments.js') }}"></script>
+{% endblock %}

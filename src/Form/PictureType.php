@@ -10,7 +10,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PictureType extends AbstractType
-{    // Génère le formulaire
+{
+    // Génère le formulaire
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

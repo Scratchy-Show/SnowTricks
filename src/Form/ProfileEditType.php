@@ -27,6 +27,7 @@ class ProfileEditType extends AbstractType
             ])
             ->add('profilPicture', FileType::class, [
                 'label' => "Nouvelle image du profil",
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Nouvelle image du profil'
                 ]

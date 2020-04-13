@@ -175,11 +175,11 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 'Votre commentaire a bien été enregistré'
             );
 
-            // Redirection vers la page de la figure
-            return $this->redirectToRoute('trick_details', [
-                'trickId' => $trick->getId(),
-                'page' => $page
-            ]);
+            // Redirection vers la page de la figure avec une ancre sur les commentaires
+            return $this->redirect(
+                $this->generateUrl('trick_details',
+                    array('trickId' => $trick->getId(), 'page' => $page)) . '#comments'
+            );
         }
         // Affiche par défaut la page de la figure
         return $this->render('trick/details.html.twig', [
