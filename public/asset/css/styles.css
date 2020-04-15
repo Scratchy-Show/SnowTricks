@@ -1,86 +1,43 @@
-/*// Home picture //*/
-
-.home-bg {
-    background-image: url('../uploads/trick/default.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    width: 100%;
-    height: 100vh;
-}
-
-.slogan {
-    height: 100vh;
-    text-align: left;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-transform: uppercase;
-    color: black;
-    font-weight: 600;
-    font-size: 20px;
-}
-
-.slogan-p {
-    align-self: flex-start;
-    font-family: 'Shadows Into Light', cursive;
-}
-
-.chevron-down {
-    position: absolute;
-    right: 0.5%;
-    bottom: 0;
-}
-
-.cup {
-    position: relative;
-}
-
-.chevron-up {
-    position: absolute;
-    right: 0.5%;
-    bottom: 0;
-}
-
-.tricks-anchor {
-    /* Anchor and fixed navbar */
-    display: block;
-    height: 98px;
-    margin-top: -98px;
-    visibility: hidden;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*// Base  //*/
+
+@font-face {
+    font-family: 'highvoltage_roughregular';
+    src: url(../fonts/HighVoltage_Rough.ttf) format('truetype'),
+        url(../fonts/highvoltage_rough-webfont.woff2) format('woff2'),
+        url(../fonts/highvoltage_rough-webfont.woff) format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+    scroll-behavior: smooth
+}
+
+html, body {
+    height: 100%;
+}
+
+h1 {
+    padding: 25px;
+    font-family: 'highvoltage_roughregular', cursive;
+    font-size: 3.5rem;
+}
 
 ul {
     padding-left: 0;
     list-style: none;
 }
 
-/* Limitation largeur des pages */
+/* Mise ne forme des Messages flash */
+.alert {
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    margin: 0;
+    padding: 10px;
+}
+
+/* Mise en forme des pages */
 .registration,
 .login,
 .password-forgot,
@@ -92,7 +49,10 @@ ul {
 .add-picture,
 .add-video {
     max-width: 1250px;
+    min-height: 83vh;
+    margin-top: 20px;
 }
+
 
 /* Modifie le contenu du bouton (Browser) généré par Bootstrap */
 .add-trick .custom-file-input ~ .custom-file-label:lang(fr)::after,
@@ -106,12 +66,236 @@ ul {
 
 
 
+/*// Header //*/
+
+header {
+    height: 100px;
+    background-color: #484b50;
+}
+
+header a {
+    line-height: 40px;
+    font-weight: 600;
+}
+
+header a {
+    color: #fff;
+}
+
+header a :hover {
+    color: #007bff;
+}
+
+header .logo {
+    float: left;
+    width: 150px;
+    height: 100px;
+    margin-left: 50px;
+}
+
+header .logo img {
+    width: 100%;
+}
+
+header nav .menu {
+    float: right;
+    width: 80%;
+    margin-top: 50px;
+    margin-bottom: 0;
+    text-align: right;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+header nav .menu li {
+    display: inline-block;
+    padding: 0 1%;
+    border-right: thin solid #007bff;
+}
+
+header nav .menu li:last-child {
+    border: none;
+}
+
+header nav .menu li :hover {
+    color: #007bff;
+}
+
+header nav .menu li a {
+    text-decoration: none;
+}
+
+.responsive-menu {
+    display: none;
+}
+/*// Fin Header //*/
+
+
+
+
 /*// Footer  //*/
 
 footer {
-    height: 80px;
+    display: flex;
+    height: 100px;
 }
 /*// Fin Footer  //*/
+
+
+
+
+/*// Page d'accueil //*/
+
+/* Bannière */
+#home-banner {
+    display: flex;
+    justify-content: center;
+    background-image: url('../uploads/trick/default.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 100%;
+    height: 95vh;
+}
+
+#home-banner h1 {
+    align-self: center;
+    margin: 10px;
+    padding: 25px;
+    border: 5px solid white;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 25px 15px white;
+    font-family: 'highvoltage_roughregular', cursive;
+    font-size: 3.5rem;
+}
+
+#home-banner h1 span {
+    font-size: 4.5rem;
+}
+
+/* Flèche pour descendre */
+.descend {
+    position: absolute;
+    right: 10px;
+    bottom: 20px;
+    transition: all 0.25s ease-in-out;
+}
+
+/* Flèche pour monter */
+.back-to-top {
+    display: none;
+}
+
+.show-back-to-top {
+    display: block;
+    position: fixed;
+    right: 10px;
+    bottom: 15px;
+    z-index: 20;
+    transition: all 0.25s ease-in-out;
+}
+
+.descend img,
+.back-to-top img {
+    width: 60px;
+    height: 60px;
+}
+
+/* Section figures */
+.home-container #tricks {
+    display: flex;
+    flex-direction: column;
+    max-width: 1700px;
+    margin: auto;
+    align-items: center;
+}
+
+.home-container #tricks .tricks-container {
+    display: flex;
+    align-content: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 15px;
+}
+
+.home-container #tricks .tricks-container .trick {
+    margin: 20px;
+    width: 280px;
+    word-wrap: break-word;
+    border: 1px solid rgba(0,0,0,0.125);
+    border-radius: 15px;
+    box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11),
+    0 4px 8px rgba(90, 97, 105, 0.12),
+    0 10px 10px #5a61690f,
+    0 7px 70px rgba(90, 97, 105, 0.1);
+}
+
+.home-container #tricks .tricks-container .trick .main-picture img {
+    width: 100%;
+    height: 175px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.home-container #tricks .tricks-container .trick .title-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.home-container #tricks .tricks-container .trick .title-buttons-container .trick-title {
+    max-width: 145px;
+    text-align: center;
+    border: 1px solid #007bff;
+    text-decoration: none;
+    color: #007bff;
+    background-color: #fff;
+}
+
+.home-container #tricks .tricks-container .trick .title-buttons-container .trick-title:hover {
+    border: 1px solid transparent;
+    color: #fff;
+    background-color: #007bff;
+    transition: .3s;
+}
+
+.home-container #tricks .tricks-container .trick .title-buttons-container img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Cache les figure au delà de 15 */
+.home-container #tricks .trick {
+    display: none;
+}
+
+/* Bouton charger plus de figure */
+.home-container #tricks #loadMore {
+    width: 200px;
+    border: 1px solid transparent;
+    color: #fff;
+    background-color: #007bff;
+    transition: .3s;
+}
+
+.home-container #tricks #loadMore:hover {
+    border: 1px solid #007bff;
+    text-decoration: none;
+    color: #007bff;
+    background-color: #fff;
+}
+
+/* Classe ajouté par le fichier load-more-comments.js */
+.home-container #tricks .noContent {
+    border: 1px solid black!important;
+    border-radius: 5px!important;
+    color: #000 !important;
+    background-color: transparent !important;
+    pointer-events: none;
+}
+/*// Fin Page d'accueil //*/
 
 
 
@@ -243,11 +427,20 @@ footer {
     position: absolute;
     top: 50%;
     left: 50%;
+    margin: 10px;
     padding: 25px;
+    border: 5px solid white;
     border-radius: 15px;
-    transform: translate(-50%, -50%);
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: inset 0 0 25px 15px white;
+    color: #007bff;
+    font-family: 'highvoltage_roughregular', cursive;
+    font-size: 3.5rem;
+    transform: translate(-50%, -50%);
+}
+
+.details-trick #mainPicture #title h1 {
+    padding: 0;
 }
 
 /* Boutons de modification/suppression de la figure - Boutons de modification/suppression de l'image principal */
@@ -605,6 +798,51 @@ footer {
 
 /* Responsive 991px Details d'une figure */
 @media only screen and (max-width: 991px) {
+    /* Header */
+    header .logo {
+        width: 100%;
+        margin: 0;
+    }
+
+    header .logo img {
+        width: 150px;
+    }
+
+    /* Menu fixé en bas */
+    header nav .menu {
+        display: none;
+    }
+
+    .responsive-menu {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        z-index: 10;
+        background-color: #484b50;
+    }
+
+    .responsive-menu .menu {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+        margin: 0;
+        padding: 15px;
+    }
+
+    .responsive-menu .menu img {
+        width: 35px;
+        height: 35px;
+    }
+
+    /* Flèche pour monter */
+    .show-back-to-top {
+        bottom: 110px;
+    }
+
     /* Modal pour modifier l'image principal*/
     .edit-trick #editMainPicture form .pictures-container {
         flex-direction: column;
