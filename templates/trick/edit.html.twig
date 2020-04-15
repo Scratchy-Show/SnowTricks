@@ -6,7 +6,7 @@
 {% block body %}
     <div class="edit-trick col-lg-8 col-md-10 mx-auto">
 
-        <h1 class="h1 mb-4 text-primary text-center">Modifier une figure</h1>
+        <h1 class="h1 mb-4 text-primary text-center">Modifier la figure</h1>
 
         <!-- Modal pour la suppression de la figure -->
         <div id="deleteTrick{{ trick.id }}"
@@ -246,7 +246,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="h4 modal-title" id="modalDeletePicture{{ picture.id }}">
-                                                Supprimer l'image {{ picture.id }}
+                                                Supprimer l'image ?
                                             </h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -319,7 +319,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="h4 modal-title" id="modalDeleteVideo{{ video.id }}">
-                                                Supprimer la vidéo {{ video.id }}
+                                                Supprimer la vidéo ?
                                             </h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -349,7 +349,7 @@
                     </a>
                 </div>
             {% elseif videos is empty %}
-                <div class="empty-video">
+                <div class="empty-video d-flex justify-content-end align-content-start flex-wrap">
                     <a href="{{ path('trick_video_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une vidéo">
                         <img src="{{ asset('img/icons/add.png') }}" alt="Ajouter une vidéo" />
                     </a>

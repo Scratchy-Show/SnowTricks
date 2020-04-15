@@ -63,12 +63,7 @@
                 </div>
                 {% if app.user.username is defined %}
                     <div class="buttons d-flex">
-                        <button type="button"
-                                class="btn"
-                                title="Modifier la figure"
-                                data-toggle="modal"
-                                data-target="#editTrick{ trick.id }}"
-                                data-whatever="@editTrick" >
+                        <button type="button" class="btn" title="Modifier la figure">
                             <a href="{{ path('trick_edit', {'id': trick.id}) }}}">
                                 <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
                             </a>
@@ -102,7 +97,7 @@
                                 data-toggle="modal"
                                 data-target="#editTrick{ trick.id }}"
                                 data-whatever="@editTrick">
-                            <a href="{{ path('trick_edit', {'id': trick.id}) }}}">
+                            <a href="{{ path('trick_edit', {'id': trick.id}) }}">
                                 <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
                             </a>
                         </button>

@@ -4,21 +4,121 @@
 
 
 {% block body %}
-    <div class="col-lg-8 col-md-10 mx-auto">
-        <h1 class="text-primary text-center">Accueil</h1>
-    </div>
 
+    <div class="home-container">
 
-    <div class="w-100 h-100">
-        <div class="home-bg">
-            <div class="container">
-                <span class="slogan">
-                    <p class="slogan-p">Born to snowboard</p>
-                </span>
+        <!-- Section de la bannière -->
+        <section id="home-banner">
+            <h1 class="h1 text-center text-primary">
+                <span>LE SNOWBOARD</span><br>
+                PAR DES PASSIONNES, POUR DES PASSIONNES
+            </h1>
+            <div class="descend">
+                <a href="#tricks">
+                    <img src={{ asset('img/icons/bottom.png') }} alt="Descendre" title="Voir figures" />
+                </a>
             </div>
-            <a href="#">
-                <i class="fas fa-chevron-down fa-4x chevron-down"></i>
-            </a>
-        </div>
+            <div class="back-to-top">
+                <a href="#tricks">
+                    <img src={{ asset('img/icons/top.png') }} alt="Monter" title="Accueil" />
+                </a>
+            </div>
+        </section>
+
+        <!-- Section des figures -->
+        <section id="tricks">
+            <div class="tricks-container">
+                {% for trick in tricks %}
+                    <div class="trick">
+                        <div class="main-picture">
+                            {% if trick.mainPicture is not empty %}
+                                <!-- Si une image principal est défini -->
+                                <img src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}" alt="Image principal" />
+                            {% else %}
+                                <!-- Si aucune image principal n'est défini -->
+                                <img src="{{ asset('uploads/trick/'~ 'default.jpg') }}" alt="Image principal" />
+                            {% endif %}
+                        </div>
+                        <div class="title-buttons-container">
+                            <a class="trick-title p-2 rounded-lg" href="{{ path('trick_details', {'trickId': trick.id, page: '1'}) }}">{{ trick.name }}</a>
+                            {% if app.user.username is defined %}
+                                <div class="buttons d-flex">
+                                    <button type="button" class="btn" title="Modifier la figure">
+                                        <a href="{{ path('trick_edit', {'id': trick.id}) }}}">
+                                            <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
+                                        </a>
+                                    </button>
+                                    <button type="button"
+                                            class="btn"
+                                            title="Supprimer la figure"
+                                            data-toggle="modal"
+                                            data-target="#deleteTrick{{ trick.id }}"
+                                            data-whatever="@deleteTrick">
+                                        <a href="#"
+                                           data-toggle="modal"
+                                           data-target="#deleteTrick{{ trick.id }}"
+                                           data-whatever="@deleteTrick">
+                                            <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer la figure" />
+                                        </a>
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Modal pour la suppression de la figure -->
+                    <div id="deleteTrick{{ trick.id }}"
+                         class="modal fade delete-trick p-0"
+                         tabindex="-1"
+                         role="dialog"
+                         aria-labelledby="modalDeleteTrick{{ trick.id }}"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 id="modalDeleteTrick{{ trick.id }}" class="h4 modal-title">
+                                        Suppression de la figure <span class="font-weight-bold">{{ trick.name }}</span>
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="m-0">Voulez-vous supprimer la figure
+                                        <span class="font-weight-bold">{{ trick.name }}</span> ?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-info" data-dismiss="modal">
+                                        Annuler
+                                    </button>
+                                    <a href="{{ path('trick_delete', {'trickId': trick.id}) }}">
+                                        <button type="button" class="btn btn-outline-danger">
+                                            Supprimer
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if tricks is not empty %}
+                <div class="m-3">
+                    <a href="#" id="loadMore" class="d-block text-center m-auto p-2 rounded-lg">Plus de figures</a>
+                </div>
+            {% elseif tricks is empty %}
+                <div class="mb-5">
+                    <p class="text-center">Il n'y a aucune figure.</p>
+                </div>
+            {% endif %}
+        </section>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/load-more-tricks.js') }}"></script>
+    <script src="{{ asset('js/back-to-top.js') }}"></script>
 {% endblock %}
