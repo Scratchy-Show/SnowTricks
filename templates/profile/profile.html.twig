@@ -4,8 +4,9 @@
 
 
 {% block body %}
-    <div class="col-lg-8 col-md-10 mx-auto">
-        <h1 class="text-primary text-center">Page de profil</h1>
+    <div class="profil-details col-lg-8 col-md-10 mx-auto">
+
+        <h1 class="h1 text-primary text-center">Page de profil</h1>
 
         <div class="mt-4 mb-3">
             <figure class="text-center">
@@ -17,7 +18,10 @@
             {{ form_widget(form) }}
             {{ form_end(form) }}
 
-            <a href="{{ url('profile_edit', {token: app.user.token}) }}" class="d-flex justify-content-center align-items-center col-12 text-primary"><u>Modifier le profil ?</u></a>
+            <a href="{{ url('profile_edit', {token: app.user.token}) }}"
+               class="d-flex justify-content-center align-items-center col-12 text-primary">
+                <u>Modifier le profil ?</u>
+            </a>
         </div>
     </div>
 {% endblock %}

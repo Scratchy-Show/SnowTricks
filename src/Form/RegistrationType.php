@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationType extends AbstractType
 {
@@ -34,7 +35,13 @@ class RegistrationType extends AbstractType
                 'label' => "Image de profil",
                 'attr' => [
                     'placeholder' => 'Image de profil'
-                ]
+                ],
+                'constraints' => [
+                    new NotBlank(
+                        array (
+                        'message' => 'Une image doit être indiquée')
+                    )
+                ],
             ])
             ->add('password', PasswordType::class, [
                 'label' => "Mot de passe",

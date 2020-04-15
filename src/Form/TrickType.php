@@ -20,12 +20,14 @@ class TrickType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => "Nom",
+                'empty_data' => ' ',
                 'attr' => [
                     'placeholder' => 'Nom de la figure'
                 ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => "Description",
+                'empty_data' => ' ',
                 'attr' => [
                     'placeholder' => 'Description de la figure'
                 ]
@@ -36,7 +38,8 @@ class TrickType extends AbstractType
                 'label' => "Catégorie"
             ])
             ->add('mainPicture', PictureType::class, [
-                'required'   => false
+                'required'   => false,
+                'label' => false
             ])
             ->add('pictures', CollectionType::class, [
                 'entry_type' => PictureType::class,
@@ -64,7 +67,7 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
-            "allow_extra_fields" => true
+            'allow_extra_fields' => true
         ]);
     }
 }

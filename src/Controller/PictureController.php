@@ -43,6 +43,21 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                 // Récupère la nouvelle image
                 $pictureFile = $form->get('file')->getData();
 
+                // Si il n'y a pas d'image
+                if (empty($pictureFile))
+                {
+                    // Message d'erreur
+                    $this->addFlash(
+                        'danger',
+                        "Aucune image trouvée !"
+                    );
+
+                    // Redirection vers la page d'ajout d'image
+                    return $this->redirectToRoute('trick_picture_add', [
+                        'trickId' => $trick->getId()
+                    ]);
+                }
+
                 // Chemin de destination de l'image
                 $destination = $this->getParameter('trick_picture_directory');
 
@@ -69,11 +84,10 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                     "L'image a bien été ajouté"
                 );
 
-                // Renvoie vers la page du profil
-                header("Location: /figure/modifier/" . $trickId);
-
-                // Empêche l'exécution du reste du script
-                die();
+                // Redirection vers la page d'édition la figure
+                return $this->redirectToRoute('trick_edit', [
+                    'id' => $trick->getId()
+                ]);
             }
             // Affiche par défaut la page de création d'une figure
             return $this->render('trick/addPicture.html.twig', [
@@ -225,10 +239,9 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                     "L'image principal a bien été modifié"
                 );
 
-                // Redirection vers la page de la figure
-                return $this->redirectToRoute('trick_details', [
-                    'trickId' => $trick->getId(),
-                    'page' => 1
+                // Redirection vers la page de modification de la figure
+                return $this->redirectToRoute('trick_edit', [
+                    'id' => $trick->getId()
                 ]);
             }
             // Message de confirmation

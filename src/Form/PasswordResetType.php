@@ -27,7 +27,7 @@ class PasswordResetType extends AbstractType
                 ],
             ])
             ->add('password', PasswordType::class, [
-                'label' => "Mot de passe",
+                'label' => "Nouveau mot de passe",
                 'attr' => [
                     'placeholder' => 'Votre nouveau mot de passe'
                 ],

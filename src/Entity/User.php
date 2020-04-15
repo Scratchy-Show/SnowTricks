@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  message = "Cet email est déjà utilisé"
  * )
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -57,6 +57,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", name="password", length=255)
+     * @Assert\NotBlank(message = "Un mot de passe doit être indiqué")
      * @Assert\Length(
      *     min = 8,
      *     minMessage = "Le mot de passe doit faire au moins {{ limit }} caractères")
@@ -66,12 +67,11 @@ class User implements UserInterface
     /**
      * @Assert\EqualTo(
      *     propertyPath = "password",
-     *     message = "Les deux mot de passe ne correspondent pas")
+     *     message = "Les mots de passe ne correspondent pas")
      */
     protected $passwordConfirm;
 
     /**
-     * @Assert\NotBlank(message = "Une image doit être indiquée")
      * @Assert\Image(
      *  mimeTypes        = {"image/jpeg", "image/jpg", "image/png"},
      *  mimeTypesMessage = "Le fichier ne possède pas une extension valide. Veuillez insérer une image en .jpg, .jpeg ou .png",
@@ -139,6 +139,26 @@ class User implements UserInterface
     public function eraseCredentials() {}
 
     public function getSalt() {}
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            ) = unserialize($serialized, array('allowed_classes' => false));
+    }
 
 
     public function getId(): ?int

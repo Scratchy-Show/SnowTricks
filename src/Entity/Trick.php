@@ -60,11 +60,13 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="trick", cascade={"persist", "remove"})
+     * @Assert\Valid
      */
     protected $pictures;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Picture", cascade={"persist", "remove"})
+     * @Assert\Valid
      */
     protected $mainPicture;
 
@@ -82,6 +84,7 @@ class Trick
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="tricks", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @Assert\NotBlank(message = "Une catégorie doit être indiquée")
      */
     protected $category;
 

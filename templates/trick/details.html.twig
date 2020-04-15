@@ -4,175 +4,255 @@
 
 
 {% block body %}
+    <div class="details-trick col-lg-8 col-md-10 mx-auto">
 
-    <div class="col-lg-12 col-md-10 mx-auto">
-
-        <div class="edit-trick col-12">
-
-            <div class="main-title">
-
-                <!-- Image principal -->
-                <figure>
-                    <!-- Si une image principal est défini -->
-                    {% if trick.mainPicture is not empty %}
-                        <img src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}"  class="rounded" alt="" />
-                        <figcaption>
-                            <div class="title">
-                                <h1>{{ trick.name }}</h1>
-                            </div>
-                        </figcaption>
-                        {% if app.user.username is defined %}
-                            <div class="buttons">
-                                <button type="button" class="btn" title="Modifier la figure" data-toggle="modal" data-target="#editMainPicture{ trick.mainPicture.id }}" data-whatever="@editMainPic" >
-                                    <img src="{{ asset('img/icons/edit.png') }}" alt="" />
-                                </button>
-                                <button type="button" class="btn" title="Supprimer la figure" data-toggle="modal" data-target="#deletePicture{{ trick.mainPicture.id }}" data-whatever="@deletePic">
-                                    <img src="{{ asset('img/icons/delete.png') }}" alt="" />
-                                </button>
-                            </div>
-                        {% endif %}
-                    {% else %} <!-- Si aucune image principal n'est défini -->
-                        <img src="{{ asset('uploads/trick/'~ 'default.jpg') }}"  class="rounded" alt="" />
-                        <figcaption>
-                            <div class="title">
-                                <h2>{{ trick.name }}</h2>
-                            </div>
-                        </figcaption>
-                        {% if app.user.username is defined %}
-                            <div class="buttons">
-                                <button type="button" class="btn" title="Modifier la figure" data-toggle="modal" data-target="#editMainPicture{ picture.id }}" data-whatever="@editMainPic" >
-                                    <img src="{{ asset('img/icons/edit.png') }}" alt="" />
-                                </button>
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                </figure>
+        <!-- Modal pour la suppression de la figure -->
+        <div id="deleteTrick{{ trick.id }}"
+             class="modal fade delete-trick p-0"
+             tabindex="-1"
+             role="dialog"
+             aria-labelledby="modalDeleteTrick{{ trick.id }}"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="modalDeleteTrick{{ trick.id }}" class="h4 modal-title">
+                            Suppression de la figure <span class="font-weight-bold">{{ trick.name }}</span>
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="m-0">Voulez-vous supprimer la figure
+                            <span class="font-weight-bold">{{ trick.name }}</span> ?
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-info" data-dismiss="modal">
+                            Annuler
+                        </button>
+                        <a href="{{ path('trick_delete', {'trickId': trick.id}) }}">
+                            <button type="button" class="btn btn-outline-danger">
+                                Supprimer
+                            </button>
+                        </a>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <!-- Modal Affiche en grand une image -->
-            <div class="modal-picture">
-                <div id="pictureModal" class="modal">
-                    <span class="close">&times;</span>
-                    <img src="" class="modal-content" id="img" alt="" />
+        <!-- Modal affiche en grand une image -->
+        <div class="modal-picture">
+            <div id="pictureModal" class="modal">
+                <span class="close">&times;</span>
+                <img id="img" class="modal-content" src="#" alt="Image" />
+            </div>
+        </div>
+
+        <!-- Section image principal -->
+        <section id="mainPicture" class="position-relative border border-dark">
+            <!-- Si une image principal est défini -->
+            {% if trick.mainPicture is not empty %}
+                <img class="w-100"
+                     src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}"
+                     alt="Image principal"
+                />
+                <div id="title" class="text-center">
+                    <h1 class="h1">{{ trick.name }}</h1>
+                </div>
+                {% if app.user.username is defined %}
+                    <div class="buttons d-flex">
+                        <button type="button"
+                                class="btn"
+                                title="Modifier la figure"
+                                data-toggle="modal"
+                                data-target="#editTrick{ trick.id }}"
+                                data-whatever="@editTrick" >
+                            <a href="{{ path('trick_edit', {'id': trick.id}) }}}">
+                                <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
+                            </a>
+                        </button>
+                        <button type="button"
+                                class="btn"
+                                title="Supprimer la figure"
+                                data-toggle="modal"
+                                data-target="#deleteTrick{{ trick.id }}"
+                                data-whatever="@deleteTrick">
+                            <a href="#"
+                               data-toggle="modal"
+                               data-target="#deleteTrick{{ trick.id }}"
+                               data-whatever="@deleteTrick">
+                                <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer la figure" />
+                            </a>
+                        </button>
+                    </div>
+                {% endif %}
+                <!-- Si aucune image principal n'est défini -->
+            {% else %}
+                <img class="w-100" src="{{ asset('uploads/trick/'~ 'default.jpg') }}" alt="Image principal" />
+                <div id="title" class="text-center">
+                    <h1 class="h1">{{ trick.name }}</h1>
+                </div>
+                {% if app.user.username is defined %}
+                    <div class="buttons">
+                        <button type="button"
+                                class="btn"
+                                title="Modifier la figure"
+                                data-toggle="modal"
+                                data-target="#editTrick{ trick.id }}"
+                                data-whatever="@editTrick">
+                            <a href="{{ path('trick_edit', {'id': trick.id}) }}}">
+                                <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
+                            </a>
+                        </button>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </section>
+
+        <!-- Bouton Afficher/Masquer les médias -->
+        <div id="button-show-hidden-medias" class="mt-3 mb-3 text-center">
+            <a href="#" id="showMedia">
+                <button class="col-10 btn btn-outline-primary">Afficher les médias</button>
+            </a>
+            <a href="#" id="hideMedia" class="d-none">
+                <button class="col-10 btn btn-outline-primary">Masquer les médias</button>
+            </a>
+        </div>
+
+        <!-- Section gallerie -->
+        <section id="container-gallery" class="medias mt-3">
+
+            <!-- Gallerie images -->
+            {% if trick.pictures is not empty %}
+                <div class="pictures-trick d-flex justify-content-start align-content-start flex-wrap">
+
+                    {% for picture in trick.pictures %}
+                        <!-- Si une image principal est défini -->
+                        {% if trick.mainPicture.id is defined  %}
+                            <!-- Evite d'afficher l'image principal dans la gallerie -->
+                            {% if picture.id != trick.mainPicture.id %}
+                                <div class="picture">
+                                    <img class="imgModal rounded"
+                                         src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
+                                         alt="Image"
+                                    />
+                                </div>
+                            {% endif %}
+                        <!-- Si une image principal n'est pas défini -->
+                        {% elseif trick.mainPicture.id is not defined %}
+                            <div class="picture">
+                                <img class="imgModal rounded"
+                                     src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
+                                     alt="Image"
+                                />
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Gallerie vidéos -->
+            {% if trick.videos is not empty %}
+                <div class="videos-trick d-flex justify-content-start align-content-start flex-wrap">
+                    {% for video in trick.videos %}
+                        <div class="video pr-1">
+                            <iframe src="{{ video.url }}" allowfullscreen></iframe>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+
+        <!-- Section infos -->
+        <section id="container-infos" class="mt-3">
+            <div class="row p-2">
+                <div class="description col-11 p-3 mx-auto bg-light">
+                    {{ trick.description | raw }}
                 </div>
             </div>
 
-            <!-- Bouton Afficher/Masquer les médias -->
-            <div class="text-center" id="button-show-hidden-medias">
-                <a href="#" id="showMedia">
-                    <button class="btn btn-outline-secondary">Afficher les médias</button>
-                </a>
-                <a href="#" id="hideMedia" class="d-none">
-                    <button class="btn btn-outline-secondary">Masquer les médias</button>
-                </a>
-            </div>
-
-            <!-- Section gallerie -->
-            <div class="container-gallery medias">
-
-                <!-- Gallerie images -->
-                {% if trick.pictures is not empty %}
-                    <div class="pictures-trick">
-
-                        {% for picture in trick.pictures %}
-                            <!-- Si une image principal est défini -->
-                            {% if trick.mainPicture.id is defined  %}
-                                <!-- Evite d'afficher l'image principal dans la gallerie -->
-                                {% if picture.id != trick.mainPicture.id %}
-                                    <div class="picture">
-                                        <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
-                                    </div>
-                                {% endif %}
-                            {% elseif trick.mainPicture.id is not defined %}
-                                <div class="picture">
-                                    <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"  class="imgModal rounded" alt="" />
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
-                <!-- Gallerie vidéos -->
-                {% if trick.videos is not empty %}
-                    <div class="videos-trick">
-                        {% for video in trick.videos %}
-                            <div class="video-buttons">
-                                <div class="video embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="{{ video.url }}" allowfullscreen></iframe>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-
-            <p>
-                {{ trick.description }}
-            </p>
-
-            <!-- Section infos -->
-            <div class="container-infos">
-                <div class="infos">
-                    <p>
-                        <span class="title">Ajouter le :</span>
-                        <span class="content">{{ trick.date|date("d/m/Y à H:m:s") }}</span>
+            <div class="row p-2">
+                <div class="infos row text-center col-11 mx-auto bg-light">
+                    <p class="col p-3 mb-0">
+                        Publié le {{ trick.date | date('d/m/Y') }} à {{ trick.date | date('H:i') }} par
+                        <span class="font-weight-bold">{{ trick.user.username }}</span>
                     </p>
                     <!-- Si il y a une date de mise à jour -->
                     {% if trick.updateDate is not null %}
-                        <p>
-                            <span class="title">Modifier le :</span>
-                            <span class="content">{{ trick.updateDate|date("d/m/Y à H:m:s") }}</span>
+                        <p class="col p-3 mb-0">
+                            Mis à jour le {{ trick.updateDate | date('d/m/Y') }} à {{ trick.updateDate | date('H:i') }}
                         </p>
                     {% endif %}
-                    <p>
-                        <span class="title">Catégorie :</span>
-                        <span class="content">{{ trick.category.name }}</span>
-                    </p>
-                    <p>
-                        <span class="title">Auteur :</span>
-                        <span class="content">{{ trick.user.username }}</span>
+                    <p class="col p-3 mb-0">
+                        Catégorie : <span class="font-weight-bold">{{ trick.category.name }}</span>
                     </p>
                 </div>
             </div>
+        </section>
 
-            <!-- Section commentaires -->
-            <div class="text-center">
-                {% if app.user.username is not defined %}
-                    <p>
-                        <a href="{{ path('registration') }}">Inscrivez-vous</a> ou <a href="{{ path('login') }}">connectez vous</a> pour commenter l'article.
-                    </p>
-                {% else %}
-                    <div class="col-sm-10 col-md-8 mx-auto">
-                        {{ form_start(form) }}
-                        {{ form_widget(form) }}
-                        <button type="submit" class="btn btn-success col-sm-s8 mx-auto">Laisser un commentaire</button>
-                        {{ form_end(form) }}
-                    </div>
-                {% endif %}
-            </div>
+        <!-- Section du formulaire des commentaires -->
+        <section id="form-comments" class="row text-center">
+            {% if app.user.username is not defined %}
+                <p class="col-sm-10 col-md-8 mx-auto mt-4 mb-5">
+                    <a href="{{ path('registration') }}">Inscrivez-vous</a>
+                    ou
+                    <a href="{{ path('login') }}">connectez vous</a>
+                    pour commenter l'article.
+                </p>
+            {% else %}
+                <div class="col-sm-10 col-md-8 mx-auto mt-3 mb-3">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-success col-sm-s6 mx-auto">Laisser un commentaire</button>
+                    {{ form_end(form) }}
+                </div>
+            {% endif %}
+        </section>
 
-            <section id="comments">
-                {% for comment in comments %}
-                    <div class="comment row mx-auto">
-                        <div class="col-md-10 col-12 mx-auto row">
-                            <div class="userImage col-lg-2 col-4">
-                                <img src="{{asset(comment.user.profilPicturePath ~ '/' ~ comment.user.pictureName)}}" class="avatar avatar-medium" alt="comment.user.username">
-                            </div>
-                            <p class="col-lg-10 col-8 bg-light">
-                                <strong>{{ comment.user.username }}</strong> <small class="text-muted">({{ comment.date | date('d/m/Y à H:i') }}) :</small>
-                                <br>{{ comment.content }}
-                            </p>
+        <!-- Section des commentaires -->
+        <section id="comments">
+            {% for comment in comments %}
+                <div class="comment">
+                    <div class="col-md-10 col-12 mx-auto row">
+                        <div class="col-lg-2 col-4 text-center">
+                            <img class="rounded-circle"
+                                 src="{{asset(comment.user.profilPicturePath ~ '/' ~ comment.user.pictureName)}}"
+                                 alt="{{ comment.user.username }}"
+                            />
                         </div>
+                        <p class="col-lg-10 col-8 bg-light">
+                            <span class="font-weight-bold">{{ comment.user.username }}</span>
+                            <small class="text-secondary">({{ comment.date | date('d/m/Y à H:i') }}) :</small><br>
+                            {{ comment.content }}
+                        </p>
                     </div>
-                {% endfor %}
-
-                <div class="paging-container">
-                    <!-- Pagination des commentaires -->
-                    {{ include('shared/paging.html.twig') }}
                 </div>
+            {% endfor %}
 
-                <a href="#" id="loadMore">Plus de commentaires</a>
-            </section>
-        </div>
+            <!-- Pagination des commentaires -->
+            <div class="paging-container mt-4">
+                {{ include('shared/paging.html.twig') }}
+            </div>
+
+            {% if comments is not empty %}
+            <div class="m-3">
+                <a href="#" id="loadMore" class="d-block text-center m-auto p-2 rounded-lg">Plus de commentaires</a>
+            </div>
+            {% elseif comments is empty %}
+                <div class="mb-5">
+                    <p class="text-center">Il n'y a aucun commentaire.</p>
+                </div>
+            {% endif %}
+        </section>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/popup.js') }}"></script>
+    <script src="{{ asset('js/show-hide-media-responsive.js') }}"></script>
+    <script src="{{ asset('js/load-more-comments.js') }}"></script>
+    <script src="{{ asset('js/paging-comments.js') }}"></script>
 {% endblock %}

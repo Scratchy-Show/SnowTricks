@@ -1,45 +1,133 @@
-/* Base */
+/*// Home picture //*/
 
-.container {
-    min-width: 345px;
+.home-bg {
+    background-image: url('../uploads/trick/default.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 100%;
+    height: 100vh;
+}
+
+.slogan {
+    height: 100vh;
+    text-align: left;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-transform: uppercase;
+    color: black;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.slogan-p {
+    align-self: flex-start;
+    font-family: 'Shadows Into Light', cursive;
+}
+
+.chevron-down {
+    position: absolute;
+    right: 0.5%;
+    bottom: 0;
+}
+
+.cup {
+    position: relative;
+}
+
+.chevron-up {
+    position: absolute;
+    right: 0.5%;
+    bottom: 0;
+}
+
+.tricks-anchor {
+    /* Anchor and fixed navbar */
+    display: block;
+    height: 98px;
+    margin-top: -98px;
+    visibility: hidden;
 }
 
 
-/* Page - Inscription */
 
-/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
-#registration .custom-file-input ~ .custom-file-label:lang(fr)::after {
-    content: "Choisir...";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*// Base  //*/
+
+ul {
+    padding-left: 0;
+    list-style: none;
 }
 
-
-
-/* Page - Modifier le profil*/
+/* Limitation largeur des pages */
+.registration,
+.login,
+.password-forgot,
+.password-reset,
+.profil-details,
+.profil-edit,
+.details-trick,
+.edit-trick,
+.add-picture,
+.add-video {
+    max-width: 1250px;
+}
 
 /* Modifie le contenu du bouton (Browser) généré par Bootstrap */
+.add-trick .custom-file-input ~ .custom-file-label:lang(fr)::after,
+.add-picture .custom-file-input ~ .custom-file-label:lang(fr)::after,
+.registration .custom-file-input ~ .custom-file-label:lang(fr)::after,
 .edit-profile .custom-file-input ~ .custom-file-label:lang(fr)::after {
     content: "Choisir...";
 }
+/*// Fin Base  //*/
 
 
 
 
-/* Page - Créer une figure  */
+/*// Footer  //*/
 
-.add-trick form fieldset legend {
-    display: none;
+footer {
+    height: 80px;
+}
+/*// Fin Footer  //*/
+
+
+
+
+/*// Page - Créer une figure  //*/
+
+.add-trick .form-group label {
+    font-weight: bold;
 }
 
-.add-trick form textarea {
+.add-trick .custom-file label {
+    font-weight: normal;
+}
+
+.add-trick #trick_description {
     height: 250px;
-}
-
-
-/* Champ d'ajout d'image et d'url  */
-.add-trick .pictures,
-.add-trick .videos {
-    padding-left: 0;
-    list-style: none;
 }
 
 .add-trick .pictures li,
@@ -47,126 +135,77 @@
     margin-bottom: 10px;
 }
 
-.add-trick .pictures li:last-child,
-.add-trick .videos li:last-child {
-    margin-top: 25px;
-    margin-bottom: 25px;
+/* Retire le label du champ */
+.add-trick .pictures li .form-group label {
+    display: none;
+}
+
+/* Affiche le champ */
+.add-trick .pictures li .form-group .custom-file-label {
+    display: inline-block;
 }
 
 .add-trick .pictures li button,
 .add-trick .videos li button {
-    padding: .375rem .75rem;
+    padding: 12px;
     border: 1px solid transparent;
-    border-radius: .25rem;
+    border-radius: 5px;
     color: #fff;
     background-color: #007bff;
     cursor: pointer;
 }
 
-.add-trick .pictures li .form-group label {
-    display: none;
+.add-trick .pictures li button:nth-child(even),
+.add-trick .videos li button:nth-child(even) {
+    background-color: darkred;
 }
-
-.add-trick .pictures li .form-group .custom-file-label {
-    display: inline-block;
-}
-
-
-/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
-.add-trick .custom-file-input ~ .custom-file-label:lang(fr)::after {
-    content: "Choisir...";
-}
-
-.add-picture .custom-file-input ~ .custom-file-label:lang(fr)::after {
-    content: "Choisir...";
-}
+/*// Fin Page - Créer une figure  //*/
 
 
 
-/* Page - Modifier une figure  */
 
+/*// Page - Details d'une figure & Page - Modifier une figure  //*/
 
-@media only screen and (max-width: 991px) {
-    .edit-trick {
-        padding: 0;
-    }
-}
-
-
-/* Titre et image principal */
-.edit-trick .main-title {
-    position: relative;
-    max-height: 615px;
-    margin-bottom: 20px;
-}
-
-.edit-trick .main-title figure img {
-    width: 100%;
-    height: auto;
-    max-height: 600px;
-}
-
-.edit-trick .main-title figure .buttons {
+/* Modal pour supprimer la figure */
+.details-trick .delete-trick .modal-dialog,
+.edit-trick .delete-trick .modal-dialog {
+    height: 60%;
     display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    position: absolute;
-    top: 0;
-}
-
-.edit-trick .main-title figure .buttons button {
-    padding: 10px 10px 0 0;
-}
-
-.edit-trick .main-title figure .buttons button img {
-    width: 30px;
-    height: 30px;
-}
-
-.edit-trick .main-title figure figcaption {
-    display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
 }
+/* Fin Modal pour supprimer la figure */
 
-.edit-trick .main-title figure figcaption .title {
-    border: 5px solid white;
-    border-radius: 15px;
-    padding: 25px;
-    background-color: rgba(255, 255, 255, 0.5);
-    box-shadow: inset 0 0 25px 15px white;
+/* Modal pour modifier l'image principal */
+.edit-trick #editMainPicture form .pictures-container .picture img {
+    width: 200px;
 }
-
-.edit-trick .main-title figure figcaption .title h2 {
-    font-size: 2.5vw;
-}
+/* Fin Modal pour modifier l'image principal */
 
 /* Modal pour afficher une image en grand */
-.edit-trick .modal-picture .modal {
+.details-trick .modal-picture .modal,
+.edit-trick .modal-picture .modal{
     display: none;
     position: fixed;
-    z-index: 1;
-    padding-top: 100px;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
+    padding-top: 100px;
+    z-index: 1;
     overflow: auto;
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.9);
 }
 
+.details-trick .modal-picture .modal-content,
 .edit-trick .modal-picture .modal-content {
-    margin: auto;
     display: block;
+    margin: auto;
     width: 80%;
     max-width: 700px;
 }
 
+.details-trick .modal-picture .modal-content,
 .edit-trick .modal-picture .modal-content {
     animation-name: zoom;
     animation-duration: 0.6s;
@@ -177,71 +216,494 @@
     to {transform:scale(1)}
 }
 
+.details-trick .modal-picture .close,
 .edit-trick .modal-picture .close {
     position: absolute;
     top: 15px;
     right: 35px;
-    color: #fff;
     font-size: 40px;
     font-weight: bold;
+    color: #fff;
     transition: 0.3s;
 }
 
+.details-trick .modal-picture .close:hover,
+.details-trick .modal-picture .close:focus,
 .edit-trick .modal-picture .close:hover,
 .edit-trick .modal-picture .close:focus {
-    color: #bbb;
     text-decoration: none;
+    cursor: pointer;
+    color: #bbb;
+}
+/* Fin Modal pour afficher une image en grand */
+
+/* Image principal et titre */
+/* Titre */
+#mainPicture #title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 25px;
+    border-radius: 15px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 25px 15px white;
+}
+
+/* Boutons de modification/suppression de la figure - Boutons de modification/suppression de l'image principal */
+#mainPicture .buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+/* Image des boutons */
+#mainPicture .buttons img {
+    width: 15px;
+    height: 15px;
+}
+/* Fin image principal et titre */
+
+/* Gallerie des médias */
+.details-trick #container-gallery,
+.edit-trick #container-gallery {
+    display: flex;
+}
+
+/* Alignement des images et vidéos */
+.details-trick #container-gallery .pictures-trick,
+.details-trick #container-gallery .videos-trick,
+.edit-trick #container-gallery .pictures-trick,
+.edit-trick #container-gallery .videos-trick {
+    width: 50%;
+}
+
+.details-trick #container-gallery .pictures-trick .picture,
+.edit-trick #container-gallery .pictures-trick .picture{
+    padding: 2px;
+}
+
+.details-trick #container-gallery .pictures-trick .picture img,
+.edit-trick #container-gallery .pictures-trick .picture img {
+    max-width: 190px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.details-trick #container-gallery .pictures-trick .picture .imgModal,
+.edit-trick #container-gallery .pictures-trick .picture .imgModal {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.details-trick #container-gallery .pictures-trick .picture .imgModal:hover,
+.edit-trick #container-gallery .pictures-trick .picture .imgModal:hover{
+    opacity: 0.9;
+}
+
+.details-trick #container-gallery .videos-trick .video,
+.edit-trick #container-gallery .videos-trick .video {
+    width: 200px;
+}
+
+.details-trick #container-gallery .videos-trick .video iframe,
+.edit-trick #container-gallery .videos-trick .video iframe {
+    width: 100%;
+}
+/* Fin gallerie des médias */
+
+/* Modal de suppression d'une image */
+.edit-trick #container-gallery .videos-trick .delete .modal-body .video {
+    margin: auto;
+}
+/* Fin Modal de suppression d'une image */
+
+/* Icon de suppression */
+.edit-trick #container-gallery .pictures-trick .picture,
+.edit-trick #container-gallery .videos-trick .video-container {
+    position: relative;
+}
+
+.edit-trick #container-gallery .pictures-trick .picture .button-container,
+.edit-trick #container-gallery .videos-trick .button-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.edit-trick #container-gallery .pictures-trick .picture .button-container button,
+.edit-trick #container-gallery .videos-trick .button-container button {
+    width: 100%;
+    padding: 0;
+}
+
+.edit-trick #container-gallery .pictures-trick .picture .button-container button img,
+.edit-trick #container-gallery .videos-trick .button-container button img {
+    width: 10px;
+    height: 10px;
+}
+/* Fin Icon de suppression */
+
+/* Bouton d'ajout */
+.edit-trick #container-gallery .pictures-trick .add,
+.edit-trick #container-gallery .videos-trick .add,
+.edit-trick #container-gallery .empty-picture .add,
+.edit-trick #container-gallery .empty-video .add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-@media only screen and (max-width: 700px){
-    .edit-trick .modal-picture .modal-content {
-        width: 100%;
-    }
+.edit-trick #container-gallery .pictures-trick .add:hover,
+.edit-trick #container-gallery .videos-trick .add:hover,
+.edit-trick #container-gallery .empty-picture .add:hover,
+.edit-trick #container-gallery .empty-video .add:hover {
+    background-color: grey;
 }
 
-/* Modal pour supprimer une figure */
-.edit-trick .delete-trick .modal-body span {
-    font-weight: bold;
+/* Icon d'ajout */
+.edit-trick #container-gallery .pictures-trick a img,
+.edit-trick #container-gallery .videos-trick a img,
+.edit-trick #container-gallery .empty-picture img,
+.edit-trick #container-gallery .empty-video img {
+    width: 30px;
+    height: 30px;
 }
+/* Fin Bouton d'ajout */
 
 /* Si aucune images ou vidéos */
-.edit-trick .container-gallery .empty-picture,
-.edit-trick .container-gallery .empty-video {
+.edit-trick #container-gallery .empty-picture,
+.edit-trick #container-gallery .empty-video {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 50%;
 }
+/* Fin Si aucune images ou vidéos */
 
-/* Bouton pour afficher/masquer les médias */
-#button-show-hidden-medias {
-    margin-bottom: 15px;
+/* Infos */
+.details-trick #container-infos .description,
+.details-trick #container-infos .infos,
+.edit-trick #container-infos .infos{
+    border: 1px solid black;
 }
 
-/* Alignement des images et videos */
-.edit-trick .container-gallery  {
+.details-trick #container-infos .infos span,
+.edit-trick #container-infos .infos span {
+    font-variant-caps: all-small-caps;
+    max-height: 64px;
+}
+/* Fin des infos */
+
+
+/* Formulaire de modification de la figure*/
+.edit-trick #form-edit-trick form {
+    width: 90%;
+    margin: auto;
+}
+
+.edit-trick #form-edit-trick form label {
     display: flex;
-    flex-direction: row;
+    font-weight: bold;
+    font-variant-caps: all-small-caps;
 }
 
-/* Alignement des images et videos responsive */
-@media only screen and (max-width: 991px) {
-    .edit-trick .container-gallery {
+.edit-trick #form-edit-trick form .form-group label {
+    flex-direction: column;
+    text-align: initial;
+}
+
+.edit-trick #form-edit-trick form .form-group #trick_description {
+    min-height: 250px;
+}
+
+.edit-trick #form-edit-trick form .buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 50px;
+}
+
+.edit-trick #form-edit-trick form .buttons button {
+    max-width: 150px;
+}
+
+.edit-trick #form-edit-trick form .buttons button:first-child {
+    margin-right: 20px;
+}
+/* Fin Formulaire de modification de la figure*/
+
+
+
+
+/* Formulaire des commentaires*/
+.details-trick #form-comments p {
+    font-size: 1.5rem;
+}
+
+.details-trick #form-comments a {
+    text-decoration: none;
+}
+/* Fin Formulaire des commentaires*/
+
+/* Commentaires */
+/* Cache les commentaires au delà de 4 */
+.details-trick #comments .comment {
+    display: none;
+}
+
+.details-trick #comments .comment p {
+    padding:5px 15px;
+    border: 1px solid black;
+    overflow-wrap: break-word;
+}
+
+.details-trick #comments .comment img {
+    max-height: 65px;
+}
+
+.details-trick #comments .comment span {
+    font-variant-caps: all-small-caps;
+}
+/* Fin commentaires */
+
+
+/* Pagination */
+.details-trick #comments .paging-container {
+    display: none;
+}
+
+/* Classe ajouté par le fichier load-more-comments.js */
+.details-trick #comments .paging-block {
+    display: block;
+}
+
+.details-trick #comments .paging-container .paging li {
+    margin: 0 8px;
+    padding: 10px 0;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    background-color: #007bff;
+}
+
+.details-trick #comments .paging-container .paging li:hover:not(.active) {
+    background-color: #fff;
+    transition: background-color .5s;
+}
+
+.details-trick #comments .paging-container .paging li a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.details-trick #comments .paging-container .paging li a:hover:not(.active) {
+    color: #007bff;
+    transition: color .5s;
+}
+
+.details-trick #comments .paging-container .paging .active {
+    background-color: #fff;
+}
+
+.details-trick #comments .paging-container .paging .active a {
+    color: #007bff;
+}
+/* Fin de la pagination*/
+
+/* Bouton charger plus de commentaires */
+.details-trick #comments #loadMore {
+    width: 200px;
+    border: 1px solid transparent;
+    color: #fff;
+    background-color: #007bff;
+    transition: .3s;
+}
+
+.details-trick #comments #loadMore:hover {
+    border: 1px solid #007bff;
+    text-decoration: none;
+    color: #007bff;
+    background-color: #fff;
+}
+
+/* Classe ajouté par le fichier load-more-comments.js */
+.details-trick #comments .noContent {
+    display: none !important;
+}
+/* Fin bouton charger plus de commentaires */
+
+
+/* Responsive 1230px Details d'une figure */
+@media only screen and (max-width: 1230px) {
+    .details-trick #container-gallery .picture img,
+    .edit-trick #container-gallery .picture img {
+        width: 170px;
+    }
+
+    .details-trick #container-gallery .videos-trick .video,
+    .edit-trick #container-gallery .videos-trick .video {
+        width: 250px;
+    }
+}
+
+/* Responsive 1175px Details d'une figure */
+@media only screen and (max-width: 1175px) {
+    .details-trick #container-gallery .picture img,
+    .edit-trick #container-gallery .picture img {
+        width: 160px;
+    }
+}
+
+/* Responsive 1050px Details d'une figure */
+@media only screen and (max-width: 1050px) {
+    .details-trick #container-gallery,
+    .edit-trick #container-gallery {
         flex-direction: column;
     }
-}
 
-/* Masque le bouton "Afficher/Masquer les médias" si écran supérieur et/ou égale à 721px */
-@media only screen and (min-width: 992px) {
-    .edit-trick #button-show-hidden-medias {
-        display: none;
+    .details-trick #container-gallery .pictures-trick,
+    .details-trick #container-gallery .videos-trick,
+    .edit-trick #container-gallery .pictures-trick,
+    .edit-trick #container-gallery .videos-trick {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .details-trick #container-gallery .pictures-trick .picture,
+    .edit-trick #container-gallery .pictures-trick .picture {
+        padding: 10px;
+    }
+
+    .details-trick #container-gallery .videos-trick .video,
+    .edit-trick #container-gallery .videos-trick .video {
+        width: 200px;
+        margin: 10px;
+    }
+
+    /* Si aucune images ou vidéos */
+    .edit-trick #container-gallery .empty-picture,
+    .edit-trick #container-gallery .empty-video {
+        width: 100%;
+    }
+
+    .edit-trick #container-gallery .empty-picture {
+        margin-bottom: 20px;
     }
 }
 
-/* Masque les medias si écran inférieur et/ou égale à 720px  */
+/* Responsive 991px Details d'une figure */
 @media only screen and (max-width: 991px) {
-    .edit-trick .medias {
+    /* Modal pour modifier l'image principal*/
+    .edit-trick #editMainPicture form .pictures-container {
+        flex-direction: column;
+    }
+
+    .edit-trick #editMainPicture form .pictures-container .picture {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Modal our afficher une image en grand*/
+    .details-trick .modal-picture .modal-content,
+    .edit-trick .modal-picture .modal-content {
+        width: 100%;
+    }
+
+    /* Gallerie des médias */
+    .details-trick #container-gallery .pictures-trick,
+    .details-trick #container-gallery .videos-trick,
+    .edit-trick #container-gallery .pictures-trick,
+    .edit-trick #container-gallery .videos-trick {
+        align-items: center;
+    }
+
+    .edit-trick #container-gallery .videos-trick {
+        flex-direction: column;
+    }
+
+    /* Image */
+    .details-trick #container-gallery .pictures-trick .picture,
+    .edit-trick #container-gallery .pictures-trick .picture {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .details-trick #container-gallery .pictures-trick .picture img,
+    .edit-trick #container-gallery .pictures-trick .picture img {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* Vidéo */
+    .edit-trick #container-gallery .videos-trick .video-container {
+        width: 100%;
+    }
+
+    .details-trick #container-gallery .videos-trick .video,
+    .edit-trick #container-gallery .videos-trick .video {
+        width: 100%;
+    }
+
+    .details-trick #container-gallery .videos-trick .video iframe,
+    .edit-trick #container-gallery .videos-trick .video iframe {
+        height: 200px;
+    }
+
+    /* Bouton d'ajout */
+    .edit-trick #container-gallery .pictures-trick .add,
+    .edit-trick #container-gallery .videos-trick .add,
+    .edit-trick #container-gallery .empty-picture .add,
+    .edit-trick #container-gallery .empty-video .add {
+        width: 90%;
+        margin: auto;
+    }
+
+    /* Icon de suppression */
+    .edit-trick #container-gallery .pictures-trick .picture .button-container {
+        top: 15px;
+        right: 25px;
+    }
+
+    .edit-trick #container-gallery .videos-trick .button-container {
+        top: 20px;
+    }
+
+    /* Infos */
+    .details-trick #container-infos .infos,
+    .edit-trick #container-infos .infos {
+        flex-direction: column;
+    }
+
+    /* Boutons du formlaire de modification */
+    .edit-trick #form-edit-trick form .buttons {
+        justify-content: center;
+        margin-top: 20px;
+    }
+}
+/* Fin Responsive */
+/*// Fin Page - Details d'une figure & Modification d'une figure //*/
+
+
+
+
+/*// Bouton afficher/masquer les médias  //*/
+
+/* Masque le bouton si écran supérieur et/ou égale à 992px */
+@media only screen and (min-width: 992px) {
+    #button-show-hidden-medias {
         display: none;
     }
 }
@@ -253,404 +715,11 @@
     }
 }
 
-.edit-trick .container-gallery .pictures-trick,
-.edit-trick .container-gallery .videos-trick  {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    width: 50%;
-}
-
+/* Masque les medias si écran inférieur et/ou égale à 991px  */
 @media only screen and (max-width: 991px) {
-    .edit-trick .container-gallery .pictures-trick,
-    .edit-trick .container-gallery .videos-trick  {
-        flex-direction: column;
-        width: 100%;
+    .details-trick #container-gallery,
+    .edit-trick #container-gallery {
+        display: none;
     }
 }
-
-.edit-trick .container-gallery .pictures-trick .picture {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    max-width: 50%;
-    min-width: 200px;
-    padding-right: 5px;
-}
-
-@media only screen and (max-width: 991px) {
-    .edit-trick .container-gallery .pictures-trick .picture {
-        max-width: 100%;
-    }
-}
-
-@media only screen and (max-width: 991px) {
-    .edit-trick .container-gallery .pictures-trick .picture img {
-        width: 80%;
-        margin: auto;
-    }
-}
-
-.imgModal {
-    width: 200px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.imgModal:hover {opacity: 0.9;}
-
-/* Bouttons pour afficher une popup ajout ou suppression d'un media */
-.edit-trick .container-gallery .pictures-trick .picture .buttons,
-.edit-trick .container-gallery .videos-trick .buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-self: flex-end;
-    padding: 5px;
-    border: 1px solid black;
-}
-
-.edit-trick .container-gallery .videos-trick .video-buttons {
-    display: flex;
-    flex-direction: column;
-    padding-right: 15px;
-    height: 195px;
-}
-
-.edit-trick .container-gallery .videos-trick .video-buttons .video {
-    min-width: 200px;
-}
-
-.edit-trick .container-gallery .pictures-trick .picture .buttons button,
-.edit-trick .container-gallery .videos-trick .video-buttons .buttons button {
-    padding: 0;
-}
-
-/* Bouton d'ajout */
-.edit-trick .container-gallery .pictures-trick .add,
-.edit-trick .container-gallery .videos-trick .add,
-.edit-trick .container-gallery .empty-picture .add,
-.edit-trick .container-gallery .empty-video .add {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-right: 40px;
-    align-items: center;
-    border: 2px solid black;
-    width: 100px;
-    height: 100px;
-    padding: 0;
-    cursor: pointer;
-}
-
-.edit-trick .container-gallery .pictures-trick .add:hover,
-.edit-trick .container-gallery .videos-trick .add:hover,
-.edit-trick .container-gallery .empty-picture .add:hover,
-.edit-trick .container-gallery .empty-video .add:hover {
-    background-color: grey;
-}
-
-@media only screen and (max-width: 991px) {
-    .edit-trick .container-gallery .pictures-trick .add,
-    .edit-trick .container-gallery .videos-trick .add,
-    .edit-trick .container-gallery .empty-picture .add,
-    .edit-trick .container-gallery .empty-video .add {
-        width: 100%;
-        height: 100px;
-        margin: 15px;
-    }
-}
-
-/* Icon de suppression */
-.edit-trick .container-gallery .pictures-trick .picture .buttons img,
-.edit-trick .container-gallery .videos-trick .buttons img {
-    width: 15px;
-    height: 15px;
-}
-
-/* Icon d'ajout */
-.edit-trick .container-gallery .pictures-trick a img,
-.edit-trick .container-gallery .videos-trick a img,
-.edit-trick .container-gallery .empty-picture img,
-.edit-trick .container-gallery .empty-video img {
-    width: 40px;
-    height: 40px;
-}
-
-/* Modal pour ajouter ou supprimer un media */
-
-.edit-trick .container-gallery .modal-container .add-picture .modal-body .form-group label,
-.edit-trick .container-gallery .modal-container .add-url .modal-body .form-group label {
-    display: none;
-}
-
-.edit-trick .container-gallery .modal-container .add-picture .modal-body .form-group .custom-file-label,
-.edit-trick .container-gallery .modal-container .add-url .modal-body .form-group .custom-file-label {
-    display: inline-block;
-}
-
-/* Modifie le contenu du bouton (Browser) généré par Bootstrap */
-.edit-trick .container-gallery .modal-container .add-picture .custom-file-input ~ .custom-file-label:lang(fr)::after,
-.edit-trick .container-gallery .modal-container .add-url .custom-file-input ~ .custom-file-label:lang(fr)::after {
-    content: "Choisir...";
-}
-
-.edit-trick .container-gallery .pictures-trick .modal-container .delete .modal-body .span {
-    font-weight: bold;
-}
-
-/* Mise en page de la partie infos */
-.edit-trick .container-infos {
-    width: 100%;
-    margin: auto;
-}
-
-@media only screen and (max-width: 991px) {
-    .edit-trick .container-infos {
-        width: 100%;
-    }
-}
-
-.edit-trick .container-infos .infos {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    margin: 15px 0;
-    padding: 10px;
-}
-
-@media only screen and (max-width: 991px) {
-    .edit-trick .container-infos .infos {
-        flex-direction: column;
-    }
-}
-
-@media only screen and (max-width: 720px) {
-    .edit-trick .container-infos .infos {
-        flex-direction: column;
-    }
-}
-
-.edit-trick .container-infos .infos p {
-    margin-bottom: 0;
-    padding: 5px;
-    border: solid;
-}
-
-@media only screen and (max-width: 991px) {
-    .edit-trick .container-infos .infos p {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-}
-
-/* Met en gras les titres de chaque catégorie d'infos */
-.edit-trick .container-infos .infos .title {
-    font-weight: bold;
-}
-
-@media only screen and (max-width: 991px) {
-    .edit-trick .container-infos .infos .content {
-        margin-left: 10px;
-    }
-}
-
-/* Mise en page de la partie formulaire */
-.edit-trick .container-infos form label {
-    width: 100%;
-}
-
-.edit-trick .container-infos form .form-group #trick_description {
-    min-height: 250px;
-}
-
-.edit-trick .container-infos form fieldset legend{
-    display: none;
-}
-
-.edit-trick .container-infos form #trick_category .form-group {
-    max-width: 150px;
-}
-
-.edit-trick .container-infos form #trick_category .form-group:last-child {
-    display: none;
-}
-
-.edit-trick .container-infos form .buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    margin-bottom: 100px;
-}
-
-@media only screen and (max-width: 720px) {
-    .edit-trick .container-infos form .buttons {
-        flex-direction: column;
-        align-items: center;
-
-    }
-}
-
-.edit-trick .container-infos form .buttons button {
-    max-width: 150px;
-}
-
-@media only screen and (max-width: 720px) {
-    .edit-trick .container-infos form .buttons button {
-        margin-bottom: 15px;
-    }
-}
-
-.edit-trick .container-infos form .buttons button:first-child {
-    margin-right: 20px;
-}
-
-@media only screen and (max-width: 720px) {
-    .edit-trick .container-infos form .buttons button:first-child {
-        margin-right: 0;
-    }
-}
-
-
-
-/* Details Trick  */
-
-.userImage {
-    text-align: center;
-}
-
-.comment {
-    display: none;
-}
-
-.comment p {
-    border: 1px solid black;
-    padding:5px 15px;
-    overflow-wrap: break-word;
-}
-
-#loadMore {
-    width: 200px;
-    color: #fff;
-    display: block;
-    text-align: center;
-    margin: 20px auto;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid transparent;
-    background-color: blue;
-    transition: .3s;
-}
-
-#loadMore:hover {
-    color: blue;
-    background-color: #fff;
-    border: 1px solid blue;
-    text-decoration: none;
-}
-
-/* Classe ajouté par le fichier load-more-comments.js */
-.noContent {
-    color: #000 !important;
-    background-color: transparent !important;
-    pointer-events: none;
-}
-
-
-
-
-
-
-
-.avatar {
-    max-width: 128px;
-    max-height: 128px;
-    border-radius: 50%;
-}
-
-.avatar-medium {
-    max-width: 64px;
-    max-height: 64px;
-}
-
-
-
-
-
-/* Pagination */
-
-.paging-container {
-    display: none;
-}
-
-/* Classe ajouté par le fichier load-more-comments.js */
-.paging-block {
-    display: block;
-}
-
-.paging-container {
-    margin-top: 25px;
-}
-
-.paging-container .paging {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-}
-
-.paging-container .paging li {
-    margin: 0 8px;
-    padding: 10px 0;
-    border: 1px solid blue;
-    border-radius: 5px;
-    background-color: blue;
-}
-
-.paging-container .paging li:hover:not(.active) {
-     background-color: white;
-     transition: background-color .5s;
-}
-
-.paging-container .paging li a {
-    padding: 10px 15px;
-    text-decoration: none;
-    color: white;
-}
-
-.paging-container .paging li a:hover:not(.active) {
-     color: blue;
-     transition: color .5s;
-}
-
-.paging-container .paging .active {
-    background-color: white;
-}
-
-.paging-container .paging .active a {
-    color: blue;
-}
-
-.paging-container .paging .prev,
-.paging-container .paging .next {
-    display: flex;
-}
-
-.paging-container .paging .numbers {
-    display: flex;
-}
-
-
-/* Footer  */
-
-
-footer {
-    height: 80px;
-}
-
-footer img {
-    width: 30px;
-    height: 30px;
-}
+/*// Fin Bouton afficher/masquer les médias  //*/
