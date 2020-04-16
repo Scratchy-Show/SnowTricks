@@ -46,17 +46,17 @@
         <div class="modal-picture">
             <div id="pictureModal" class="modal">
                 <span class="close">&times;</span>
-                <img id="img" class="modal-content" src="#" alt="Image" />
+                <img id="img" class="modal-content" src="#" alt="{{ trick.name }}" />
             </div>
         </div>
 
-        <!-- Section image principal -->
+        <!-- Section image principale -->
         <section id="mainPicture" class="position-relative border border-dark">
-            <!-- Si une image principal est défini -->
+            <!-- Si une image principale est défini -->
             {% if trick.mainPicture is not empty %}
                 <img class="w-100"
                      src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}"
-                     alt="Image principal"
+                     alt="{{ trick.name }}"
                 />
                 <div id="title" class="text-center">
                     <h1 class="h1">{{ trick.name }}</h1>
@@ -83,7 +83,7 @@
                         </button>
                     </div>
                 {% endif %}
-                <!-- Si aucune image principal n'est défini -->
+                <!-- Si aucune image principale n'est défini -->
             {% else %}
                 <img class="w-100" src="{{ asset('uploads/trick/'~ 'default.jpg') }}" alt="Image principal" />
                 <div id="title" class="text-center">
@@ -99,6 +99,19 @@
                                 data-whatever="@editTrick">
                             <a href="{{ path('trick_edit', {'id': trick.id}) }}">
                                 <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
+                            </a>
+                        </button>
+                        <button type="button"
+                                class="btn"
+                                title="Supprimer la figure"
+                                data-toggle="modal"
+                                data-target="#deleteTrick{{ trick.id }}"
+                                data-whatever="@deleteTrick">
+                            <a href="#"
+                               data-toggle="modal"
+                               data-target="#deleteTrick{{ trick.id }}"
+                               data-whatever="@deleteTrick">
+                                <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer la figure" />
                             </a>
                         </button>
                     </div>
@@ -124,23 +137,23 @@
                 <div class="pictures-trick d-flex justify-content-start align-content-start flex-wrap">
 
                     {% for picture in trick.pictures %}
-                        <!-- Si une image principal est défini -->
+                        <!-- Si une image principale est défini -->
                         {% if trick.mainPicture.id is defined  %}
-                            <!-- Evite d'afficher l'image principal dans la gallerie -->
+                            <!-- Evite d'afficher l'image principale dans la gallerie -->
                             {% if picture.id != trick.mainPicture.id %}
                                 <div class="picture">
                                     <img class="imgModal rounded"
                                          src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
-                                         alt="Image"
+                                         alt="{{ trick.name }}"
                                     />
                                 </div>
                             {% endif %}
-                        <!-- Si une image principal n'est pas défini -->
+                        <!-- Si une image principale n'est pas défini -->
                         {% elseif trick.mainPicture.id is not defined %}
                             <div class="picture">
                                 <img class="imgModal rounded"
                                      src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
-                                     alt="Image"
+                                     alt="{{ trick.name }}"
                                 />
                             </div>
                         {% endif %}

@@ -28,13 +28,17 @@ ul {
     list-style: none;
 }
 
-/* Mise ne forme des Messages flash */
+/* Mise en forme des Messages flash */
 .alert {
     position: absolute;
     left: 25%;
     width: 50%;
     margin: 0;
     padding: 10px;
+}
+
+.alert p {
+    margin-bottom: 0;
 }
 
 /* Mise en forme des pages */
@@ -99,7 +103,7 @@ header .logo img {
 
 header nav .menu {
     float: right;
-    width: 80%;
+    width: 75%;
     margin-top: 50px;
     margin-bottom: 0;
     text-align: right;

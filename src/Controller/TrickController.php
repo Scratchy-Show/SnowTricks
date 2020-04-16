@@ -37,13 +37,13 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid())
         {
-            // Récupère l'image principal
+            // Récupère l'image principale
             $mainPicture = $form->get('mainPicture')->getData();
 
             // Chemin de destination de l'image
             $destination = $this->getParameter('trick_picture_directory');
 
-            // Si une image principal est présente
+            // Si une image principale est présente
             if ($mainPicture != null)
             {
                 // Défini son nom et la déplace dans le dossier cible
@@ -54,7 +54,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 $mainPicture->setPath('uploads/trick');
                 $mainPicture->setTrick($trick);
 
-                // Attribut l'image principal à la figure
+                // Attribut l'image principale à la figure
                 $trick->setMainPicture($mainPicture);
             }
 
@@ -94,8 +94,8 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 "La figure <strong>" . $trick->getName() . "</strong> a bien été ajouté"
             );
 
-            // Redirection vers la page listant les figures
-            return $this->redirectToRoute('home');
+            // Redirection vers la page d'accueil avec une ancre sur les figures
+            return $this->redirect($this->generateUrl('home') . '#tricks');
         }
 
         // Affiche la page de création d'une figure avec le formulaire
@@ -176,8 +176,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             );
 
             // Redirection vers la page de la figure avec une ancre sur les commentaires
-            return $this->redirect(
-                $this->generateUrl('trick_details',
+            return $this->redirect($this->generateUrl('trick_details',
                     array('trickId' => $trick->getId(), 'page' => $page)) . '#comments'
             );
         }
@@ -316,7 +315,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         // Si une figure correspond à l'id
         if ($trick != null)
         {
-            // Supprime l'image en tant qu'image principal
+            // Supprime l'image en tant qu'image principale
             $trick->setMainPicture(null);
 
             // Persiste les données dans la BDD

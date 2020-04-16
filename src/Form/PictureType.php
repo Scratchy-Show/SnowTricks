@@ -16,7 +16,7 @@ class PictureType extends AbstractType
     {
         $builder
             ->add('file', FileType::class, [
-            'label' => "Image Principal",
+            'label' => "Image principale",
             'attr' => [
                 'placeholder' => 'Choisir une image'
             ]

@@ -129,10 +129,10 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                 // Si l'image est trouvée
                 if ($picture != null)
                 {
-                    // Si l'image a supprimer est l'image principal de la figure
+                    // Si l'image a supprimer est l'image principale de la figure
                     if ($trick->getMainPicture()->getId() == $picture->getId())
                     {
-                        // Supprime l'image en tant qu'image principal
+                        // Supprime l'image en tant qu'image principale
                         $trick->setMainPicture(null);
                     }
 
@@ -207,7 +207,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
     }
 
     /**
-     * @Route("/figure/modifier/image-principal/{trickId}", name="trick_main_picture_edit")
+     * @Route("/figure/modifier/image-principale/{trickId}", name="trick_main_picture_edit")
      * @IsGranted("ROLE_USER")
      */
     public function editMainPicture(Request $request, $trickId)
@@ -224,7 +224,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                 // Récupère l'image
                 $picture = $this->getDoctrine()->getRepository(Picture::class)->find($mainPictureId);
 
-                // Défini l'image en tant qu'image principal
+                // Défini l'image en tant qu'image principale
                 $trick->setMainPicture($picture);
 
                 // Récupère le gestionnaire d'entités
@@ -236,7 +236,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                 // Message de confirmation
                 $this->addFlash(
                     'success',
-                    "L'image principal a bien été modifié"
+                    "L'image principale a bien été modifié"
                 );
 
                 // Redirection vers la page de modification de la figure

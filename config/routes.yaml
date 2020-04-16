@@ -51,7 +51,7 @@ trick_picture_add:
      controller: App\Controller\PictureController::addPictureTrick
 
 trick_main_picture_edit:
-     path: /figure/modifier/image-principal/{trickId}
+     path: /figure/modifier/image-principale/{trickId}
      controller: App\Controller\PictureController::editMainPicture
 
 trick_picture_delete:
