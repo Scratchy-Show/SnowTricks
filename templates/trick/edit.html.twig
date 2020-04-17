@@ -59,15 +59,15 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" action="{{ path('trick_main_picture_edit', {'trickId': trick.id}) }}">
-                                <!-- Si il y a des images dans la gallerie -->
+                            <form method="POST" action="{{ path('trick_main_picture_edit', {'slug': trick.slug}) }}">
                                 {% if pictures is not empty %}
+                                    <!-- Si il y a des images dans la gallerie -->
                                     <div class="pictures-container d-flex align-content-start flex-wrap">
                                         {% for picture in pictures %}
-                                            <!-- Si une image principale est défini -->
                                             {% if trick.mainPicture.id is defined  %}
-                                                <!-- Evite d'afficher l'image principale dans la gallerie -->
+                                                <!-- Si une image principale est défini -->
                                                 {% if picture.id != trick.mainPicture.id %}
+                                                    <!-- Evite d'afficher l'image principale dans la gallerie -->
                                                     <div class="picture p-1">
                                                         <input id="editMainPicture" type="radio"
                                                                name="editMainPicture"
@@ -80,8 +80,8 @@
                                                         </label>
                                                     </div>
                                                 {% endif %}
-                                            <!-- Si une image principale n'est pas défini -->
                                             {% elseif trick.mainPicture.id is not defined %}
+                                                <!-- Si une image principale n'est pas défini -->
                                                 <div class="picture p-1">
                                                     <input id="editMainPicture" type="radio"
                                                            name="editMainPicture"
@@ -102,8 +102,8 @@
                                         </button>
                                         <button type="submit" class="btn btn-success">Modifier</button>
                                     </div>
-                                    <!-- Si il n'y a pas d'image dans la gallerie -->
                                 {% elseif trick.pictures is empty %}
+                                    <!-- Si il n'y a pas d'image dans la gallerie -->
                                     <p>Veuillez ajouter une image !</p>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-info" data-dismiss="modal">
@@ -128,8 +128,8 @@
 
         <!-- Section image principale -->
         <section id="mainPicture" class="position-relative border border-dark">
-            <!-- Si une image principale est défini -->
             {% if trick.mainPicture is not empty %}
+                <!-- Si une image principale est défini -->
                 <img class="w-100"
                      src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}"
                      alt="{{ trick.name }}"
@@ -155,8 +155,8 @@
                         <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer l'image principale" />
                     </button>
                 </div>
-                <!-- Si aucune image principale n'est défini -->
             {% else %}
+                <!-- Si aucune image principale n'est défini -->
                 <img class="w-100" src="{{ asset('uploads/trick/'~ 'default.jpg') }}" alt="Image principale" />
                 <div id="title" class="text-center">
                     <h1 class="h1">{{ trick.name }}</h1>
@@ -190,12 +190,11 @@
             <!-- Gallerie images -->
             {% if pictures is not empty %}
                 <div class="pictures-trick d-flex justify-content-start align-content-start flex-wrap">
-
                     {% for picture in pictures %}
-                        <!-- Si une image principale est défini -->
                         {% if trick.mainPicture.id is defined  %}
-                            <!-- Evite d'afficher l'image principale dans la gallerie -->
+                            <!-- Si une image principale est défini -->
                             {% if picture.id != trick.mainPicture.id %}
+                                <!-- Evite d'afficher l'image principale dans la gallerie -->
                                 <div class="picture">
                                     <img class="imgModal rounded"
                                          src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
@@ -213,8 +212,8 @@
                                     </div>
                                 </div>
                             {% endif %}
-                            <!-- Si une image principale n'est pas défini -->
                         {% elseif trick.mainPicture.id is not defined %}
+                            <!-- Si une image principale n'est pas défini -->
                             <div class="picture">
                                 <img class="imgModal rounded"
                                      src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
@@ -274,13 +273,13 @@
                         </div>
 
                     {% endfor %}
-                    <a href="{{ path('trick_picture_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une image">
+                    <a href="{{ path('trick_picture_add', {'slug': trick.slug}) }}" class="add" title="Ajouter une image">
                         <img src="{{ asset('img/icons/add.png') }}" alt="Ajouter une image" />
                     </a>
                 </div>
             {% elseif pictures is empty %}
-                <div class="empty-picture">
-                    <a href="{{ path('trick_picture_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une image">
+                <div class="empty-picture d-flex justify-content-start align-content-start flex-wrap">
+                    <a href="{{ path('trick_picture_add', {'slug': trick.slug}) }}" class="add" title="Ajouter une image">
                         <img src="{{ asset('img/icons/add.png') }}" alt="Ajouter une image" />
                     </a>
                 </div>
@@ -344,13 +343,13 @@
                         </div>
 
                     {% endfor %}
-                    <a href="{{ path('trick_video_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une vidéo">
+                    <a href="{{ path('trick_video_add', {'slug': trick.slug}) }}" class="add" title="Ajouter une vidéo">
                         <img src="{{ asset('img/icons/add.png') }}" alt="Ajouter une vidéo" />
                     </a>
                 </div>
             {% elseif videos is empty %}
                 <div class="empty-video d-flex justify-content-end align-content-start flex-wrap">
-                    <a href="{{ path('trick_video_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une vidéo">
+                    <a href="{{ path('trick_video_add', {'slug': trick.slug}) }}" class="add" title="Ajouter une vidéo">
                         <img src="{{ asset('img/icons/add.png') }}" alt="Ajouter une vidéo" />
                     </a>
                 </div>
@@ -365,8 +364,8 @@
                         Publié le {{ trick.date | date('d/m/Y') }} à {{ trick.date | date('H:i') }} par
                         <span class="font-weight-bold">{{ trick.user.username }}</span>
                     </p>
-                    <!-- Si il y a une date de mise à jour -->
                     {% if trick.updateDate is not null %}
+                        <!-- Si il y a une date de mise à jour -->
                         <p class="col p-3 mb-0">
                             Mis à jour le {{ trick.updateDate | date('d/m/Y') }} à {{ trick.updateDate | date('H:i') }}
                         </p>

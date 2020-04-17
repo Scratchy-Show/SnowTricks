@@ -53,6 +53,7 @@ class MailController extends AbstractController // Permet d'utiliser la méthode
                     "Votre compte a été activé. Vous pouvez maintenant vous connecter."
                 );
 
+                // Redirection vers la page d'accueil
                 return $this->redirectToRoute('home');
             }
             else // Si le jeton ne correspond pas à l'utilisateur
@@ -62,6 +63,7 @@ class MailController extends AbstractController // Permet d'utiliser la méthode
                     "La validation de votre compte a échoué. Nous n'avons pas pu vous identifier."
                 );
 
+                // Redirection vers la page d'inscription
                 return $this->redirectToRoute('registration');
             }
         }
@@ -72,6 +74,7 @@ class MailController extends AbstractController // Permet d'utiliser la méthode
                 "La validation de votre compte a échoué. Nous n'avons pas pu vous identifier."
             );
 
+            // Redirection vers la page d'inscription
             return $this->redirectToRoute('registration');
         }
     }

@@ -17,16 +17,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class PictureController extends AbstractController // Permet d'utiliser la méthode render
 {
     /**
-     * @Route("/figure/ajouter/image/{trick}", name="trick_picture_add")
+     * @Route("/figure/ajouter/image/{slug}", name="trick_picture_add")
      * @IsGranted("ROLE_USER")
      */
-    public function addPictureTrick(Request $request, FileUploader $fileUploader, $trickId)
+    public function addPictureTrick(Request $request, FileUploader $fileUploader, $slug)
     {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
 
         // Récupère la figure
-        $trick = $entityManager->getRepository(Trick::class)->find($trickId);
+        $trick = $entityManager->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
 
         // Si une figure correspond à l'id
         if ($trick != null)
@@ -54,7 +54,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
 
                     // Redirection vers la page d'ajout d'image
                     return $this->redirectToRoute('trick_picture_add', [
-                        'trickId' => $trick->getId()
+                        'slug' => $slug
                     ]);
                 }
 
@@ -86,13 +86,12 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
 
                 // Redirection vers la page d'édition la figure
                 return $this->redirectToRoute('trick_edit', [
-                    'id' => $trick->getId()
+                    'slug' => $slug
                 ]);
             }
-            // Affiche par défaut la page de création d'une figure
+            // Affiche par la page d'ajout d'une image
             return $this->render('trick/addPicture.html.twig', [
-                'form' => $form->createView(),
-                'trick' => $trick
+                'form' => $form->createView()
             ]);
         }
         else // Si aucune figure ne correspond à l'id
@@ -103,7 +102,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                 "Aucune figure ne correspond."
             );
 
-            // Redirection vers la page listant les figures
+            // Redirection vers la page d'accueil
             return $this->redirectToRoute('home');
         }
     }
@@ -129,8 +128,8 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                 // Si l'image est trouvée
                 if ($picture != null)
                 {
-                    // Si l'image a supprimer est l'image principale de la figure
-                    if ($trick->getMainPicture()->getId() == $picture->getId())
+                    // Si il y'a une image principale et que l'image a supprimer est l'image principale de la figure
+                    if (($trick->getMainPicture() != null) && ($trick->getMainPicture()->getId() == $picture->getId()))
                     {
                         // Supprime l'image en tant qu'image principale
                         $trick->setMainPicture(null);
@@ -160,11 +159,10 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                         "L'image a bien été supprimé"
                     );
 
-                    // Renvoie vers la page du profil
-                    header("Location: /figure/modifier/" . $trickId);
-
-                    // Empêche l'exécution du reste du script
-                    die();
+                    // Redirection vers la page d'édition la figure
+                    return $this->redirectToRoute('trick_edit', [
+                        'slug' => $trick->getSlug()
+                    ]);
                 }
                 else // Si l'image n'est pas trouvé
                 {
@@ -174,11 +172,10 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                         "L'image n'a pas été trouvé."
                     );
 
-                    // Renvoie vers la page du profil
-                    header("Location: /figure/modifier/" . $trickId);
-
-                    // Empêche l'exécution du reste du script
-                    die();
+                    // Redirection vers la page d'édition la figure
+                    return $this->redirectToRoute('trick_edit', [
+                        'slug' => $trick->getSlug()
+                    ]);
                 }
             }
             else
@@ -207,52 +204,68 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
     }
 
     /**
-     * @Route("/figure/modifier/image-principale/{trickId}", name="trick_main_picture_edit")
+     * @Route("/figure/modifier/image-principale/{slug}", name="trick_main_picture_edit")
      * @IsGranted("ROLE_USER")
      */
-    public function editMainPicture(Request $request, $trickId)
+    public function editMainPicture(Request $request, $slug)
     {
         if($request->isMethod('post')) {
             // Récupère l'id de l'image
             $mainPictureId = $request->request->get("editMainPicture");
 
-            // Récupère la figure
-            $trick = $this->getDoctrine()->getRepository(Trick::class)->find($trickId);
-
+            // Si une image a bien été sélectionné
             if ($mainPictureId != null)
             {
-                // Récupère l'image
-                $picture = $this->getDoctrine()->getRepository(Picture::class)->find($mainPictureId);
+                // Récupère la figure
+                $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
 
-                // Défini l'image en tant qu'image principale
-                $trick->setMainPicture($picture);
+                // Si la figure est trouvé
+                if ($trick != null)
+                {
+                    // Récupère l'image
+                    $picture = $this->getDoctrine()->getRepository(Picture::class)->find($mainPictureId);
 
-                // Récupère le gestionnaire d'entités
-                $entityManager = $this->getDoctrine()->getManager();
+                    // Défini l'image en tant qu'image principale
+                    $trick->setMainPicture($picture);
 
-                // Persiste les données dans la BDD
-                $entityManager->flush();
+                    // Récupère le gestionnaire d'entités
+                    $entityManager = $this->getDoctrine()->getManager();
 
-                // Message de confirmation
+                    // Persiste les données dans la BDD
+                    $entityManager->flush();
+
+                    // Message de confirmation
+                    $this->addFlash(
+                        'success',
+                        "L'image principale a bien été modifié"
+                    );
+
+                    // Redirection vers la page d'edition de la figure
+                    return $this->redirectToRoute('trick_edit', [
+                        'slug' => $slug
+                    ]);
+                }
+                // Message d'erreur
                 $this->addFlash(
-                    'success',
-                    "L'image principale a bien été modifié"
+                    'danger',
+                    "Veuiller ne pas modifier les valeurs du formulaire."
                 );
 
-                // Redirection vers la page de modification de la figure
-                return $this->redirectToRoute('trick_edit', [
-                    'id' => $trick->getId()
-                ]);
+                // Redirection vers la page d'accueil
+                return $this->redirectToRoute('home');
             }
-            // Message de confirmation
-            $this->addFlash(
-                'danger',
-                "Aucune image sélectionnée"
-            );
+            else // Aucune image n'a été sélectionné
+            {
+                // Message d'erreur
+                $this->addFlash(
+                    'danger',
+                    "Aucune image sélectionnée"
+                );
+            }
 
-            // Redirection vers la page de la figure
+            // Redirection vers la page d'édition de la figure
             return $this->redirectToRoute('trick_edit', [
-                'id' => $trick->getId()
+                'slug' => $slug
             ]);
         }
     }

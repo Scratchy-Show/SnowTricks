@@ -153,7 +153,6 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
                 );
             }
         }
-
         // Affiche la page d'oublie de mot de passe avec le formulaire
         return $this->render('account/passwordForgot.html.twig', [
             'form' => $form->createView()
@@ -225,7 +224,6 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
                 );
             }
         }
-
         // Affiche la page réinitialisation du mot de passe avec le formulaire
         return $this->render('account/passwordReset.html.twig', [
             'form' => $form->createView()

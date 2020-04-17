@@ -31,7 +31,7 @@ logout:
      controller: App\Controller\LoginController::logout
 
 trick_details:
-     path: /figure/details/{trickId}/{page}
+     path: /figure/details/{slug}/{page}
      controller: App\Controller\TrickController::detailsTrick
 
 trick_create:
@@ -39,7 +39,7 @@ trick_create:
      controller: App\Controller\TrickController::createTrick
 
 trick_edit:
-     path: /figure/modifier/{id}
+     path: /figure/modifier/{slug}
      controller: App\Controller\TrickController::editTrick
 
 trick_delete:
@@ -47,11 +47,11 @@ trick_delete:
      controller: App\Controller\TrickController::deleteTrick
 
 trick_picture_add:
-     path: /figure/ajouter/image/{trickId}
+     path: /figure/ajouter/image/{slug}
      controller: App\Controller\PictureController::addPictureTrick
 
 trick_main_picture_edit:
-     path: /figure/modifier/image-principale/{trickId}
+     path: /figure/modifier/image-principale/{slug}
      controller: App\Controller\PictureController::editMainPicture
 
 trick_picture_delete:
@@ -59,7 +59,7 @@ trick_picture_delete:
      controller: App\Controller\PictureController::deletePictureTrick
 
 trick_video_add:
-     path: /figure/ajouter/video/{trickId}
+     path: /figure/ajouter/video/{slug}
      controller: App\Controller\VideoController::addVideoTrick
 
 trick_video_delete:

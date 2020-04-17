@@ -40,11 +40,11 @@
                             {% endif %}
                         </div>
                         <div class="title-buttons-container">
-                            <a class="trick-title p-2 rounded-lg" href="{{ path('trick_details', {'trickId': trick.id, page: '1'}) }}">{{ trick.name }}</a>
+                            <a class="trick-title p-2 rounded-lg" href="{{ path('trick_details', {'slug': trick.slug, page: '1'}) }}">{{ trick.name }}</a>
                             {% if app.user.username is defined %}
                                 <div class="buttons d-flex">
                                     <button type="button" class="btn" title="Modifier la figure">
-                                        <a href="{{ path('trick_edit', {'id': trick.id}) }}}">
+                                        <a href="{{ path('trick_edit', {'slug': trick.slug}) }}">
                                             <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
                                         </a>
                                     </button>

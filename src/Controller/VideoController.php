@@ -15,18 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class VideoController extends AbstractController // Permet d'utiliser la méthode render
 {
     /**
-     * @Route("/figure/ajouter/video/{trickId}", name="trick_video_add")
+     * @Route("/figure/ajouter/video/{slug}", name="trick_video_add")
      * @IsGranted("ROLE_USER")
      */
-    public function addVideoTrick(Request $request, $trickId)
+    public function addVideoTrick(Request $request, $slug)
     {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
 
         // Récupère la figure
-        $trick = $entityManager->getRepository(Trick::class)->find($trickId);
+        $trick = $entityManager->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
 
-        // Si une figure correspond à l'id
+        // Si une figure correspond au slug
         if ($trick != null)
         {
             // Création du formulaire des videos
@@ -52,7 +52,7 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
 
                     // Redirection vers la page d'ajout de vidéo
                     return $this->redirectToRoute('trick_video_add', [
-                        'trickId' => $trick->getId()
+                        'slug' => $slug
                     ]);
                 }
 
@@ -77,13 +77,12 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
 
                 // Redirection vers la page d'édition la figure
                 return $this->redirectToRoute('trick_edit', [
-                    'id' => $trick->getId()
+                    'slug' => $slug
                 ]);
             }
-            // Affiche par défaut la page de création d'une figure
+            // Affiche par la page d'ajout d'une vidéo
             return $this->render('trick/addVideo.html.twig', [
-                'form' => $form->createView(),
-                'trick' => $trick
+                'form' => $form->createView()
             ]);
         }
         else // Si aucune figure ne correspond à l'id
@@ -94,7 +93,7 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
                 "Aucune figure ne correspond."
             );
 
-            // Redirection vers la page listant les figures
+            // Redirection vers la page d'accueil
             return $this->redirectToRoute('home');
         }
     }
@@ -136,11 +135,10 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
                         "La vidéo a bien été supprimé"
                     );
 
-                    // Renvoie vers la page du profil
-                    header("Location: /figure/modifier/" . $trickId);
-
-                    // Empêche l'exécution du reste du script
-                    die();
+                    // Redirection vers la page d'édition la figure
+                    return $this->redirectToRoute('trick_edit', [
+                        'slug' => $trick->getSlug()
+                    ]);
                 }
                 else // Si l'Url n'est pas trouvé
                 {
@@ -150,11 +148,10 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
                         "La vidéo n'a pas été trouvé."
                     );
 
-                    // Renvoie vers la page du profil
-                    header("Location: /figure/modifier/" . $trickId);
-
-                    // Empêche l'exécution du reste du script
-                    die();
+                    // Redirection vers la page d'édition la figure
+                    return $this->redirectToRoute('trick_edit', [
+                        'slug' => $trick->getSlug()
+                    ]);
                 }
             }
             else
