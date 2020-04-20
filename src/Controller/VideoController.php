@@ -3,13 +3,14 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\VideoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class VideoController extends AbstractController // Permet d'utiliser la méthode render
@@ -17,9 +18,14 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
     /**
      * @Route("/figure/ajouter/video/{slug}", name="trick_video_add")
      * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @param $slug
+     * @return RedirectResponse|Response
      */
-    public function addVideoTrick(Request $request, $slug)
-    {
+    public function addVideoTrick(
+        Request $request,
+        $slug
+    ) {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -27,8 +33,7 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
         $trick = $entityManager->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
 
         // Si une figure correspond au slug
-        if ($trick != null)
-        {
+        if ($trick != null) {
             // Création du formulaire des videos
             $form = $this->createForm(VideoType::class);
 
@@ -36,14 +41,12 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
             $form->handleRequest($request);
 
             // Si le formulaire d'ajout d'image est soumis
-            if ($form->isSubmitted() && $form->isValid())
-            {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // Récupère l'Url
                 $url = $form->get('url')->getData();
 
                 // Si il n'y a pas d'url
-                if (empty($url))
-                {
+                if (empty($url)) {
                     // Message d'erreur
                     $this->addFlash(
                         'danger',
@@ -84,8 +87,7 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
             return $this->render('trick/addVideo.html.twig', [
                 'form' => $form->createView()
             ]);
-        }
-        else // Si aucune figure ne correspond à l'id
+        } else // Si aucune figure ne correspond à l'id
         {
             // Message d'erreur
             $this->addFlash(
@@ -101,13 +103,17 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
     /**
      * @Route("/figure/supprimer/video/{videoId}/{trickIid}", name="trick_video_delete")
      * @IsGranted("ROLE_USER")
+     * @param $videoId
+     * @param $trickId
+     * @return RedirectResponse
      */
-    public function deleteVideoTrick($videoId, $trickId)
-    {
+    public function deleteVideoTrick(
+        $videoId,
+        $trickId
+    ) {
 
         // Si $videoId et $trick ne sont pas vident et $trick est bien numérique
-        if ((!empty($videoId)) && (!empty($trickId)) && (is_numeric($trickId)))
-        {
+        if ((!empty($videoId)) && (!empty($trickId)) && (is_numeric($trickId))) {
             // Récupère la vidéo
             $url = $this->getDoctrine()->getRepository(Video::class)->find($videoId);
 
@@ -115,11 +121,9 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
             $trick = $this->getDoctrine()->getRepository(Trick::class)->find($trickId);
 
             // Si la figure éxiste
-            if ($trick != null)
-            {
+            if ($trick != null) {
                 // Si l'Url est trouvée
-                if ($url != null)
-                {
+                if ($url != null) {
                     // Récupère le gestionnaire d'entités
                     $entityManager = $this->getDoctrine()->getManager();
 
@@ -139,8 +143,7 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
                     return $this->redirectToRoute('trick_edit', [
                         'slug' => $trick->getSlug()
                     ]);
-                }
-                else // Si l'Url n'est pas trouvé
+                } else // Si l'Url n'est pas trouvé
                 {
                     // Message d'erreur
                     $this->addFlash(
@@ -153,8 +156,7 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
                         'slug' => $trick->getSlug()
                     ]);
                 }
-            }
-            else
+            } else // Si la figure n'existe pas
             {
                 // Message d'erreur
                 $this->addFlash(
@@ -165,8 +167,7 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
                 // Redirection vers la page d'accueil
                 return $this->redirectToRoute('home');
             }
-        }
-        else // Si $picture et $trick sont vident ou non numérique
+        } else // Si $picture et $trick sont vident ou non numérique
         {
             // Message d'erreur
             $this->addFlash(

@@ -3,7 +3,6 @@
 
 namespace App\Form;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -32,7 +31,8 @@ class PasswordResetType extends AbstractType
                     'placeholder' => 'Votre nouveau mot de passe'
                 ],
                 'constraints' => [
-                    new Length(['min' => 8, 'minMessage' => "Le mot de passe doit faire au moins {{ limit }} caractèress"]),
+                    new Length(['min' => 8,
+                                'minMessage' => "Le mot de passe doit faire au moins {{ limit }} caractèress"]),
                     new NotBlank(['message' => "Un mot de passe doit être indiqué"]),
                 ],
             ])

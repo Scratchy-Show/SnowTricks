@@ -260,9 +260,12 @@
             </div>
 
             {% if comments is not empty %}
-            <div class="m-3">
-                <a href="#" id="loadMore" class="d-block text-center m-auto p-2 rounded-lg">Plus de commentaires</a>
-            </div>
+                {% if comments|length > 4 %}
+                    <!-- Si il y a plus de 4 commentaires -->
+                    <div class="m-3">
+                        <a href="#" id="loadMore" class="d-block text-center m-auto p-2 rounded-lg">Plus de commentaires</a>
+                    </div>
+                {% endif %}
             {% elseif comments is empty %}
                 <div class="mb-5">
                     <p class="text-center">Il n'y a aucun commentaire.</p>

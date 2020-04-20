@@ -53,9 +53,10 @@ ul {
 .edit-trick,
 .add-picture,
 .add-video {
+    display: flow-root;
     max-width: 1250px;
     min-height: 83vh;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 
@@ -784,44 +785,138 @@ footer {
 
 /* Responsive 1050px Details d'une figure */
 @media only screen and (max-width: 1050px) {
-    /* Header */
-    header .logo {
-        width: 100%;
-        margin: 0;
-    }
-
-    header .logo img {
-        width: 150px;
-    }
-
-    /* Menu fixé en bas */
     header nav .menu {
-        display: none;
-    }
-
-    .responsive-menu {
-        display: block;
-        position: fixed;
-        bottom: 0;
-        left: 0;
+        text-align: left;
         width: 100%;
-        height: 100px;
-        z-index: 10;
-        background-color: #484b50;
+        margin-top: 0;
+        margin-bottom: 15px;
+        background: #484b50;
     }
 
-    .responsive-menu .menu {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        height: 100%;
+    header nav .menu li {
+        display: none;
+        width: 100%;
+        padding: 0;
         margin: 0;
-        padding: 15px;
     }
 
-    .responsive-menu .menu img {
-        width: 35px;
-        height: 35px;
+    header nav .menu li:hover {
+        background: #54585d;
+        -moz-transition-duration: 0.5s;
+        -o-transition-duration: 0.5s;
+        -webkit-transition-duration: 0.5s;
+        transition-duration: 0.5s;
+    }
+
+    header nav .menu li a {
+        display: table;
+        width: 100%;
+        color: #fff;
+        text-decoration: none;
+        font-size: 20px;
+        padding: 20px;
+        overflow: hidden;
+        border-bottom: thin solid #555;
+    }
+
+    /* Menu hamburger */
+    header nav .burger {
+        position: absolute;
+        top: 5px;
+        right: -25px;
+        width: 70px;
+        height: 70px;
+        background: #007bff;
+        -moz-transition: all 0.6s ease-in-out;
+        -o-transition: all 0.6s ease-in-out;
+        -webkit-transition: all 0.6s ease-in-out;
+        transition: all 0.6s ease-in-out;
+        -moz-transform: translate(-50%, 0);
+        -ms-transform: translate(-50%, 0);
+        -webkit-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+    }
+
+    header nav .burger i,
+    header nav .burger i:before,
+    header nav .burger i:after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 2px;
+        width: 40px;
+        content: '';
+        background: #fff;
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        -moz-transition: all 0.2s ease-in-out;
+        -o-transition: all 0.2s ease-in-out;
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+    }
+
+    header nav .burger i:before {
+        margin-top: -12px;
+    }
+
+    header nav .burger i:after {
+        margin-top: 12px;
+    }
+
+    header nav .burger:hover {
+        background: #0056b3;
+    }
+
+    header nav .burger:hover i:before {
+        margin-top: -14px;
+    }
+
+    header nav .burger:hover i:after {
+        margin-top: 14px;
+    }
+
+    header nav .burger.active {
+        background: #007bff;
+    }
+
+    header nav .burger.active i {
+        background: transparent;
+    }
+
+    header nav .burger.active i:before,
+    header nav .burger.active i:after {
+        left: -5px;
+        width: 50px;
+    }
+
+    header nav .burger.active i:before {
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        top: 12px;
+    }
+
+    header nav .burger.active i:after {
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        top: -12px;
+    }
+
+    header nav .burger.active:hover {
+        background: #0056b3;
+    }
+
+    header nav .burger.active:hover i:before,
+    header nav .burger.active:hover i:after {
+        width: 60px;
+        margin: 0;
+        left: -10px;
+        top: 0;
     }
 
     /* Flèche pour monter */
@@ -934,6 +1029,57 @@ footer {
     .edit-trick #form-edit-trick form .buttons {
         justify-content: center;
         margin-top: 20px;
+    }
+}
+
+/* Responsive 520px Details d'une figure */
+@media only screen and (max-width: 520px) {
+    /* Header */
+    header .logo {
+        width: 100%;
+        margin: 0;
+    }
+
+    header .logo img {
+        width: 150px;
+    }
+
+    /* Menu fixé en bas */
+    header nav .burger {
+        display: none;
+    }
+
+    header nav .menu {
+        display: none;
+    }
+
+    .responsive-menu {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        z-index: 10;
+        background-color: #484b50;
+    }
+
+    .responsive-menu .menu {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+        margin: 0;
+        padding: 15px;
+    }
+
+    .responsive-menu .menu li {
+        display: block !important;
+    }
+
+    .responsive-menu .menu img {
+        width: 35px;
+        height: 35px;
     }
 }
 /* Fin Responsive */

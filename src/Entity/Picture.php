@@ -21,7 +21,8 @@ class Picture
     /**
      * @Assert\Image(
      *  mimeTypes        = {"image/jpeg", "image/jpg", "image/png"},
-     *  mimeTypesMessage = "Le fichier ne possède pas une extension valide. Veuillez insérer une image en .jpg, .jpeg ou .png",
+     *  mimeTypesMessage = "Le fichier ne possède pas une extension valide.
+     *                      Veuillez insérer une image en .jpg, .jpeg ou .png",
      *  minWidth         = 480,
      *  minWidthMessage  = "La largeur de cette image est trop petite. Elle doit faire minimum {{ min_width }} pixels",
      *  maxWidth         = 1500,

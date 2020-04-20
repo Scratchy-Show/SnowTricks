@@ -3,15 +3,18 @@
 
 namespace App\Controller;
 
-
 use App\Entity\User;
 use App\Form\PasswordForgotType;
 use App\Form\PasswordResetType;
 use App\Form\RegistrationType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use Swift_Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -19,13 +22,21 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
 {
     /**
      * @Route("/inscription", name="registration")
-     * @throws \Exception
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @param Swift_Mailer $mailer
+     * @param MailController $mail
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
-    public function registrationPage(Request $request, UserPasswordEncoderInterface $encoder, \Swift_Mailer $mailer, MailController $mail)
-    {
+    public function registrationPage(
+        Request $request,
+        UserPasswordEncoderInterface $encoder,
+        Swift_Mailer $mailer,
+        MailController $mail
+    ) {
         // Si l'utilisateur est déjà connecté
-        if ($this->getUser() != null)
-        {
+        if ($this->getUser() != null) {
             // Redirection vers la page d'accueil
             return $this->redirectToRoute('home');
         }
@@ -99,10 +110,21 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
 
     /**
      * @Route("/mot-de-passe-oublie", name="password_forgot")
-     * @throws \Exception
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param UserRepository $repository
+     * @param Swift_Mailer $mailer
+     * @param MailController $mail
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
-    public function passwordForgot(Request $request, EntityManagerInterface $manager, UserRepository $repository, \Swift_Mailer $mailer, MailController $mail)
-    {
+    public function passwordForgot(
+        Request $request,
+        EntityManagerInterface $manager,
+        UserRepository $repository,
+        Swift_Mailer $mailer,
+        MailController $mail
+    ) {
         // Création du formulaire
         $form = $this->createForm(PasswordForgotType::class);
 
@@ -110,8 +132,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
         $form->handleRequest($request);
 
         // Si le formulaire est soumis et valide
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             // Récupère le pseudo dans le formulaire
             $username = $form->get('username')->getData();
 
@@ -119,8 +140,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
             $user = $repository->findOneBy(['username' => $username]);
 
             // Si l'utilisateur est trouvé
-            if ($user != null)
-            {
+            if ($user != null) {
                 // Attribution d'un nouveau token pour le reset
                 $user->setToken(bin2hex(random_bytes(64)));
 
@@ -144,8 +164,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
 
                 // Redirection vers la page d'accueil
                 return $this->redirectToRoute('home');
-            }
-            else // Si l'utilisateur n'est pas trouvé
+            } else // Si l'utilisateur n'est pas trouvé
             {
                 $this->addFlash(
                     'danger',
@@ -162,10 +181,20 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
 
     /**
      * @Route("/mot-de-passe-reinitialise/{token}", name="password_reset")
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param UserRepository $repository
+     * @param UserPasswordEncoderInterface $encoder
+     * @param $token
+     * @return RedirectResponse|Response
      */
-    public function passwordReset(Request $request, EntityManagerInterface $manager, UserRepository $repository,
-        UserPasswordEncoderInterface $encoder, $token)
-    {
+    public function passwordReset(
+        Request $request,
+        EntityManagerInterface $manager,
+        UserRepository $repository,
+        UserPasswordEncoderInterface $encoder,
+        $token
+    ) {
         // Création du formulaire
         $form = $this->createForm(PasswordResetType::class);
 
@@ -173,8 +202,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
         $form->handleRequest($request);
 
         // Si le formulaire est soumis et valide
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             // Récupère l'email dans le formulaire
             $email = $form->get('email')->getData();
 
@@ -182,11 +210,9 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
             $user = $repository->findOneBy(['email' => $email]);
 
             // Si l'utilisateur est trouvé
-            if ($user != null)
-            {
+            if ($user != null) {
                 // Si le jeton de l'utilisateur correspond au jeton du formulaire
-                if ($user->getToken() == $token)
-                {
+                if ($user->getToken() == $token) {
                     // Récupère le mot de passe dans le formulaire
                     $password = $form->get('password')->getData();
 
@@ -207,16 +233,14 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
 
                     // Redirection vers la page d'accueil
                     return $this->redirectToRoute('home');
-                }
-                else // Si les jetons ne correspondent pas
+                } else // Si les jetons ne correspondent pas
                 {
                     $this->addFlash(
                         'danger',
                         "La modification du mot de passe n'a pas pu être effectué"
                     );
                 }
-            }
-            else // Si l'utilisateur n'est pas trouvé
+            } else // Si l'utilisateur n'est pas trouvé
             {
                 $this->addFlash(
                     'danger',

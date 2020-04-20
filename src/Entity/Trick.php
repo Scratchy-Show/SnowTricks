@@ -3,6 +3,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -141,24 +142,24 @@ class Trick
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getUpdateDate(): ?\DateTimeInterface
+    public function getUpdateDate(): ?DateTimeInterface
     {
         return $this->updateDate;
     }
 
-    public function setUpdateDate(?\DateTimeInterface $updateDate): self
+    public function setUpdateDate(?DateTimeInterface $updateDate): self
     {
         $this->updateDate = $updateDate;
 
@@ -186,8 +187,7 @@ class Trick
         $text = trim($text, '-');
 
         // Translittérer - Nettoie les accents
-        if (function_exists('iconv'))
-        {
+        if (function_exists('iconv')) {
             // Convertit la chaîne $text depuis utf-8 vers us-ascii//TRANSLIT
             $text = iconv('utf-8', 'ASCII//TRANSLIT', $text);
         }

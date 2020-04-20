@@ -3,19 +3,21 @@
 
 namespace App\Controller;
 
-
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MailController extends AbstractController // Permet d'utiliser la méthode render
 {
     // Envoie un mail pour valider le compte
-    public function sendMail(User $user, \Swift_Mailer $mailer, $swiftMessage, $view)
+    public function sendMail(User $user, Swift_Mailer $mailer, $swiftMessage, $view)
     {
-        $message = (new \Swift_Message($swiftMessage))
+        $message = (new Swift_Message($swiftMessage))
             ->setFrom('noreply@snowtricks.com')
             ->setTo($user->getEmail())
             ->setBody(
@@ -31,18 +33,25 @@ class MailController extends AbstractController // Permet d'utiliser la méthode
 
     /**
      * @Route("/validation-email/{username}/{token}", name="validate_email")
+     * @param $username
+     * @param $token
+     * @param UserRepository $repository
+     * @param EntityManagerInterface $manager
+     * @return RedirectResponse
      */
-    public function validateEmail($username, $token, UserRepository $repository, EntityManagerInterface $manager)
-    {
+    public function validateEmail(
+        $username,
+        $token,
+        UserRepository $repository,
+        EntityManagerInterface $manager
+    ) {
         // Récupère l'utilisateur
         $user = $repository->findOneBy(['username' => $username]);
 
         // Si l'utilisateur est trouvé
-        if ($user != null)
-        {
+        if ($user != null) {
             // Si le jeton correspond à celui de l'utilisateur
-            if ($token == $user->getToken())
-            {
+            if ($token == $user->getToken()) {
                 // Active le compte
                 $user->setActivated(true);
                 $manager->persist($user);
@@ -55,8 +64,7 @@ class MailController extends AbstractController // Permet d'utiliser la méthode
 
                 // Redirection vers la page d'accueil
                 return $this->redirectToRoute('home');
-            }
-            else // Si le jeton ne correspond pas à l'utilisateur
+            } else // Si le jeton ne correspond pas à l'utilisateur
             {
                 $this->addFlash(
                     'danger',
@@ -66,8 +74,7 @@ class MailController extends AbstractController // Permet d'utiliser la méthode
                 // Redirection vers la page d'inscription
                 return $this->redirectToRoute('registration');
             }
-        }
-        else // Si l'utilisateur n'est pas trouvé
+        } else // Si l'utilisateur n'est pas trouvé
         {
             $this->addFlash(
                 'danger',

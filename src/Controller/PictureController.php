@@ -3,7 +3,6 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Picture;
 use App\Entity\Trick;
 use App\Form\PictureType;
@@ -11,7 +10,9 @@ use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PictureController extends AbstractController // Permet d'utiliser la méthode render
@@ -19,9 +20,16 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
     /**
      * @Route("/figure/ajouter/image/{slug}", name="trick_picture_add")
      * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @param $slug
+     * @return RedirectResponse|Response
      */
-    public function addPictureTrick(Request $request, FileUploader $fileUploader, $slug)
-    {
+    public function addPictureTrick(
+        Request $request,
+        FileUploader $fileUploader,
+        $slug
+    ) {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -29,8 +37,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
         $trick = $entityManager->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
 
         // Si une figure correspond à l'id
-        if ($trick != null)
-        {
+        if ($trick != null) {
             // Création du formulaire d'image
             $form = $this->createForm(PictureType::class);
 
@@ -38,14 +45,12 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
             $form->handleRequest($request);
 
             // Si le formulaire d'ajout d'image est soumis
-            if ($form->isSubmitted() && $form->isValid())
-            {
+            if ($form->isSubmitted() && $form->isValid()) {
                 // Récupère la nouvelle image
                 $pictureFile = $form->get('file')->getData();
 
                 // Si il n'y a pas d'image
-                if (empty($pictureFile))
-                {
+                if (empty($pictureFile)) {
                     // Message d'erreur
                     $this->addFlash(
                         'danger',
@@ -93,8 +98,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
             return $this->render('trick/addPicture.html.twig', [
                 'form' => $form->createView()
             ]);
-        }
-        else // Si aucune figure ne correspond à l'id
+        } else // Si aucune figure ne correspond à l'id
         {
             // Message d'erreur
             $this->addFlash(
@@ -110,12 +114,16 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
     /**
      * @Route("/figure/supprimer/image/{picture}/{trick}", name="trick_picture_delete")
      * @IsGranted("ROLE_USER")
+     * @param $pictureId
+     * @param $trickId
+     * @return RedirectResponse
      */
-    public function deletePictureTrick($pictureId, $trickId)
-    {
+    public function deletePictureTrick(
+        $pictureId,
+        $trickId
+    ) {
         // Si $picture et $trick ne sont pas vident et sont numérique
-        if ((!empty($pictureId)) && (is_numeric($pictureId)) && (!empty($trickId)) && (is_numeric($trickId)))
-        {
+        if ((!empty($pictureId)) && (is_numeric($pictureId)) && (!empty($trickId)) && (is_numeric($trickId))) {
             // Récupère l'image
             $picture = $this->getDoctrine()->getRepository(Picture::class)->find($pictureId);
 
@@ -123,14 +131,12 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
             $trick = $this->getDoctrine()->getRepository(Trick::class)->find($trickId);
 
             // Si la figure éxiste
-            if ($trick != null)
-            {
+            if ($trick != null) {
                 // Si l'image est trouvée
-                if ($picture != null)
-                {
+                if ($picture != null) {
                     // Si il y'a une image principale et que l'image a supprimer est l'image principale de la figure
-                    if (($trick->getMainPicture() != null) && ($trick->getMainPicture()->getId() == $picture->getId()))
-                    {
+                    if (($trick->getMainPicture() != null) &&
+                        ($trick->getMainPicture()->getId() == $picture->getId())) {
                         // Supprime l'image en tant qu'image principale
                         $trick->setMainPicture(null);
                     }
@@ -163,8 +169,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                     return $this->redirectToRoute('trick_edit', [
                         'slug' => $trick->getSlug()
                     ]);
-                }
-                else // Si l'image n'est pas trouvé
+                } else // Si l'image n'est pas trouvé
                 {
                     // Message d'erreur
                     $this->addFlash(
@@ -177,8 +182,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                         'slug' => $trick->getSlug()
                     ]);
                 }
-            }
-            else
+            } else // Si la figure n'existe pas
             {
                 // Message d'erreur
                 $this->addFlash(
@@ -189,8 +193,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                 // Redirection vers la page d'accueil
                 return $this->redirectToRoute('home');
             }
-        }
-        else // Si $picture et $trick sont vident ou non numérique
+        } else // Si $picture et $trick sont vident ou non numérique
         {
             // Message d'erreur
             $this->addFlash(
@@ -206,22 +209,25 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
     /**
      * @Route("/figure/modifier/image-principale/{slug}", name="trick_main_picture_edit")
      * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @param $slug
+     * @return RedirectResponse
      */
-    public function editMainPicture(Request $request, $slug)
-    {
-        if($request->isMethod('post')) {
+    public function editMainPicture(
+        Request $request,
+        $slug
+    ) {
+        if ($request->isMethod('post')) {
             // Récupère l'id de l'image
             $mainPictureId = $request->request->get("editMainPicture");
 
             // Si une image a bien été sélectionné
-            if ($mainPictureId != null)
-            {
+            if ($mainPictureId != null) {
                 // Récupère la figure
                 $trick = $this->getDoctrine()->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
 
                 // Si la figure est trouvé
-                if ($trick != null)
-                {
+                if ($trick != null) {
                     // Récupère l'image
                     $picture = $this->getDoctrine()->getRepository(Picture::class)->find($mainPictureId);
 
@@ -253,8 +259,7 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
 
                 // Redirection vers la page d'accueil
                 return $this->redirectToRoute('home');
-            }
-            else // Aucune image n'a été sélectionné
+            } else // Aucune image n'a été sélectionné
             {
                 // Message d'erreur
                 $this->addFlash(
@@ -268,5 +273,15 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
                 'slug' => $slug
             ]);
         }
+        // Message d'erreur
+        $this->addFlash(
+            'danger',
+            "Veuiller ne pas modifier les valeurs du formulaire."
+        );
+
+        // Redirection vers la page d'edition de la figure
+        return $this->redirectToRoute('trick_edit', [
+            'slug' => $slug
+        ]);
     }
 }

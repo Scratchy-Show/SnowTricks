@@ -3,9 +3,12 @@
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  message = "Cet email est déjà utilisé"
  * )
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, Serializable
 {
     /**
      * @ORM\Id()
@@ -74,7 +77,8 @@ class User implements UserInterface, \Serializable
     /**
      * @Assert\Image(
      *  mimeTypes        = {"image/jpeg", "image/jpg", "image/png"},
-     *  mimeTypesMessage = "Le fichier ne possède pas une extension valide. Veuillez insérer une image en .jpg, .jpeg ou .png",
+     *  mimeTypesMessage = "Le fichier ne possède pas une extension valide.
+     *                      Veuillez insérer une image en .jpg, .jpeg ou .png",
      *  minWidth         = 200,
      *  minWidthMessage  = "La largeur de cette image est trop petite. Elle doit faire minimum {{ min_width }} pixels",
      *  maxWidth         = 400,
@@ -129,16 +133,20 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         // Par défaut, la date d'inscription est celle d'aujourd'hui
-        $this->setDate(new \DateTime("now"));
+        $this->setDate(new DateTime("now"));
         // Par défaut, le compte n'est pas activé
         $this->setActivated(false);
         $this->tricks = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
-    public function eraseCredentials() {}
+    public function eraseCredentials()
+    {
+    }
 
-    public function getSalt() {}
+    public function getSalt()
+    {
+    }
 
     /** @see \Serializable::serialize() */
     public function serialize()
@@ -150,9 +158,12 @@ class User implements UserInterface, \Serializable
         ));
     }
 
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
+    /** @param $serialized
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize(
+        $serialized
+    ) {
         list (
             $this->id,
             $this->username,
@@ -190,12 +201,12 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -365,6 +376,4 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
-
-
 }
