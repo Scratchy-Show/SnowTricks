@@ -72,6 +72,7 @@ class AccountController extends AbstractController // Permet d'utiliser la méth
             $user->setPictureName($newFilename);
             $user->setProfilPicturePath('uploads/profil');
             $user->setToken(bin2hex(random_bytes(64)));
+            $user->setRoles(['ROLE_USER']);
 
             // Récupère le gestionnaire d'entités
             $entityManager = $this->getDoctrine()->getManager();
