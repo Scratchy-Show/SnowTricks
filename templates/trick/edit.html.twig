@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <!-- Modal pour la modification de l'image principal -->
+        <!-- Modal pour la modification de l'image principale -->
         <div class="modal-container">
             <div id="editMainPicture" class="modal fade"
                  tabindex="-1" role="dialog" aria-labelledby="modalEditMainPicture" aria-hidden="true">
@@ -52,22 +52,22 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="h4 modal-title" id="modalEditMainPicture">
-                                Choisissez la nouvelle image principal
+                                Choisissez la nouvelle image principale
                             </h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" action="{{ path('trick_main_picture_edit', {'trickId': trick.id}) }}">
-                                <!-- Si il y a des images dans la gallerie -->
+                            <form method="POST" action="{{ path('trick_main_picture_edit', {'slug': trick.slug}) }}">
                                 {% if pictures is not empty %}
+                                    <!-- Si il y a des images dans la gallerie -->
                                     <div class="pictures-container d-flex align-content-start flex-wrap">
                                         {% for picture in pictures %}
-                                            <!-- Si une image principal est défini -->
                                             {% if trick.mainPicture.id is defined  %}
-                                                <!-- Evite d'afficher l'image principal dans la gallerie -->
+                                                <!-- Si une image principale est défini -->
                                                 {% if picture.id != trick.mainPicture.id %}
+                                                    <!-- Evite d'afficher l'image principale dans la gallerie -->
                                                     <div class="picture p-1">
                                                         <input id="editMainPicture" type="radio"
                                                                name="editMainPicture"
@@ -75,13 +75,13 @@
                                                         >
                                                         <label for="editMainPicture">
                                                             <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
-                                                                 class="imgModal rounded" alt="Image"
+                                                                 class="rounded" alt="{{ trick.name }}"
                                                             />
                                                         </label>
                                                     </div>
                                                 {% endif %}
-                                            <!-- Si une image principal n'est pas défini -->
                                             {% elseif trick.mainPicture.id is not defined %}
+                                                <!-- Si une image principale n'est pas défini -->
                                                 <div class="picture p-1">
                                                     <input id="editMainPicture" type="radio"
                                                            name="editMainPicture"
@@ -89,7 +89,7 @@
                                                     >
                                                     <label for="editMainPicture">
                                                         <img src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
-                                                             class="imgModal rounded" alt="Image"
+                                                             class="rounded" alt="{{ trick.name }}"
                                                         />
                                                     </label>
                                                 </div>
@@ -102,8 +102,8 @@
                                         </button>
                                         <button type="submit" class="btn btn-success">Modifier</button>
                                     </div>
-                                    <!-- Si il n'y a pas d'image dans la gallerie -->
                                 {% elseif trick.pictures is empty %}
+                                    <!-- Si il n'y a pas d'image dans la gallerie -->
                                     <p>Veuillez ajouter une image !</p>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-info" data-dismiss="modal">
@@ -122,17 +122,17 @@
         <div class="modal-picture">
             <div id="pictureModal" class="modal">
                 <span class="close">&times;</span>
-                <img id="img" class="modal-content" src="#" alt="Image" />
+                <img id="img" class="modal-content" src="#" alt="{{ trick.name }}" />
             </div>
         </div>
 
-        <!-- Section image principal -->
+        <!-- Section image principale -->
         <section id="mainPicture" class="position-relative border border-dark">
-            <!-- Si une image principal est défini -->
             {% if trick.mainPicture is not empty %}
+                <!-- Si une image principale est défini -->
                 <img class="w-100"
                      src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}"
-                     alt="Image principal"
+                     alt="{{ trick.name }}"
                 />
                 <div id="title" class="text-center">
                     <h2 class="h2">{{ trickName }}</h2>
@@ -140,35 +140,35 @@
                 <div class="buttons d-flex">
                     <button type="button"
                             class="btn"
-                            title="Modifier l'image principal"
+                            title="Modifier l'image principale"
                             data-toggle="modal"
                             data-target="#editMainPicture"
                             data-whatever="@editMainPic" >
-                        <img src="{{ asset('img/icons/edit.png') }}" alt="Image principal" />
+                        <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier l'image principale" />
                     </button>
                     <button type="button"
                             class="btn"
-                            title="Supprimer l'image principal"
+                            title="Supprimer l'image principale"
                             data-toggle="modal"
                             data-target="#deletePicture{{ trick.mainPicture.id }}"
                             data-whatever="@deletePic">
-                        <img src="{{ asset('img/icons/delete.png') }}" alt="Image principal" />
+                        <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer l'image principale" />
                     </button>
                 </div>
-                <!-- Si aucune image principal n'est défini -->
             {% else %}
-                <img class="w-100" src="{{ asset('uploads/trick/'~ 'default.jpg') }}" alt="Image principal" />
+                <!-- Si aucune image principale n'est défini -->
+                <img class="w-100" src="{{ asset('uploads/trick/'~ 'default.jpg') }}" alt="Image principale" />
                 <div id="title" class="text-center">
                     <h1 class="h1">{{ trick.name }}</h1>
                 </div>
                 <div class="buttons">
                     <button type="button"
                             class="btn"
-                            title="Modifier l'image principal"
+                            title="Modifier l'image principale"
                             data-toggle="modal"
                             data-target="#editMainPicture"
                             data-whatever="@editMainPic">
-                        <img src="{{ asset('img/icons/edit.png') }}" alt="Image principal" />
+                        <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier l'image principale" />
                     </button>
                 </div>
             {% endif %}
@@ -190,16 +190,15 @@
             <!-- Gallerie images -->
             {% if pictures is not empty %}
                 <div class="pictures-trick d-flex justify-content-start align-content-start flex-wrap">
-
                     {% for picture in pictures %}
-                        <!-- Si une image principal est défini -->
                         {% if trick.mainPicture.id is defined  %}
-                            <!-- Evite d'afficher l'image principal dans la gallerie -->
+                            <!-- Si une image principale est défini -->
                             {% if picture.id != trick.mainPicture.id %}
+                                <!-- Evite d'afficher l'image principale dans la gallerie -->
                                 <div class="picture">
                                     <img class="imgModal rounded"
                                          src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
-                                         alt="Image"
+                                         alt="{{ trick.name }}"
                                     />
                                     <div class="button-container">
                                         <button type="button"
@@ -208,17 +207,17 @@
                                                 data-toggle="modal"
                                                 data-target="#deletePicture{{ picture.id }}"
                                                 data-whatever="@deletePic">
-                                            <img src="{{ asset('img/icons/delete.png') }}" alt="Image" />
+                                            <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer l'image" />
                                         </button>
                                     </div>
                                 </div>
                             {% endif %}
-                            <!-- Si une image principal n'est pas défini -->
                         {% elseif trick.mainPicture.id is not defined %}
+                            <!-- Si une image principale n'est pas défini -->
                             <div class="picture">
                                 <img class="imgModal rounded"
                                      src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
-                                     alt="Image"
+                                     alt="{{ trick.name }}"
                                 />
                                 <div class="button-container">
                                     <button type="button"
@@ -227,7 +226,7 @@
                                             data-toggle="modal"
                                             data-target="#deletePicture{{ picture.id }}"
                                             data-whatever="@deletePic">
-                                        <img src="{{ asset('img/icons/delete.png') }}" alt="Image" />
+                                        <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer l'image" />
                                     </button>
                                 </div>
                             </div>
@@ -256,7 +255,7 @@
                                             <div class="picture text-center">
                                                 <img class="imgModal rounded"
                                                      src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
-                                                     alt="Image"
+                                                     alt="{{ trick.name }}"
                                                 />
                                             </div>
                                         </div>
@@ -274,13 +273,13 @@
                         </div>
 
                     {% endfor %}
-                    <a href="{{ path('trick_picture_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une image">
+                    <a href="{{ path('trick_picture_add', {'slug': trick.slug}) }}" class="add" title="Ajouter une image">
                         <img src="{{ asset('img/icons/add.png') }}" alt="Ajouter une image" />
                     </a>
                 </div>
             {% elseif pictures is empty %}
-                <div class="empty-picture">
-                    <a href="{{ path('trick_picture_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une image">
+                <div class="empty-picture d-flex justify-content-start align-content-start flex-wrap">
+                    <a href="{{ path('trick_picture_add', {'slug': trick.slug}) }}" class="add" title="Ajouter une image">
                         <img src="{{ asset('img/icons/add.png') }}" alt="Ajouter une image" />
                     </a>
                 </div>
@@ -302,7 +301,7 @@
                                         data-toggle="modal"
                                         data-target="#deleteVideo{{ video.id }}"
                                         data-whatever="@deleteUrl">
-                                    <img src="{{ asset('img/icons/delete.png') }}" alt="" />
+                                    <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer la vidéo" />
                                 </button>
                             </div>
                         </div>
@@ -344,13 +343,13 @@
                         </div>
 
                     {% endfor %}
-                    <a href="{{ path('trick_video_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une vidéo">
+                    <a href="{{ path('trick_video_add', {'slug': trick.slug}) }}" class="add" title="Ajouter une vidéo">
                         <img src="{{ asset('img/icons/add.png') }}" alt="Ajouter une vidéo" />
                     </a>
                 </div>
             {% elseif videos is empty %}
                 <div class="empty-video d-flex justify-content-end align-content-start flex-wrap">
-                    <a href="{{ path('trick_video_add', {'trickId': trick.id}) }}" class="add" title="Ajouter une vidéo">
+                    <a href="{{ path('trick_video_add', {'slug': trick.slug}) }}" class="add" title="Ajouter une vidéo">
                         <img src="{{ asset('img/icons/add.png') }}" alt="Ajouter une vidéo" />
                     </a>
                 </div>
@@ -365,8 +364,8 @@
                         Publié le {{ trick.date | date('d/m/Y') }} à {{ trick.date | date('H:i') }} par
                         <span class="font-weight-bold">{{ trick.user.username }}</span>
                     </p>
-                    <!-- Si il y a une date de mise à jour -->
                     {% if trick.updateDate is not null %}
+                        <!-- Si il y a une date de mise à jour -->
                         <p class="col p-3 mb-0">
                             Mis à jour le {{ trick.updateDate | date('d/m/Y') }} à {{ trick.updateDate | date('H:i') }}
                         </p>

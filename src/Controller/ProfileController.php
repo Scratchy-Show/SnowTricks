@@ -3,13 +3,15 @@
 
 namespace App\Controller;
 
-
 use App\Form\ProfileEditType;
 use App\Form\ProfileType;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileController extends AbstractController // Permet d'utiliser la méthode render
@@ -35,15 +37,19 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
     /**
      * @Route("/modifier-profil/{token}", name="profile_edit")
      * @IsGranted("ROLE_USER")
-     * @throws \Exception
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param $token
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
-    public function profileEdit(Request $request, EntityManagerInterface $manager, $token)
-    {
+    public function profileEdit(
+        Request $request,
+        EntityManagerInterface $manager,
+        $token
+    ) {
         // Récupère l'utilisateur connecté
         $user = $this->getUser();
-
-        // Récupère sont email
-        $email = $user->getEmail();
 
         // Création du formulaire avec les données de l'utilisateur
         $form = $this->createForm(ProfileEditType::class, $user);
@@ -52,14 +58,11 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
         $form->handleRequest($request);
 
         // Si le formulaire est soumis et valide
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             // Si le jeton de l'utilisateur correspond au jeton du lien
-            if ($user->getToken() == $token)
-            {
+            if ($user->getToken() == $token) {
                 // Si il y a une nouvelle image de profil
-                if ($form->get('profilPicture')->getData() != null)
-                {
+                if ($form->get('profilPicture')->getData() != null) {
                     // Récupère l'image du formulaire
                     $pictureFile = $form->get('profilPicture')->getData();
 
@@ -97,8 +100,7 @@ class ProfileController extends AbstractController // Permet d'utiliser la méth
 
                 // Redirection vers la page du profil
                 return $this->redirectToRoute('profile');
-            }
-            else // Si les jetons ne correspondent pas
+            } else // Si les jetons ne correspondent pas
             {
                 $this->addFlash(
                     'danger',

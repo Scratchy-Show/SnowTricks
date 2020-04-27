@@ -15,12 +15,12 @@
             </h1>
             <div class="descend">
                 <a href="#tricks">
-                    <img src={{ asset('img/icons/bottom.png') }} alt="Descendre" title="Voir figures" />
+                    <img src="{{ asset('img/icons/bottom.png') }}" alt="Descendre vers les figures" title="Descendre vers les figures" />
                 </a>
             </div>
             <div class="back-to-top">
                 <a href="#tricks">
-                    <img src={{ asset('img/icons/top.png') }} alt="Monter" title="Accueil" />
+                    <img src="{{ asset('img/icons/top.png') }}" alt="Remonter vers les figures" title="Monter vers les figures" />
                 </a>
             </div>
         </section>
@@ -32,19 +32,19 @@
                     <div class="trick">
                         <div class="main-picture">
                             {% if trick.mainPicture is not empty %}
-                                <!-- Si une image principal est défini -->
-                                <img src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}" alt="Image principal" />
+                                <!-- Si une image principale est défini -->
+                                <img src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}" alt="{{ trick.name }}" />
                             {% else %}
-                                <!-- Si aucune image principal n'est défini -->
-                                <img src="{{ asset('uploads/trick/'~ 'default.jpg') }}" alt="Image principal" />
+                                <!-- Si aucune image principale n'est défini -->
+                                <img src="{{ asset('uploads/trick/'~ 'default.jpg') }}" alt="Image principale" />
                             {% endif %}
                         </div>
                         <div class="title-buttons-container">
-                            <a class="trick-title p-2 rounded-lg" href="{{ path('trick_details', {'trickId': trick.id, page: '1'}) }}">{{ trick.name }}</a>
+                            <a class="trick-title p-2 rounded-lg" href="{{ path('trick_details', {'slug': trick.slug, page: '1'}) }}">{{ trick.name }}</a>
                             {% if app.user.username is defined %}
                                 <div class="buttons d-flex">
                                     <button type="button" class="btn" title="Modifier la figure">
-                                        <a href="{{ path('trick_edit', {'id': trick.id}) }}}">
+                                        <a href="{{ path('trick_edit', {'slug': trick.slug}) }}">
                                             <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
                                         </a>
                                     </button>

@@ -1,0 +1,8 @@
+App\Entity\User:
+  user:
+    username: "Test2"
+    email: "nom2@exemple.fr"
+    password: "password"
+    pictureName: "Test2.jpg"
+    profilPicturePath: "uploads/profil"
+    token: "0123456789"

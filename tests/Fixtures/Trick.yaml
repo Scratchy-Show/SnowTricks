@@ -1,0 +1,4 @@
+App\Entity\Trick:
+  trick:
+    name: "Test figure"
+    description: "Test de la figure avec les fixtures"

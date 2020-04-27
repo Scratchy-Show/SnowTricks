@@ -14,7 +14,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TrickType extends AbstractType
-{    // Génère le formulaire
+{
+    // Génère le formulaire
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

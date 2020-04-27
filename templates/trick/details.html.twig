@@ -46,17 +46,17 @@
         <div class="modal-picture">
             <div id="pictureModal" class="modal">
                 <span class="close">&times;</span>
-                <img id="img" class="modal-content" src="#" alt="Image" />
+                <img id="img" class="modal-content" src="#" alt="{{ trick.name }}" />
             </div>
         </div>
 
-        <!-- Section image principal -->
+        <!-- Section image principale -->
         <section id="mainPicture" class="position-relative border border-dark">
-            <!-- Si une image principal est défini -->
             {% if trick.mainPicture is not empty %}
+                <!-- Si une image principale est défini -->
                 <img class="w-100"
                      src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}"
-                     alt="Image principal"
+                     alt="{{ trick.name }}"
                 />
                 <div id="title" class="text-center">
                     <h1 class="h1">{{ trick.name }}</h1>
@@ -64,7 +64,7 @@
                 {% if app.user.username is defined %}
                     <div class="buttons d-flex">
                         <button type="button" class="btn" title="Modifier la figure">
-                            <a href="{{ path('trick_edit', {'id': trick.id}) }}}">
+                            <a href="{{ path('trick_edit', {'slug': trick.slug}) }}">
                                 <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
                             </a>
                         </button>
@@ -83,8 +83,8 @@
                         </button>
                     </div>
                 {% endif %}
-                <!-- Si aucune image principal n'est défini -->
             {% else %}
+                <!-- Si aucune image principale n'est défini -->
                 <img class="w-100" src="{{ asset('uploads/trick/'~ 'default.jpg') }}" alt="Image principal" />
                 <div id="title" class="text-center">
                     <h1 class="h1">{{ trick.name }}</h1>
@@ -97,8 +97,21 @@
                                 data-toggle="modal"
                                 data-target="#editTrick{ trick.id }}"
                                 data-whatever="@editTrick">
-                            <a href="{{ path('trick_edit', {'id': trick.id}) }}">
+                            <a href="{{ path('trick_edit', {'slug': trick.slug}) }}">
                                 <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
+                            </a>
+                        </button>
+                        <button type="button"
+                                class="btn"
+                                title="Supprimer la figure"
+                                data-toggle="modal"
+                                data-target="#deleteTrick{{ trick.id }}"
+                                data-whatever="@deleteTrick">
+                            <a href="#"
+                               data-toggle="modal"
+                               data-target="#deleteTrick{{ trick.id }}"
+                               data-whatever="@deleteTrick">
+                                <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer la figure" />
                             </a>
                         </button>
                     </div>
@@ -120,42 +133,57 @@
         <section id="container-gallery" class="medias mt-3">
 
             <!-- Gallerie images -->
-            {% if trick.pictures is not empty %}
+            {% if pictures is not empty %}
                 <div class="pictures-trick d-flex justify-content-start align-content-start flex-wrap">
-
-                    {% for picture in trick.pictures %}
-                        <!-- Si une image principal est défini -->
+                    {% for picture in pictures %}
                         {% if trick.mainPicture.id is defined  %}
-                            <!-- Evite d'afficher l'image principal dans la gallerie -->
-                            {% if picture.id != trick.mainPicture.id %}
-                                <div class="picture">
-                                    <img class="imgModal rounded"
-                                         src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
-                                         alt="Image"
-                                    />
+                            <!-- Si une image principale est défini -->
+                            {% if pictures|length == 1 %}
+                                <!-- Si il y a uniquement l'image principale -->
+                                <div class="empty-picture">
+                                    <p class="font-weight-bold">La gallerie d'image est vide</p>
                                 </div>
+                            {% elseif pictures|length > 1 %}
+                                <!-- Si il y a plus que l'image principale -->
+                                {% if picture.id != trick.mainPicture.id %}
+                                    <!-- Evite d'afficher l'image principale dans la gallerie -->
+                                    <div class="picture">
+                                        <img class="imgModal rounded"
+                                             src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
+                                             alt="{{ trick.name }}"
+                                        />
+                                    </div>
+                                {% endif %}
                             {% endif %}
-                        <!-- Si une image principal n'est pas défini -->
                         {% elseif trick.mainPicture.id is not defined %}
+                            <!-- Si une image principale n'est pas défini -->
                             <div class="picture">
                                 <img class="imgModal rounded"
                                      src="{{ asset(picture.path ~ '/'  ~ picture.name) }}"
-                                     alt="Image"
+                                     alt="{{ trick.name }}"
                                 />
                             </div>
                         {% endif %}
                     {% endfor %}
                 </div>
+            {% elseif pictures is empty %}
+                <div class="empty-picture">
+                    <p class="font-weight-bold">La figure n'a pour l'instant aucune image</p>
+                </div>
             {% endif %}
 
             <!-- Gallerie vidéos -->
-            {% if trick.videos is not empty %}
+            {% if videos is not empty %}
                 <div class="videos-trick d-flex justify-content-start align-content-start flex-wrap">
                     {% for video in trick.videos %}
                         <div class="video pr-1">
                             <iframe src="{{ video.url }}" allowfullscreen></iframe>
                         </div>
                     {% endfor %}
+                </div>
+            {% elseif videos is empty %}
+                <div class="empty-video">
+                    <p class="font-weight-bold">La figure n'a pour l'instant aucune vidéo</p>
                 </div>
             {% endif %}
         </section>
@@ -174,8 +202,8 @@
                         Publié le {{ trick.date | date('d/m/Y') }} à {{ trick.date | date('H:i') }} par
                         <span class="font-weight-bold">{{ trick.user.username }}</span>
                     </p>
-                    <!-- Si il y a une date de mise à jour -->
                     {% if trick.updateDate is not null %}
+                        <!-- Si il y a une date de mise à jour -->
                         <p class="col p-3 mb-0">
                             Mis à jour le {{ trick.updateDate | date('d/m/Y') }} à {{ trick.updateDate | date('H:i') }}
                         </p>
@@ -232,9 +260,12 @@
             </div>
 
             {% if comments is not empty %}
-            <div class="m-3">
-                <a href="#" id="loadMore" class="d-block text-center m-auto p-2 rounded-lg">Plus de commentaires</a>
-            </div>
+                {% if comments|length > 4 %}
+                    <!-- Si il y a plus de 4 commentaires -->
+                    <div class="m-3">
+                        <a href="#" id="loadMore" class="d-block text-center m-auto p-2 rounded-lg">Plus de commentaires</a>
+                    </div>
+                {% endif %}
             {% elseif comments is empty %}
                 <div class="mb-5">
                     <p class="text-center">Il n'y a aucun commentaire.</p>

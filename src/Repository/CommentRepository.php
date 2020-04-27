@@ -26,22 +26,19 @@ class CommentRepository extends ServiceEntityRepository
     public function getAllCommentsWithPaging($page, $nbMaxPerPage, $trick)
     {
         // Vérifie que $page correspond à un nombre
-        if (!is_numeric($page))
-        {
+        if (!is_numeric($page)) {
             throw new InvalidArgumentException(
                 'La valeur de l\'argument est incorrecte (valeur : ' . $page . ').'
             );
         }
 
         // Si $page est inférieur à 1
-        if ($page < 1)
-        {
+        if ($page < 1) {
             throw new NotFoundHttpException('La page demandée n\'existe pas');
         }
 
         // Vérifie que $nbMaxPerPage correspond à un nombre
-        if (!is_numeric($nbMaxPerPage))
-        {
+        if (!is_numeric($nbMaxPerPage)) {
             throw new InvalidArgumentException(
                 'La valeur de l\'argument est incorrecte (valeur : ' . $nbMaxPerPage . ').'
             );
@@ -70,8 +67,7 @@ class CommentRepository extends ServiceEntityRepository
         $paginator = new Paginator($query);
 
         // Si la page demandé ne correspond pas au compte
-        if ( ($paginator->count() <= $firstResult) && $page != 1)
-        {
+        if (($paginator->count() <= $firstResult) && $page != 1) {
             // Page 404, sauf pour la première page
             throw new NotFoundHttpException('La page demandée n\'existe pas.');
         }

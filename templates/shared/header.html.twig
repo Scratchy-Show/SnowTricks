@@ -2,39 +2,39 @@
     <ul class="menu">
         <li>
             <a href="{{ path('home') }}">
-                <img src={{ asset('img/icons/home.png') }} alt="Accueil" title="Accueil" />
+                <img src="{{ asset('img/icons/home.png') }}" alt="Accueil" title="Accueil" />
             </a>
         </li>
         <li>
             <a href="{{ path('home') }}#tricks">
-                <img src={{ asset('img/icons/tricks.png') }} alt="Figures" title="Figures" />
+                <img src="{{ asset('img/icons/tricks.png') }}" alt="Figures" title="Figures" />
             </a>
         </li>
         {% if app.user.username is defined %}
             <li>
                 <a href="{{ path('profile') }}">
-                    <img src={{ asset('img/icons/profile.png') }} alt="Profil" title="Profil" />
+                    <img src="{{ asset('img/icons/profile.png') }}" alt="Profil" title="Profil" />
                 </a>
             </li>
             <li>
                 <a href="{{ path('trick_create') }}">
-                    <img src={{ asset('img/icons/create.png') }} alt="Ajouter" title="Ajouter une figure" />
+                    <img src="{{ asset('img/icons/create.png') }}" alt="Ajouter une figure" title="Ajouter une figure" />
                 </a>
             </li>
             <li>
                 <a href="{{ path('logout') }}">
-                    <img src={{ asset('img/icons/logout.png') }} alt="Déconnexion" title="Déconnexion" />
+                    <img src="{{ asset('img/icons/logout.png') }}" alt="Déconnexion" title="Déconnexion" />
                 </a>
             </li>
         {% else %}
             <li>
                 <a href="{{ path('login') }}">
-                    <img src={{ asset('img/icons/login.png') }} alt="Connexion" title="Connexion" />
+                    <img src="{{ asset('img/icons/login.png') }}" alt="Connexion" title="Connexion" />
                 </a>
             </li>
             <li>
                 <a href="{{ path('registration') }}">
-                    <img src={{ asset('img/icons/registration.png') }} alt="Inscription" title="Inscription" />
+                    <img src="{{ asset('img/icons/registration.png') }}" alt="Inscription" title="Inscription" />
                 </a>
             </li>
         {% endif %}
@@ -43,10 +43,11 @@
 
 <header>
     <a class="logo clearfix text-center" href="{{ path('home') }}">
-        <img src={{ asset('img/logo.png') }} alt="SnowTricks" title="SnowTricks" />
+        <img src="{{ asset('img/logo.png') }}" alt="SnowTricks" title="SnowTricks" />
     </a>
 
     <nav>
+        <a href="#" class="burger"><i></i></a>
         <ul class="menu">
             <li><a href="{{ path('home') }}">Accueil</a></li>
             <li><a href="{{ path('home') }}#tricks">Figures</a></li>

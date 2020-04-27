@@ -11,10 +11,13 @@ use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Service\FileUploader;
 use DateTime;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TrickController extends AbstractController // Permet d'utiliser la méthode render
@@ -22,9 +25,14 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
     /**
      * @Route("/figure/creer", name="trick_create")
      * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @return RedirectResponse|Response
      */
-    public function createTrick(Request $request, FileUploader $fileUploader)
-    {
+    public function createTrick(
+        Request $request,
+        FileUploader $fileUploader
+    ) {
         // Crée une instance de Trick
         $trick = new Trick();
 
@@ -35,17 +43,15 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         $form->handleRequest($request);
 
         // Si le formulaire est soumis et valide
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            // Récupère l'image principal
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupère l'image principale
             $mainPicture = $form->get('mainPicture')->getData();
 
             // Chemin de destination de l'image
             $destination = $this->getParameter('trick_picture_directory');
 
-            // Si une image principal est présente
-            if ($mainPicture != null)
-            {
+            // Si une image principale est présente
+            if ($mainPicture != null) {
                 // Défini son nom et la déplace dans le dossier cible
                 $fileName = $fileUploader->upload($mainPicture->getFile(), $destination);
 
@@ -54,13 +60,12 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 $mainPicture->setPath('uploads/trick');
                 $mainPicture->setTrick($trick);
 
-                // Attribut l'image principal à la figure
+                // Attribut l'image principale à la figure
                 $trick->setMainPicture($mainPicture);
             }
 
             // Pour chaque image de la collection
-            foreach ($trick->getPictures() as $picture)
-            {
+            foreach ($trick->getPictures() as $picture) {
                 // Défini son nom et la déplace dans le dossier cible
                 $fileName = $fileUploader->upload($picture->getFile(), $destination);
 
@@ -71,8 +76,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             }
 
             // Pour chaque Url de la collection
-            foreach($trick->getVideos() as $video)
-            {
+            foreach ($trick->getVideos() as $video) {
                 $video->setTrick($trick);
             }
 
@@ -94,8 +98,8 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 "La figure <strong>" . $trick->getName() . "</strong> a bien été ajouté"
             );
 
-            // Redirection vers la page listant les figures
-            return $this->redirectToRoute('home');
+            // Redirection vers la page d'accueil avec une ancre sur les figures
+            return $this->redirect($this->generateUrl('home') . '#tricks');
         }
 
         // Affiche la page de création d'une figure avec le formulaire
@@ -105,26 +109,38 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
     }
 
     /**
-     * @Route("/figure/details/{trickId}/{page}", requirements={"page" = "\d+"}, name="trick_details")
+     * @Route("/figure/details/{slug}/{page}", requirements={"page" = "\d+"}, name="trick_details")
+     * @param Request $request
+     * @param $slug
+     * @param $page
+     * @return RedirectResponse|Response
      */
-    public function detailsTrick(Request $request, $trickId, $page)
-    {
+    public function detailsTrick(
+        Request $request,
+        $slug,
+        $page
+    ) {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
 
-        // Récupère la figure
-        $trick = $entityManager->getRepository(Trick::class)->find($trickId);
+        // Récupère la figure correspondant au slug
+        $trick = $entityManager->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
+
+        // Récupère les images liées à la figure
+        $pictures = $entityManager->getRepository(Picture::class)->findBy(['trick' => $trick->getId()]);
+
+        // Récupère les vidéos liées à la figure
+        $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $trick->getId()]);
 
         // Si aucune figure ne correspond à l'id
-        if ($trick == null)
-        {
+        if ($trick == null) {
             // Message d'erreur
             $this->addFlash(
                 'danger',
                 "Aucune figure ne correspond."
             );
 
-            // Redirection vers la page listant les figures
+            // Redirection vers la page d'accueil
             return $this->redirectToRoute('home');
         }
 
@@ -144,7 +160,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
             // Le nom de la route
             'path' => 'trick_details',
             // Paramètres supplémentaire nécessaires pour la route
-            'pathSettings' => array('trickId' => $trick->getId())
+            'pathSettings' => array('slug' => $slug)
         );
 
         // Crée une instance de Comment
@@ -177,13 +193,14 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
             // Redirection vers la page de la figure avec une ancre sur les commentaires
             return $this->redirect(
-                $this->generateUrl('trick_details',
-                    array('trickId' => $trick->getId(), 'page' => $page)) . '#comments'
+                $this->generateUrl('trick_details', array('slug' => $trick->getSlug(), 'page' => $page)) . '#comments'
             );
         }
         // Affiche par défaut la page de la figure
         return $this->render('trick/details.html.twig', [
             'trick' => $trick,
+            'pictures' => $pictures,
+            'videos' => $videos,
             'comments' => $comments,
             'paging' => $paging,
             'form' => $form->createView()
@@ -191,53 +208,57 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
     }
 
     /**
-     * @Route("/figure/modifier/{id}", name="trick_edit")
+     * @Route("/figure/modifier/{slug}", name="trick_edit")
      * @IsGranted("ROLE_USER")
+     * @param Request $request
+     * @param $slug
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
-    public function editTrick(Request $request, $id)
-    {
+    public function editTrick(
+        Request $request,
+        $slug
+    ) {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
 
         // Récupère la figure
-        $trick = $entityManager->getRepository(Trick::class)->find($id);
+        $trick = $entityManager->getRepository(Trick::class)->findOneBy(['slug' => $slug]);
 
         // Si une figure correspond à l'id
-        if ($trick != null)
-        {
+        if ($trick != null) {
             // Création du formulaire de figure
             $formTrickType = $this->createForm(TrickType::class, $trick);
 
+            // Récupère l'id de la figure
+            $trickId = $trick->getId();
+
             // Récupère les images liées à la figure
-            $pictures = $entityManager->getRepository(Picture::class)->findBy(['trick' => $id]);
+            $pictures = $entityManager->getRepository(Picture::class)->findBy(['trick' => $trickId]);
 
             // Récupère le nom de la figure
             $trickName = $trick->getName();
 
             // Récupère les urls liées à la figure
-            $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $id]);
+            $videos = $entityManager->getRepository(Video::class)->findBy(['trick' => $trickId]);
 
             // Met à jour le formulaire à l'aide des infos reçues de l'utilisateur
             $formTrickType->handleRequest($request);
 
             // Si le formulaire de modification d'une figure est soumis et valide
-            if ($formTrickType->isSubmitted() && $formTrickType->isValid())
-            {
+            if ($formTrickType->isSubmitted() && $formTrickType->isValid()) {
                 // Récupère l'id de la figure
-                $trickId = $_POST['trickId'];
+                $formTrickId = $_POST['trickId'];
 
                 // Vérifie si l'id de la figure correspond à l'id donné par le formulaire
-                if ($trick->getId() == $trickId)
-                {
+                if ($trickId == $formTrickId) {
                     // Lie chaque image à la figure
-                    foreach ($pictures as $picture)
-                    {
+                    foreach ($pictures as $picture) {
                         $picture->setTrick($trick);
                     }
 
                     // Lie chaque vidéo à la figure
-                    foreach ($videos as $video)
-                    {
+                    foreach ($videos as $video) {
                         $video->setTrick($trick);
                     }
                     
@@ -260,11 +281,10 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
                     // Redirection vers la page de la figure
                     return $this->redirectToRoute('trick_details', [
-                        'trickId' => $trick->getId(),
+                        'slug' => $trick->getSlug(),
                         'page' => 1
                     ]);
-                }
-                else // Si les id ne correspondent pas
+                } else // Si les id ne correspondent pas
                 {
                     // Message d'erreur
                     $this->addFlash(
@@ -284,8 +304,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 'videos' => $videos,
                 'formTrickType' => $formTrickType->createView()
             ]);
-        }
-        else // Si aucune figure ne correspond à l'id
+        } else // Si aucune figure ne correspond à l'id
         {
             // Message d'erreur
             $this->addFlash(
@@ -293,7 +312,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 "Aucune figure ne correspond."
             );
 
-            // Redirection vers la page listant les figures
+            // Redirection vers la page d'accueil
             return $this->redirectToRoute('home');
         }
     }
@@ -301,9 +320,12 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
     /**
      * @Route("/figure/supprimer/{trickId}", name="trick_delete")
      * @IsGranted("ROLE_USER")
+     * @param $trickId
+     * @return RedirectResponse
      */
-    public function deleteTrick($trickId)
-    {
+    public function deleteTrick(
+        $trickId
+    ) {
         // Récupère le gestionnaire d'entités
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -314,17 +336,15 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
         $pictures = $entityManager->getRepository(Picture::class)->findBy(['trick' => $trickId]);
 
         // Si une figure correspond à l'id
-        if ($trick != null)
-        {
-            // Supprime l'image en tant qu'image principal
+        if ($trick != null) {
+            // Supprime l'image en tant qu'image principale
             $trick->setMainPicture(null);
 
             // Persiste les données dans la BDD
             $entityManager->flush();
 
             // Pour chaque image
-            foreach ($pictures as $picture)
-            {
+            foreach ($pictures as $picture) {
                 // Récupère l'image
                 $filePicture = $this->getParameter('trick_picture_directory') . '/' . $picture->getName();
 
@@ -346,10 +366,9 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 "La figure <strong>{$trick->getName()}</strong> a bien été supprimé"
             );
 
-            // redirection vers l'accueil
+            // Redirection vers l'accueil
             return $this->redirectToRoute('home');
-        }
-        else // Si aucune figure ne correspond à l'id
+        } else // Si aucune figure ne correspond à l'id
         {
             // Message d'erreur
             $this->addFlash(
@@ -357,7 +376,7 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                 "Aucune figure ne correspond."
             );
 
-            // Redirection vers la page listant les figures
+            // Redirection vers l'accueil
             return $this->redirectToRoute('home');
         }
     }

@@ -3,6 +3,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -57,6 +58,11 @@ class Trick
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updateDate;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $slug;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="trick", cascade={"persist", "remove"})
@@ -119,6 +125,8 @@ class Trick
     {
         $this->name = $name;
 
+        $this->setSlug($this->name);
+
         return $this;
     }
 
@@ -134,28 +142,63 @@ class Trick
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getUpdateDate(): ?\DateTimeInterface
+    public function getUpdateDate(): ?DateTimeInterface
     {
         return $this->updateDate;
     }
 
-    public function setUpdateDate(?\DateTimeInterface $updateDate): self
+    public function setUpdateDate(?DateTimeInterface $updateDate): self
     {
         $this->updateDate = $updateDate;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $this->slugify($slug);
+
+        return $this;
+    }
+
+    public function slugify($text)
+    {
+        // Remplace les non lettres ou chiffres par un -
+        $text = preg_replace('#[^\\pL\d]+#u', '-', $text);
+
+        // Supprime les espaces en début et fin de chaîne
+        $text = trim($text, '-');
+
+        // Translittérer - Nettoie les accents
+        if (function_exists('iconv')) {
+            // Convertit la chaîne $text depuis utf-8 vers us-ascii//TRANSLIT
+            $text = iconv('utf-8', 'ASCII//TRANSLIT', $text);
+        }
+
+        // Renvoie la chaîne $text en minuscules
+        $text = strtolower($text);
+
+        // Supprimer les caractères indésirables
+        $text = preg_replace('#[^-\w]+#', '', $text);
+
+        return $text;
     }
 
     /**

@@ -49,7 +49,7 @@ class RegistrationType extends AbstractType
                     'placeholder' => 'Votre mot de passe'
                 ]
             ])
-            ->add('passwordConfirm' , PasswordType::class, [
+            ->add('passwordConfirm', PasswordType::class, [
                 'label' => "Confirmation du mot de passe",
                 'attr' => [
                     'placeholder' => 'Confirmer votre mot de passe'
