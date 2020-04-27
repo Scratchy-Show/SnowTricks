@@ -1,0 +1,19 @@
+App\Entity\User:
+  user_user1:
+    username: "Test"
+    password: \$argon2id\$v=19\$m=65536,t=4,p=1\$ZzdscmVrN0pzRjNCWDhOLw\$PQ805BLpk+H2+mFDGdt4LXRhSn9TIItRe7Wzb8d9rdQ
+    email: "nom@exemple.fr"
+    pictureName: "default.png"
+    profilPicturePath: "uploads/profil"
+    token: "0123456789"
+    activated: true
+    roles: ["ROLE_USER"]
+  user_user2:
+    username: "Test2"
+    password: \$argon2id\$v=19\$m=65536,t=4,p=1\$WEkxdDQySFIublkudG5pLw\$gyZjHOzyQ65eHXNYzpTAGmXjEz/NBAGr78Nm4C/BD/g
+    email: "nom2@exemple.fr"
+    pictureName: "default.png"
+    profilPicturePath: "uploads/profil"
+    token: "01234567890123456789"
+    activated: false
+    roles: ["ROLE_USER"]
