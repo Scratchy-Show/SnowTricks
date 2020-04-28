@@ -247,8 +247,8 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
             // Si le formulaire de modification d'une figure est soumis et valide
             if ($formTrickType->isSubmitted() && $formTrickType->isValid()) {
-                // Si la valeur du champ trickId est non définie
-                if (!isset($_POST['trickId'])) {
+                // Si la variable trickId est non définie
+                if (filter_input(INPUT_POST, 'trickId', FILTER_SANITIZE_STRING) == null) {
                     // Message d'erreur
                     $this->addFlash(
                         'danger',
@@ -259,8 +259,8 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
                     return $this->redirectToRoute('home');
                 }
 
-                // Récupère l'id de la figure
-                $formTrickId = $_POST['trickId'];
+                // Récupère l'id de la figure et supprime les données potentiellement dangereuses
+                $formTrickId = filter_input(INPUT_POST, 'trickId', FILTER_SANITIZE_STRING);
 
                 // Vérifie si l'id de la figure correspond à l'id donné par le formulaire
                 if ($trickId == $formTrickId) {

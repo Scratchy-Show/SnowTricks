@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $(".burger").click(function () {
-        $(this).toggleClass('active');
+        $(this).toggleClass("active");
         $("ul.menu li").slideToggle("fast");
     });
 
@@ -9,5 +9,5 @@ $(document).ready(function () {
             $("ul.menu li").removeAttr("style");
             $("a").removeClass("active");
         }
-    })
+    });
 });
