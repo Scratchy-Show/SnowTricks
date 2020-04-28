@@ -247,6 +247,18 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
             // Si le formulaire de modification d'une figure est soumis et valide
             if ($formTrickType->isSubmitted() && $formTrickType->isValid()) {
+                // Si la valeur du champ trickId est non définie
+                if (!isset($_POST['trickId'])) {
+                    // Message d'erreur
+                    $this->addFlash(
+                        'danger',
+                        "On ne touche pas aux champs cachés !"
+                    );
+
+                    // Redirection vers la page d'accueil
+                    return $this->redirectToRoute('home');
+                }
+
                 // Récupère l'id de la figure
                 $formTrickId = $_POST['trickId'];
 
