@@ -105,9 +105,12 @@
             </div>
 
             {% if tricks is not empty %}
-                <div class="m-3">
-                    <a href="#" id="loadMore" class="d-block text-center m-auto p-2 rounded-lg">Plus de figures</a>
-                </div>
+                {% if tricks|length > 15 %}
+                    <!-- Si il y a plus de 15 figures -->
+                    <div class="m-3">
+                        <a href="#" id="loadMore" class="d-block text-center m-auto p-2 rounded-lg">Plus de figures</a>
+                    </div>
+                {% endif %}
             {% elseif tricks is empty %}
                 <div class="mb-5">
                     <p class="text-center">Il n'y a aucune figure.</p>

@@ -6,7 +6,7 @@ let $addPictureButton = $('<button type="button" class="add_picture_link">Ajoute
 let $newPictureLinkLi = $('<li></li>').append($addPictureButton);
 
 // Ajoute un lien au bas de la liste des images
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     // Récupère l'ul qui contient la collection d'images
     $pictureCollectionHolder = $('ul.pictures');
 
@@ -24,14 +24,17 @@ jQuery(document).ready(function() {
     // indexé lors de l'insertion d'un nouvel élément
     $pictureCollectionHolder.data('index', $pictureCollectionHolder.find(':input').length);
 
-    $addPictureButton.on('click', function() {
+    $addPictureButton.on('click', function () {
         // Ajoute un nouveau formulaire d'images
         addPictureForm($pictureCollectionHolder, $newPictureLinkLi);
     });
 });
 
 // Ajoute un lien pour ajouter une image
-function addPictureForm($collectionHolder, $newPictureLinkLi) {
+function addPictureForm(
+    $collectionHolder,
+    $newPictureLinkLi
+) {
     // Obtient le prototype de données
     let prototype = $collectionHolder.data('prototype');
 
@@ -56,11 +59,13 @@ function addPictureForm($collectionHolder, $newPictureLinkLi) {
 }
 
 // Ajoute un lien de suppression à l'image
-function addPictureFormDeleteLink($tagFormLi) {
+function addPictureFormDeleteLink(
+    $tagFormLi
+) {
     let $removeFormButton = $('<button type="button">Supprimer l\'image</button>');
     $tagFormLi.append($removeFormButton);
 
-    $removeFormButton.on('click', function() {
+    $removeFormButton.on('click', function () {
         // Supprime le li du formulaire d'image
         $tagFormLi.remove();
     });

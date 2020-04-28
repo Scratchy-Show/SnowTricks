@@ -6,7 +6,7 @@ let $addVideoButton = $('<button type="button" class="add_video_link">Ajouter un
 let $newVideoLinkLi = $('<li></li>').append($addVideoButton);
 
 // Ajoute un lien au bas de la liste des vidéos
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     // Récupère l'ul qui contient la collection des vidéos
     $videoCollectionHolder = $('ul.videos');
 
@@ -24,14 +24,17 @@ jQuery(document).ready(function() {
     // indexé lors de l'insertion d'un nouvel élément
     $videoCollectionHolder.data('index', $videoCollectionHolder.find(':input').length);
 
-    $addVideoButton.on('click', function() {
+    $addVideoButton.on('click', function () {
         // Ajoute un nouveau formulaire de vidéo
         addVideoForm($videoCollectionHolder, $newVideoLinkLi);
     });
 });
 
 // Ajoute un lien pour ajouter une vidéo
-function addVideoForm($collectionHolder, $newVideoLinkLi) {
+function addVideoForm(
+    $collectionHolder,
+    $newVideoLinkLi
+) {
     // Obtient le prototype de données
     let prototype = $collectionHolder.data('prototype');
 
@@ -56,11 +59,13 @@ function addVideoForm($collectionHolder, $newVideoLinkLi) {
 }
 
 // Ajoute un lien de suppression à la vidéo
-function addVideoFormDeleteLink($tagFormLi) {
+function addVideoFormDeleteLink(
+    $tagFormLi
+) {
     let $removeFormButton = $('<button type="button">Supprimer l\'url</button>');
     $tagFormLi.append($removeFormButton);
 
-    $removeFormButton.on('click', function() {
+    $removeFormButton.on('click', function () {
         // Supprime le li du formulaire de la vidéo
         $tagFormLi.remove();
     });

@@ -496,6 +496,10 @@ footer {
     transition: 0.3s;
 }
 
+.edit-trick #container-gallery .pictures-trick .modal-container .delete .modal-body img {
+    cursor: auto;
+}
+
 .details-trick #container-gallery .pictures-trick .picture .imgModal,
 .edit-trick #container-gallery .pictures-trick .picture .imgModal {
     cursor: pointer;

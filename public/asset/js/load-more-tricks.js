@@ -1,10 +1,12 @@
-$(document).ready(function(){
+$(document).ready(function () {
     // Affiche les figures 5 par 5
     $(".trick").slice(0, 15).show();
-    $("#loadMore").on("click", function(e){
+    $("#loadMore").on("click", function (
+        e
+    ) {
         e.preventDefault();
         $(".trick:hidden").slice(0, 5).slideDown();
-        if($(".trick:hidden").length === 0) {
+        if ($(".trick:hidden").length === 0) {
             $("#loadMore").text("Ajouter de nouvelles figures").addClass("noContent");
         }
     });
