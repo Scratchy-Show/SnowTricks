@@ -413,6 +413,7 @@ footer {
   from {
     transform: scale(0);
   }
+
   to {
     transform: scale(1);
   }
@@ -522,7 +523,7 @@ footer {
 }
 
 .details-trick #container-gallery .pictures-trick .picture .imgModal:hover,
-.edit-trick #container-gallery .pictures-trick .picture .imgModal:hover{
+.edit-trick #container-gallery .pictures-trick .picture .imgModal:hover {
   opacity: 0.9;
 }
 
@@ -637,7 +638,7 @@ footer {
 /* Infos */
 .details-trick #container-infos .description,
 .details-trick #container-infos .infos,
-.edit-trick #container-infos .infos{
+.edit-trick #container-infos .infos {
   border: 1px solid black;
 }
 
@@ -650,7 +651,7 @@ footer {
 /* Fin des infos */
 
 
-/* Formulaire de modification de la figure*/
+/* Formulaire de modification de la figure */
 .edit-trick #form-edit-trick form {
   width: 90%;
   margin: auto;
@@ -685,7 +686,7 @@ footer {
   margin-right: 20px;
 }
 
-/* Fin Formulaire de modification de la figure*/
+/* Fin Formulaire de modification de la figure */
 
 
 
@@ -709,7 +710,7 @@ footer {
 }
 
 .details-trick #comments .comment p {
-  padding:5px 15px;
+  padding: 5px 15px;
   border: 1px solid black;
   overflow-wrap: break-word;
 }
@@ -745,7 +746,7 @@ footer {
 
 .details-trick #comments .paging-container .paging li:hover:not(.active) {
   background-color: #fff;
-  transition: background-color .5s;
+  transition: background-color 0.5s;
 }
 
 .details-trick #comments .paging-container .paging li a {
@@ -756,7 +757,7 @@ footer {
 
 .details-trick #comments .paging-container .paging li a:hover:not(.active) {
   color: #007bff;
-  transition: color .5s;
+  transition: color 0.5s;
 }
 
 .details-trick #comments .paging-container .paging .active {
@@ -766,6 +767,7 @@ footer {
 .details-trick #comments .paging-container .paging .active a {
   color: #007bff;
 }
+
 /* Fin de la pagination */
 
 /* Bouton charger plus de commentaires */
@@ -774,7 +776,7 @@ footer {
   border: 1px solid transparent;
   color: #fff;
   background-color: #007bff;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .details-trick #comments #loadMore:hover {
@@ -887,24 +889,18 @@ footer {
     transition: all 0.2s ease-in-out;
   }
 
-  header nav .burger i:before {
-    margin-top: -12px;
-  }
-
+  header nav .burger i:before,
   header nav .burger i:after {
-    margin-top: 12px;
+    margin-top: -12px;
   }
 
   header nav .burger:hover {
     background: #0056b3;
   }
 
-  header nav .burger:hover i:before {
-    margin-top: -14px;
-  }
-
+  header nav .burger:hover i:before,
   header nav .burger:hover i:after {
-    margin-top: 14px;
+    margin-top: -14px;
   }
 
   header nav .burger.active {
