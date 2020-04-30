@@ -287,7 +287,7 @@ footer {
   border: 1px solid transparent;
   color: #fff;
   background-color: #007bff;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .home-container #tricks #loadMore:hover {
@@ -792,7 +792,6 @@ footer {
 }
 
 /* Fin bouton charger plus de commentaires */
-
 
 /* Responsive 1230px Details d'une figure */
 @media only screen and (max-width: 1230px) {
