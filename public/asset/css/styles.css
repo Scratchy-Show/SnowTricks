@@ -52,7 +52,8 @@ ul {
 .add-trick,
 .edit-trick,
 .add-picture,
-.add-video {
+.add-video,
+.error {
     display: flow-root;
     max-width: 1250px;
     min-height: 83vh;

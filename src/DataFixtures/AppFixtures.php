@@ -83,7 +83,7 @@ class AppFixtures extends Fixture
 
             $trick
                 ->setName($trickName)
-                ->setDescription($faker->paragraph(3))
+                ->setDescription($faker->paragraph(12))
                 ->setDate($faker
                     ->dateTimeBetween($startDate = '-12 months', $endDate = '-6 months', $timezone = 'Europe/Paris'))
                 ->setUpdateDate($faker
