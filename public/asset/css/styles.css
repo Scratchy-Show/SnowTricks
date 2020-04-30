@@ -1,16 +1,17 @@
-/*// Base //*/
+/* Base */
 
 @font-face {
   font-family: 'highvoltage_roughregular';
-  src: url(../fonts/HighVoltage_Rough.ttf) format('truetype'),
-    url(../fonts/highvoltage_rough-webfont.woff2) format('woff2'),
-    url(../fonts/highvoltage_rough-webfont.woff) format('woff');
+  src:
+          url(../fonts/HighVoltage_Rough.ttf) format('truetype'),
+          url(../fonts/highvoltage_rough-webfont.woff2) format('woff2'),
+          url(../fonts/highvoltage_rough-webfont.woff) format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 html {
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
 }
 
 html,
@@ -69,12 +70,13 @@ ul {
 .edit-profile .custom-file-input ~ .custom-file-label:lang(fr)::after {
   content: "Choisir...";
 }
-/*// Fin Base //*/
+
+/* Fin Base */
 
 
 
 
-/*// Header //*/
+/* Header */
 
 header {
   height: 100px;
@@ -133,23 +135,25 @@ header nav .menu li a {
 .responsive-menu {
   display: none;
 }
-/*// Fin Header //*/
+
+/* Fin Header */
 
 
 
 
-/*// Footer //*/
+/* Footer */
 
 footer {
   display: flex;
   height: 100px;
 }
-/*// Fin Footer //*/
+
+/* Fin Footer */
 
 
 
 
-/*// Page d'accueil //*/
+/* Page d'accueil */
 
 /* Bannière */
 #home-banner {
@@ -180,7 +184,7 @@ footer {
 }
 
 /* Flèche pour descendre */
-.descend {
+#home-banner .descend {
   position: absolute;
   right: 10px;
   bottom: 20px;
@@ -188,11 +192,11 @@ footer {
 }
 
 /* Flèche pour monter */
-.back-to-top {
+#home-banner .back-to-top {
   display: none;
 }
 
-.show-back-to-top {
+#home-banner .show-back-to-top {
   display: block;
   position: fixed;
   right: 10px;
@@ -201,8 +205,8 @@ footer {
   transition: all 0.25s ease-in-out;
 }
 
-.descend img,
-.back-to-top img {
+#home-banner .descend img,
+#home-banner .back-to-top img {
   width: 60px;
   height: 60px;
 }
@@ -228,12 +232,13 @@ footer {
   margin: 20px;
   width: 280px;
   word-wrap: break-word;
-  border: 1px solid rgba(0,0,0,0.125);
+  border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 15px;
-  box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11),
-  0 4px 8px rgba(90, 97, 105, 0.12),
-  0 10px 10px #5a61690f,
-  0 7px 70px rgba(90, 97, 105, 0.1);
+  box-shadow:
+          0 2px 0 rgba(90, 97, 105, 0.11),
+          0 4px 8px rgba(90, 97, 105, 0.12),
+          0 10px 10px #5a61690f,
+          0 7px 70px rgba(90, 97, 105, 0.1);
 }
 
 .home-container #tricks .tricks-container .trick .main-picture img {
@@ -272,7 +277,7 @@ footer {
 }
 
 /* Cache les figure au delà de 15 */
-.home-container #tricks .trick {
+.home-container #tricks .tricks-container .trick {
   display: none;
 }
 
@@ -294,18 +299,19 @@ footer {
 
 /* Classe ajouté par le fichier load-more-comments.js */
 .home-container #tricks .noContent {
-  border: 1px solid black!important;
-  border-radius: 5px!important;
+  border: 1px solid black !important;
+  border-radius: 5px !important;
   color: #000 !important;
   background-color: transparent !important;
   pointer-events: none;
 }
-/*// Fin Page d'accueil //*/
+
+/* Fin Page d'accueil */
 
 
 
 
-/*// Page - Créer une figure //*/
+/* Page - Créer une figure */
 
 .add-trick .form-group label {
   font-weight: bold;
@@ -348,12 +354,13 @@ footer {
 .add-trick .videos li button:nth-child(even) {
   background-color: darkred;
 }
-/*// Fin Page - Créer une figure //*/
+
+/* Fin Page - Créer une figure */
 
 
 
 
-/*// Page - Details d'une figure & Page - Modifier une figure //*/
+/* Page - Details d'une figure & Page - Modifier une figure */
 
 /* Modal pour supprimer la figure */
 .details-trick .delete-trick .modal-dialog,
@@ -362,12 +369,14 @@ footer {
   display: flex;
   align-items: center;
 }
+
 /* Fin Modal pour supprimer la figure */
 
 /* Modal pour modifier l'image principal */
 .edit-trick #editMainPicture form .pictures-container .picture img {
   width: 200px;
 }
+
 /* Fin Modal pour modifier l'image principal */
 
 /* Modal pour afficher une image en grand */
@@ -382,8 +391,8 @@ footer {
   padding-top: 100px;
   z-index: 1;
   overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .details-trick .modal-picture .modal-content,
@@ -401,8 +410,12 @@ footer {
 }
 
 @keyframes zoom {
-  from {transform:scale(0)}
-  to {transform:scale(1)}
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 .details-trick .modal-picture .close,
@@ -424,9 +437,11 @@ footer {
   cursor: pointer;
   color: #bbb;
 }
+
 /* Fin Modal pour afficher une image en grand */
 
 /* Image principal et titre */
+
 /* Titre */
 #mainPicture #title {
   position: absolute;
@@ -467,6 +482,7 @@ footer {
   width: 15px;
   height: 15px;
 }
+
 /* Fin image principal et titre */
 
 /* Gallerie des médias */
@@ -484,7 +500,7 @@ footer {
 }
 
 .details-trick #container-gallery .pictures-trick .picture,
-.edit-trick #container-gallery .pictures-trick .picture{
+.edit-trick #container-gallery .pictures-trick .picture {
   padding: 2px;
 }
 
@@ -519,12 +535,14 @@ footer {
 .edit-trick #container-gallery .videos-trick .video iframe {
   width: 100%;
 }
+
 /* Fin gallerie des médias */
 
 /* Modal de suppression d'une image */
 .edit-trick #container-gallery .videos-trick .delete .modal-body .video {
   margin: auto;
 }
+
 /* Fin Modal de suppression d'une image */
 
 /* Icon de suppression */
@@ -555,6 +573,7 @@ footer {
   width: 10px;
   height: 10px;
 }
+
 /* Fin Icon de suppression */
 
 /* Bouton d'ajout */
@@ -587,6 +606,7 @@ footer {
   width: 30px;
   height: 30px;
 }
+
 /* Fin Bouton d'ajout */
 
 /* Si aucune images ou vidéos */
@@ -611,6 +631,7 @@ footer {
 .details-trick #container-gallery .empty-video p {
   margin: 15px 0;
 }
+
 /* Fin Si aucune images ou vidéos */
 
 /* Infos */
@@ -625,6 +646,7 @@ footer {
   font-variant-caps: all-small-caps;
   max-height: 64px;
 }
+
 /* Fin des infos */
 
 
@@ -662,6 +684,7 @@ footer {
 .edit-trick #form-edit-trick form .buttons button:first-child {
   margin-right: 20px;
 }
+
 /* Fin Formulaire de modification de la figure*/
 
 
@@ -675,9 +698,11 @@ footer {
 .details-trick #form-comments a {
   text-decoration: none;
 }
+
 /* Fin Formulaire des commentaires */
 
 /* Commentaires */
+
 /* Cache les commentaires au delà de 4 */
 .details-trick #comments .comment {
   display: none;
@@ -696,6 +721,7 @@ footer {
 .details-trick #comments .comment span {
   font-variant-caps: all-small-caps;
 }
+
 /* Fin commentaires */
 
 
@@ -762,6 +788,7 @@ footer {
 .details-trick #comments .noContent {
   display: none !important;
 }
+
 /* Fin bouton charger plus de commentaires */
 
 
@@ -1037,6 +1064,7 @@ footer {
 
 /* Responsive 520px Details d'une figure */
 @media only screen and (max-width: 520px) {
+
   /* Header */
   header .logo {
     width: 100%;
@@ -1086,12 +1114,13 @@ footer {
   }
 }
 /* Fin Responsive */
-/*// Fin Page - Details d'une figure & Modification d'une figure //*/
+
+/* Fin Page - Details d'une figure & Modification d'une figure */
 
 
 
 
-/*// Bouton afficher/masquer les médias //*/
+/* Bouton afficher/masquer les médias */
 
 /* Masque le bouton si écran supérieur et/ou égale à 1051px */
 @media only screen and (min-width: 1051px) {
@@ -1114,4 +1143,5 @@ footer {
     display: none;
   }
 }
-/*// Fin Bouton afficher/masquer les médias //*/
+
+/* Fin Bouton afficher/masquer les médias */
