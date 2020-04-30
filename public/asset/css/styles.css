@@ -1,4 +1,4 @@
-/*// Base  //*/
+/*// Base //*/
 
 @font-face {
     font-family: 'highvoltage_roughregular';
@@ -13,7 +13,8 @@ html {
     scroll-behavior: smooth
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -68,7 +69,7 @@ ul {
 .edit-profile .custom-file-input ~ .custom-file-label:lang(fr)::after {
     content: "Choisir...";
 }
-/*// Fin Base  //*/
+/*// Fin Base //*/
 
 
 
@@ -83,9 +84,6 @@ header {
 header a {
     line-height: 40px;
     font-weight: 600;
-}
-
-header a {
     color: #fff;
 }
 
@@ -140,13 +138,13 @@ header nav .menu li a {
 
 
 
-/*// Footer  //*/
+/*// Footer //*/
 
 footer {
     display: flex;
     height: 100px;
 }
-/*// Fin Footer  //*/
+/*// Fin Footer //*/
 
 
 
@@ -307,7 +305,7 @@ footer {
 
 
 
-/*// Page - Créer une figure  //*/
+/*// Page - Créer une figure //*/
 
 .add-trick .form-group label {
     font-weight: bold;
@@ -350,12 +348,12 @@ footer {
 .add-trick .videos li button:nth-child(even) {
     background-color: darkred;
 }
-/*// Fin Page - Créer une figure  //*/
+/*// Fin Page - Créer une figure //*/
 
 
 
 
-/*// Page - Details d'une figure & Page - Modifier une figure  //*/
+/*// Page - Details d'une figure & Page - Modifier une figure //*/
 
 /* Modal pour supprimer la figure */
 .details-trick .delete-trick .modal-dialog,
@@ -669,7 +667,7 @@ footer {
 
 
 
-/* Formulaire des commentaires*/
+/* Formulaire des commentaires */
 .details-trick #form-comments p {
     font-size: 1.5rem;
 }
@@ -677,7 +675,7 @@ footer {
 .details-trick #form-comments a {
     text-decoration: none;
 }
-/* Fin Formulaire des commentaires*/
+/* Fin Formulaire des commentaires */
 
 /* Commentaires */
 /* Cache les commentaires au delà de 4 */
@@ -742,7 +740,7 @@ footer {
 .details-trick #comments .paging-container .paging .active a {
     color: #007bff;
 }
-/* Fin de la pagination*/
+/* Fin de la pagination */
 
 /* Bouton charger plus de commentaires */
 .details-trick #comments #loadMore {
@@ -929,7 +927,7 @@ footer {
         bottom: 110px;
     }
 
-    /* Modal pour modifier l'image principal*/
+    /* Modal pour modifier l'image principal */
     .edit-trick #editMainPicture form .pictures-container {
         flex-direction: column;
     }
@@ -939,7 +937,7 @@ footer {
         text-align: center;
     }
 
-    /* Modal our afficher une image en grand*/
+    /* Modal our afficher une image en grand */
     .details-trick .modal-picture .modal-content,
     .edit-trick .modal-picture .modal-content {
         width: 100%;
@@ -1093,7 +1091,7 @@ footer {
 
 
 
-/*// Bouton afficher/masquer les médias  //*/
+/*// Bouton afficher/masquer les médias //*/
 
 /* Masque le bouton si écran supérieur et/ou égale à 1051px */
 @media only screen and (min-width: 1051px) {
@@ -1109,11 +1107,11 @@ footer {
     }
 }
 
-/* Masque les medias si écran inférieur et/ou égale à 1050px  */
+/* Masque les medias si écran inférieur et/ou égale à 1050px */
 @media only screen and (max-width: 1050px) {
     .details-trick #container-gallery,
     .edit-trick #container-gallery {
         display: none;
     }
 }
-/*// Fin Bouton afficher/masquer les médias  //*/
+/*// Fin Bouton afficher/masquer les médias //*/
