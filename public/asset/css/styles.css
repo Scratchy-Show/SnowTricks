@@ -381,7 +381,7 @@ footer {
 
 /* Modal pour afficher une image en grand */
 .details-trick .modal-picture .modal,
-.edit-trick .modal-picture .modal{
+.edit-trick .modal-picture .modal {
   display: none;
   position: fixed;
   left: 0;
@@ -870,8 +870,8 @@ footer {
   }
 
   header nav .burger i,
-  header nav .burger i:before,
-  header nav .burger i:after {
+  header nav .burger i::before,
+  header nav .burger i::after {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -889,8 +889,8 @@ footer {
     transition: all 0.2s ease-in-out;
   }
 
-  header nav .burger i:before,
-  header nav .burger i:after {
+  header nav .burger i::before,
+  header nav .burger i::after {
     margin-top: -12px;
   }
 
@@ -898,8 +898,8 @@ footer {
     background: #0056b3;
   }
 
-  header nav .burger:hover i:before,
-  header nav .burger:hover i:after {
+  header nav .burger:hover i::before,
+  header nav .burger:hover i::after {
     margin-top: -14px;
   }
 
@@ -911,13 +911,13 @@ footer {
     background: transparent;
   }
 
-  header nav .burger.active i:before,
-  header nav .burger.active i:after {
+  header nav .burger.active i::before,
+  header nav .burger.active i::after {
     left: -5px;
     width: 50px;
   }
 
-  header nav .burger.active i:before {
+  header nav .burger.active i::before {
     -moz-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
@@ -925,7 +925,7 @@ footer {
     top: 12px;
   }
 
-  header nav .burger.active i:after {
+  header nav .burger.active i::after {
     -moz-transform: rotate(-45deg);
     -ms-transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
@@ -937,8 +937,8 @@ footer {
     background: #0056b3;
   }
 
-  header nav .burger.active:hover i:before,
-  header nav .burger.active:hover i:after {
+  header nav .burger.active:hover i::before,
+  header nav .burger.active:hover i::after {
     width: 60px;
     margin: 0;
     left: -10px;
@@ -1060,7 +1060,6 @@ footer {
 
 /* Responsive 520px Details d'une figure */
 @media only screen and (max-width: 520px) {
-
   /* Header */
   header .logo {
     width: 100%;
@@ -1109,12 +1108,10 @@ footer {
     height: 35px;
   }
 }
+
 /* Fin Responsive */
 
 /* Fin Page - Details d'une figure & Modification d'une figure */
-
-
-
 
 /* Bouton afficher/masquer les médias */
 
