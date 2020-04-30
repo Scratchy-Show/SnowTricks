@@ -73,9 +73,6 @@ ul {
 
 /* Fin Base */
 
-
-
-
 /* Header */
 
 header {
@@ -138,9 +135,6 @@ header nav .menu li a {
 
 /* Fin Header */
 
-
-
-
 /* Footer */
 
 footer {
@@ -149,9 +143,6 @@ footer {
 }
 
 /* Fin Footer */
-
-
-
 
 /* Page d'accueil */
 
@@ -268,7 +259,7 @@ footer {
   border: 1px solid transparent;
   color: #fff;
   background-color: #007bff;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .home-container #tricks .tricks-container .trick .title-buttons-container img {
@@ -307,9 +298,6 @@ footer {
 }
 
 /* Fin Page d'accueil */
-
-
-
 
 /* Page - Créer une figure */
 
@@ -356,9 +344,6 @@ footer {
 }
 
 /* Fin Page - Créer une figure */
-
-
-
 
 /* Page - Details d'une figure & Page - Modifier une figure */
 
@@ -650,7 +635,6 @@ footer {
 
 /* Fin des infos */
 
-
 /* Formulaire de modification de la figure */
 .edit-trick #form-edit-trick form {
   width: 90%;
@@ -688,9 +672,6 @@ footer {
 
 /* Fin Formulaire de modification de la figure */
 
-
-
-
 /* Formulaire des commentaires */
 .details-trick #form-comments p {
   font-size: 1.5rem;
@@ -724,7 +705,6 @@ footer {
 }
 
 /* Fin commentaires */
-
 
 /* Pagination */
 .details-trick #comments .paging-container {
