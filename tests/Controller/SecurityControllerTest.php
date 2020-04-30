@@ -70,6 +70,9 @@ class SecurityControllerTest extends WebTestCase // Permet de créer des tests a
         // Charge un fichier avec des données pour User
         $this->loadFixtureFiles([__DIR__ . '/Users.yaml']);
 
+        // Arrête le noyau avant de créer le client
+        self::ensureKernelShutdown();
+
         // Récupère un client
         $client = static::createClient();
 
@@ -91,6 +94,9 @@ class SecurityControllerTest extends WebTestCase // Permet de créer des tests a
     {
         // Charge un fichier avec des données pour User
         $this->loadFixtureFiles([__DIR__ . '/Users.yaml']);
+
+        // Arrête le noyau avant de créer le client
+        self::ensureKernelShutdown();
 
         // Récupère un client
         $client = static::createClient();
