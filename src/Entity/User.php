@@ -53,8 +53,8 @@ class User implements UserInterface, Serializable
     protected $email;
 
     /**
-     * @Assert\DateTime
      * @ORM\Column(type="datetime", name="date")
+     * @Assert\Type("DateTime")
      */
     protected $date;
 

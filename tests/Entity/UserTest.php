@@ -29,7 +29,7 @@ class UserTest extends KernelTestCase // Permet de récupérer le validateur ave
             ;
     }
 
-    // Assertion personnalisée qui attend aucun erreur
+    // Assertion personnalisée qui attend aucune erreur
     public function assertHasErrors(User $user, int $number = 0)
     {
         self::bootKernel();
