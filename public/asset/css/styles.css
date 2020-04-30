@@ -1,45 +1,45 @@
 /*// Base //*/
 
 @font-face {
-    font-family: 'highvoltage_roughregular';
-    src: url(../fonts/HighVoltage_Rough.ttf) format('truetype'),
-        url(../fonts/highvoltage_rough-webfont.woff2) format('woff2'),
-        url(../fonts/highvoltage_rough-webfont.woff) format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'highvoltage_roughregular';
+  src: url(../fonts/HighVoltage_Rough.ttf) format('truetype'),
+    url(../fonts/highvoltage_rough-webfont.woff2) format('woff2'),
+    url(../fonts/highvoltage_rough-webfont.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 html {
-    scroll-behavior: smooth
+  scroll-behavior: smooth
 }
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 h1 {
-    padding: 25px;
-    font-family: 'highvoltage_roughregular', cursive;
-    font-size: 3.5rem;
+  padding: 25px;
+  font-family: 'highvoltage_roughregular', cursive;
+  font-size: 3.5rem;
 }
 
 ul {
-    padding-left: 0;
-    list-style: none;
+  padding-left: 0;
+  list-style: none;
 }
 
 /* Mise en forme des Messages flash */
 .alert {
-    position: absolute;
-    left: 25%;
-    width: 50%;
-    margin: 0;
-    padding: 10px;
+  position: absolute;
+  left: 25%;
+  width: 50%;
+  margin: 0;
+  padding: 10px;
 }
 
 .alert p {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 /* Mise en forme des pages */
@@ -55,10 +55,10 @@ ul {
 .add-picture,
 .add-video,
 .error {
-    display: flow-root;
-    max-width: 1250px;
-    min-height: 83vh;
-    margin-top: 30px;
+  display: flow-root;
+  max-width: 1250px;
+  min-height: 83vh;
+  margin-top: 30px;
 }
 
 
@@ -67,7 +67,7 @@ ul {
 .add-picture .custom-file-input ~ .custom-file-label:lang(fr)::after,
 .registration .custom-file-input ~ .custom-file-label:lang(fr)::after,
 .edit-profile .custom-file-input ~ .custom-file-label:lang(fr)::after {
-    content: "Choisir...";
+  content: "Choisir...";
 }
 /*// Fin Base //*/
 
@@ -77,61 +77,61 @@ ul {
 /*// Header //*/
 
 header {
-    height: 100px;
-    background-color: #484b50;
+  height: 100px;
+  background-color: #484b50;
 }
 
 header a {
-    line-height: 40px;
-    font-weight: 600;
-    color: #fff;
+  line-height: 40px;
+  font-weight: 600;
+  color: #fff;
 }
 
 header a :hover {
-    color: #007bff;
+  color: #007bff;
 }
 
 header .logo {
-    float: left;
-    width: 150px;
-    height: 100px;
-    margin-left: 50px;
+  float: left;
+  width: 150px;
+  height: 100px;
+  margin-left: 50px;
 }
 
 header .logo img {
-    width: 100%;
+  width: 100%;
 }
 
 header nav .menu {
-    float: right;
-    width: 75%;
-    margin-top: 50px;
-    margin-bottom: 0;
-    text-align: right;
-    text-transform: uppercase;
-    letter-spacing: 3px;
+  float: right;
+  width: 75%;
+  margin-top: 50px;
+  margin-bottom: 0;
+  text-align: right;
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
 
 header nav .menu li {
-    display: inline-block;
-    padding: 0 1%;
-    border-right: thin solid #007bff;
+  display: inline-block;
+  padding: 0 1%;
+  border-right: thin solid #007bff;
 }
 
 header nav .menu li:last-child {
-    border: none;
+  border: none;
 }
 
 header nav .menu li :hover {
-    color: #007bff;
+  color: #007bff;
 }
 
 header nav .menu li a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .responsive-menu {
-    display: none;
+  display: none;
 }
 /*// Fin Header //*/
 
@@ -141,8 +141,8 @@ header nav .menu li a {
 /*// Footer //*/
 
 footer {
-    display: flex;
-    height: 100px;
+  display: flex;
+  height: 100px;
 }
 /*// Fin Footer //*/
 
@@ -153,152 +153,152 @@ footer {
 
 /* Bannière */
 #home-banner {
-    display: flex;
-    justify-content: center;
-    background-image: url('../uploads/trick/default.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    width: 100%;
-    height: 95vh;
+  display: flex;
+  justify-content: center;
+  background-image: url('../uploads/trick/default.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 100%;
+  height: 95vh;
 }
 
 #home-banner h1 {
-    align-self: center;
-    margin: 10px;
-    padding: 25px;
-    border: 5px solid white;
-    border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.5);
-    box-shadow: inset 0 0 25px 15px white;
-    font-family: 'highvoltage_roughregular', cursive;
-    font-size: 3.5rem;
+  align-self: center;
+  margin: 10px;
+  padding: 25px;
+  border: 5px solid white;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 25px 15px white;
+  font-family: 'highvoltage_roughregular', cursive;
+  font-size: 3.5rem;
 }
 
 #home-banner h1 span {
-    font-size: 4.5rem;
+  font-size: 4.5rem;
 }
 
 /* Flèche pour descendre */
 .descend {
-    position: absolute;
-    right: 10px;
-    bottom: 20px;
-    transition: all 0.25s ease-in-out;
+  position: absolute;
+  right: 10px;
+  bottom: 20px;
+  transition: all 0.25s ease-in-out;
 }
 
 /* Flèche pour monter */
 .back-to-top {
-    display: none;
+  display: none;
 }
 
 .show-back-to-top {
-    display: block;
-    position: fixed;
-    right: 10px;
-    bottom: 15px;
-    z-index: 20;
-    transition: all 0.25s ease-in-out;
+  display: block;
+  position: fixed;
+  right: 10px;
+  bottom: 15px;
+  z-index: 20;
+  transition: all 0.25s ease-in-out;
 }
 
 .descend img,
 .back-to-top img {
-    width: 60px;
-    height: 60px;
+  width: 60px;
+  height: 60px;
 }
 
 /* Section figures */
 .home-container #tricks {
-    display: flex;
-    flex-direction: column;
-    max-width: 1700px;
-    margin: auto;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 1700px;
+  margin: auto;
+  align-items: center;
 }
 
 .home-container #tricks .tricks-container {
-    display: flex;
-    align-content: flex-start;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 0 15px;
+  display: flex;
+  align-content: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 15px;
 }
 
 .home-container #tricks .tricks-container .trick {
-    margin: 20px;
-    width: 280px;
-    word-wrap: break-word;
-    border: 1px solid rgba(0,0,0,0.125);
-    border-radius: 15px;
-    box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11),
-    0 4px 8px rgba(90, 97, 105, 0.12),
-    0 10px 10px #5a61690f,
-    0 7px 70px rgba(90, 97, 105, 0.1);
+  margin: 20px;
+  width: 280px;
+  word-wrap: break-word;
+  border: 1px solid rgba(0,0,0,0.125);
+  border-radius: 15px;
+  box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11),
+  0 4px 8px rgba(90, 97, 105, 0.12),
+  0 10px 10px #5a61690f,
+  0 7px 70px rgba(90, 97, 105, 0.1);
 }
 
 .home-container #tricks .tricks-container .trick .main-picture img {
-    width: 100%;
-    height: 175px;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+  width: 100%;
+  height: 175px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 }
 
 .home-container #tricks .tricks-container .trick .title-buttons-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
 }
 
 .home-container #tricks .tricks-container .trick .title-buttons-container .trick-title {
-    max-width: 145px;
-    text-align: center;
-    border: 1px solid #007bff;
-    text-decoration: none;
-    color: #007bff;
-    background-color: #fff;
+  max-width: 145px;
+  text-align: center;
+  border: 1px solid #007bff;
+  text-decoration: none;
+  color: #007bff;
+  background-color: #fff;
 }
 
 .home-container #tricks .tricks-container .trick .title-buttons-container .trick-title:hover {
-    border: 1px solid transparent;
-    color: #fff;
-    background-color: #007bff;
-    transition: .3s;
+  border: 1px solid transparent;
+  color: #fff;
+  background-color: #007bff;
+  transition: .3s;
 }
 
 .home-container #tricks .tricks-container .trick .title-buttons-container img {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 /* Cache les figure au delà de 15 */
 .home-container #tricks .trick {
-    display: none;
+  display: none;
 }
 
 /* Bouton charger plus de figure */
 .home-container #tricks #loadMore {
-    width: 200px;
-    border: 1px solid transparent;
-    color: #fff;
-    background-color: #007bff;
-    transition: .3s;
+  width: 200px;
+  border: 1px solid transparent;
+  color: #fff;
+  background-color: #007bff;
+  transition: .3s;
 }
 
 .home-container #tricks #loadMore:hover {
-    border: 1px solid #007bff;
-    text-decoration: none;
-    color: #007bff;
-    background-color: #fff;
+  border: 1px solid #007bff;
+  text-decoration: none;
+  color: #007bff;
+  background-color: #fff;
 }
 
 /* Classe ajouté par le fichier load-more-comments.js */
 .home-container #tricks .noContent {
-    border: 1px solid black!important;
-    border-radius: 5px!important;
-    color: #000 !important;
-    background-color: transparent !important;
-    pointer-events: none;
+  border: 1px solid black!important;
+  border-radius: 5px!important;
+  color: #000 !important;
+  background-color: transparent !important;
+  pointer-events: none;
 }
 /*// Fin Page d'accueil //*/
 
@@ -308,45 +308,45 @@ footer {
 /*// Page - Créer une figure //*/
 
 .add-trick .form-group label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .add-trick .custom-file label {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .add-trick #trick_description {
-    height: 250px;
+  height: 250px;
 }
 
 .add-trick .pictures li,
 .add-trick .videos li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 /* Retire le label du champ */
 .add-trick .pictures li .form-group label {
-    display: none;
+  display: none;
 }
 
 /* Affiche le champ */
 .add-trick .pictures li .form-group .custom-file-label {
-    display: inline-block;
+  display: inline-block;
 }
 
 .add-trick .pictures li button,
 .add-trick .videos li button {
-    padding: 12px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    color: #fff;
-    background-color: #007bff;
-    cursor: pointer;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #007bff;
+  cursor: pointer;
 }
 
 .add-trick .pictures li button:nth-child(even),
 .add-trick .videos li button:nth-child(even) {
-    background-color: darkred;
+  background-color: darkred;
 }
 /*// Fin Page - Créer une figure //*/
 
@@ -358,121 +358,121 @@ footer {
 /* Modal pour supprimer la figure */
 .details-trick .delete-trick .modal-dialog,
 .edit-trick .delete-trick .modal-dialog {
-    height: 60%;
-    display: flex;
-    align-items: center;
+  height: 60%;
+  display: flex;
+  align-items: center;
 }
 /* Fin Modal pour supprimer la figure */
 
 /* Modal pour modifier l'image principal */
 .edit-trick #editMainPicture form .pictures-container .picture img {
-    width: 200px;
+  width: 200px;
 }
 /* Fin Modal pour modifier l'image principal */
 
 /* Modal pour afficher une image en grand */
 .details-trick .modal-picture .modal,
 .edit-trick .modal-picture .modal{
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    padding-top: 100px;
-    z-index: 1;
-    overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.9);
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: 100px;
+  z-index: 1;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.9);
 }
 
 .details-trick .modal-picture .modal-content,
 .edit-trick .modal-picture .modal-content {
-    display: block;
-    margin: auto;
-    width: 80%;
-    max-width: 700px;
+  display: block;
+  margin: auto;
+  width: 80%;
+  max-width: 700px;
 }
 
 .details-trick .modal-picture .modal-content,
 .edit-trick .modal-picture .modal-content {
-    animation-name: zoom;
-    animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
 }
 
 @keyframes zoom {
-    from {transform:scale(0)}
-    to {transform:scale(1)}
+  from {transform:scale(0)}
+  to {transform:scale(1)}
 }
 
 .details-trick .modal-picture .close,
 .edit-trick .modal-picture .close {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    font-size: 40px;
-    font-weight: bold;
-    color: #fff;
-    transition: 0.3s;
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #fff;
+  transition: 0.3s;
 }
 
 .details-trick .modal-picture .close:hover,
 .details-trick .modal-picture .close:focus,
 .edit-trick .modal-picture .close:hover,
 .edit-trick .modal-picture .close:focus {
-    text-decoration: none;
-    cursor: pointer;
-    color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+  color: #bbb;
 }
 /* Fin Modal pour afficher une image en grand */
 
 /* Image principal et titre */
 /* Titre */
 #mainPicture #title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: 10px;
-    padding: 25px;
-    border: 5px solid white;
-    border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.5);
-    box-shadow: inset 0 0 25px 15px white;
-    color: #007bff;
-    font-family: 'highvoltage_roughregular', cursive;
-    font-size: 3.5rem;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 10px;
+  padding: 25px;
+  border: 5px solid white;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 25px 15px white;
+  color: #007bff;
+  font-family: 'highvoltage_roughregular', cursive;
+  font-size: 3.5rem;
+  transform: translate(-50%, -50%);
 }
 
 .details-trick #mainPicture #title h1 {
-    padding: 0;
+  padding: 0;
 }
 
 /* Boutons de modification/suppression de la figure - Boutons de modification/suppression de l'image principal */
 #mainPicture .buttons {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: 2px solid black;
-    border-radius: 10px;
-    background-color: #fff;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: #fff;
 }
 
 #mainPicture .buttons .btn {
-    padding: 10px;
+  padding: 10px;
 }
 
 /* Image des boutons */
 #mainPicture .buttons img {
-    width: 15px;
-    height: 15px;
+  width: 15px;
+  height: 15px;
 }
 /* Fin image principal et titre */
 
 /* Gallerie des médias */
 .details-trick #container-gallery,
 .edit-trick #container-gallery {
-    display: flex;
+  display: flex;
 }
 
 /* Alignement des images et vidéos */
@@ -480,80 +480,80 @@ footer {
 .details-trick #container-gallery .videos-trick,
 .edit-trick #container-gallery .pictures-trick,
 .edit-trick #container-gallery .videos-trick {
-    width: 50%;
+  width: 50%;
 }
 
 .details-trick #container-gallery .pictures-trick .picture,
 .edit-trick #container-gallery .pictures-trick .picture{
-    padding: 2px;
+  padding: 2px;
 }
 
 .details-trick #container-gallery .pictures-trick .picture img,
 .edit-trick #container-gallery .pictures-trick .picture img {
-    max-width: 190px;
-    cursor: pointer;
-    transition: 0.3s;
+  max-width: 190px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .edit-trick #container-gallery .pictures-trick .modal-container .delete .modal-body img {
-    cursor: auto;
+  cursor: auto;
 }
 
 .details-trick #container-gallery .pictures-trick .picture .imgModal,
 .edit-trick #container-gallery .pictures-trick .picture .imgModal {
-    cursor: pointer;
-    transition: 0.3s;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .details-trick #container-gallery .pictures-trick .picture .imgModal:hover,
 .edit-trick #container-gallery .pictures-trick .picture .imgModal:hover{
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 .details-trick #container-gallery .videos-trick .video,
 .edit-trick #container-gallery .videos-trick .video {
-    width: 200px;
+  width: 200px;
 }
 
 .details-trick #container-gallery .videos-trick .video iframe,
 .edit-trick #container-gallery .videos-trick .video iframe {
-    width: 100%;
+  width: 100%;
 }
 /* Fin gallerie des médias */
 
 /* Modal de suppression d'une image */
 .edit-trick #container-gallery .videos-trick .delete .modal-body .video {
-    margin: auto;
+  margin: auto;
 }
 /* Fin Modal de suppression d'une image */
 
 /* Icon de suppression */
 .edit-trick #container-gallery .pictures-trick .picture,
 .edit-trick #container-gallery .videos-trick .video-container {
-    position: relative;
+  position: relative;
 }
 
 .edit-trick #container-gallery .pictures-trick .picture .button-container,
 .edit-trick #container-gallery .videos-trick .button-container {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 30px;
-    border: 2px solid black;
-    border-radius: 10px;
-    background-color: #fff;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: #fff;
 }
 
 .edit-trick #container-gallery .pictures-trick .picture .button-container button,
 .edit-trick #container-gallery .videos-trick .button-container button {
-    width: 100%;
-    padding: 0;
+  width: 100%;
+  padding: 0;
 }
 
 .edit-trick #container-gallery .pictures-trick .picture .button-container button img,
 .edit-trick #container-gallery .videos-trick .button-container button img {
-    width: 10px;
-    height: 10px;
+  width: 10px;
+  height: 10px;
 }
 /* Fin Icon de suppression */
 
@@ -562,21 +562,21 @@ footer {
 .edit-trick #container-gallery .videos-trick .add,
 .edit-trick #container-gallery .empty-picture .add,
 .edit-trick #container-gallery .empty-video .add {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
-    border-radius: 4px;
-    cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .edit-trick #container-gallery .pictures-trick .add:hover,
 .edit-trick #container-gallery .videos-trick .add:hover,
 .edit-trick #container-gallery .empty-picture .add:hover,
 .edit-trick #container-gallery .empty-video .add:hover {
-    background-color: #007bff;
+  background-color: #007bff;
 }
 
 /* Icon d'ajout */
@@ -584,32 +584,32 @@ footer {
 .edit-trick #container-gallery .videos-trick a img,
 .edit-trick #container-gallery .empty-picture img,
 .edit-trick #container-gallery .empty-video img {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 /* Fin Bouton d'ajout */
 
 /* Si aucune images ou vidéos */
 .details-trick #container-gallery .empty-picture,
 .details-trick #container-gallery .empty-video {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
 }
 
 .edit-trick #container-gallery .empty-picture,
 .edit-trick #container-gallery .empty-video {
-    width: 50%;
+  width: 50%;
 }
 
 .details-trick #container-gallery .pictures-trick .empty-picture {
-    width: 100%;
+  width: 100%;
 }
 
 .details-trick #container-gallery .empty-picture p,
 .details-trick #container-gallery .empty-video p {
-    margin: 15px 0;
+  margin: 15px 0;
 }
 /* Fin Si aucune images ou vidéos */
 
@@ -617,50 +617,50 @@ footer {
 .details-trick #container-infos .description,
 .details-trick #container-infos .infos,
 .edit-trick #container-infos .infos{
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 .details-trick #container-infos .infos span,
 .edit-trick #container-infos .infos span {
-    font-variant-caps: all-small-caps;
-    max-height: 64px;
+  font-variant-caps: all-small-caps;
+  max-height: 64px;
 }
 /* Fin des infos */
 
 
 /* Formulaire de modification de la figure*/
 .edit-trick #form-edit-trick form {
-    width: 90%;
-    margin: auto;
+  width: 90%;
+  margin: auto;
 }
 
 .edit-trick #form-edit-trick form label {
-    display: flex;
-    font-weight: bold;
-    font-variant-caps: all-small-caps;
+  display: flex;
+  font-weight: bold;
+  font-variant-caps: all-small-caps;
 }
 
 .edit-trick #form-edit-trick form .form-group label {
-    flex-direction: column;
-    text-align: initial;
+  flex-direction: column;
+  text-align: initial;
 }
 
 .edit-trick #form-edit-trick form .form-group #trick_description {
-    min-height: 250px;
+  min-height: 250px;
 }
 
 .edit-trick #form-edit-trick form .buttons {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 50px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 50px;
 }
 
 .edit-trick #form-edit-trick form .buttons button {
-    max-width: 150px;
+  max-width: 150px;
 }
 
 .edit-trick #form-edit-trick form .buttons button:first-child {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 /* Fin Formulaire de modification de la figure*/
 
@@ -669,421 +669,421 @@ footer {
 
 /* Formulaire des commentaires */
 .details-trick #form-comments p {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .details-trick #form-comments a {
-    text-decoration: none;
+  text-decoration: none;
 }
 /* Fin Formulaire des commentaires */
 
 /* Commentaires */
 /* Cache les commentaires au delà de 4 */
 .details-trick #comments .comment {
-    display: none;
+  display: none;
 }
 
 .details-trick #comments .comment p {
-    padding:5px 15px;
-    border: 1px solid black;
-    overflow-wrap: break-word;
+  padding:5px 15px;
+  border: 1px solid black;
+  overflow-wrap: break-word;
 }
 
 .details-trick #comments .comment img {
-    max-height: 65px;
+  max-height: 65px;
 }
 
 .details-trick #comments .comment span {
-    font-variant-caps: all-small-caps;
+  font-variant-caps: all-small-caps;
 }
 /* Fin commentaires */
 
 
 /* Pagination */
 .details-trick #comments .paging-container {
-    display: none;
+  display: none;
 }
 
 /* Classe ajouté par le fichier load-more-comments.js */
 .details-trick #comments .paging-block {
-    display: block;
+  display: block;
 }
 
 .details-trick #comments .paging-container .paging li {
-    margin: 0 8px;
-    padding: 10px 0;
-    border: 1px solid #007bff;
-    border-radius: 5px;
-    background-color: #007bff;
+  margin: 0 8px;
+  padding: 10px 0;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #007bff;
 }
 
 .details-trick #comments .paging-container .paging li:hover:not(.active) {
-    background-color: #fff;
-    transition: background-color .5s;
+  background-color: #fff;
+  transition: background-color .5s;
 }
 
 .details-trick #comments .paging-container .paging li a {
-    padding: 10px 15px;
-    text-decoration: none;
-    color: #fff;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #fff;
 }
 
 .details-trick #comments .paging-container .paging li a:hover:not(.active) {
-    color: #007bff;
-    transition: color .5s;
+  color: #007bff;
+  transition: color .5s;
 }
 
 .details-trick #comments .paging-container .paging .active {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .details-trick #comments .paging-container .paging .active a {
-    color: #007bff;
+  color: #007bff;
 }
 /* Fin de la pagination */
 
 /* Bouton charger plus de commentaires */
 .details-trick #comments #loadMore {
-    width: 200px;
-    border: 1px solid transparent;
-    color: #fff;
-    background-color: #007bff;
-    transition: .3s;
+  width: 200px;
+  border: 1px solid transparent;
+  color: #fff;
+  background-color: #007bff;
+  transition: .3s;
 }
 
 .details-trick #comments #loadMore:hover {
-    border: 1px solid #007bff;
-    text-decoration: none;
-    color: #007bff;
-    background-color: #fff;
+  border: 1px solid #007bff;
+  text-decoration: none;
+  color: #007bff;
+  background-color: #fff;
 }
 
 /* Classe ajouté par le fichier load-more-comments.js */
 .details-trick #comments .noContent {
-    display: none !important;
+  display: none !important;
 }
 /* Fin bouton charger plus de commentaires */
 
 
 /* Responsive 1230px Details d'une figure */
 @media only screen and (max-width: 1230px) {
-    .details-trick #container-gallery .picture img,
-    .edit-trick #container-gallery .picture img {
-        width: 170px;
-    }
+  .details-trick #container-gallery .picture img,
+  .edit-trick #container-gallery .picture img {
+    width: 170px;
+  }
 
-    .details-trick #container-gallery .videos-trick .video,
-    .edit-trick #container-gallery .videos-trick .video {
-        width: 250px;
-    }
+  .details-trick #container-gallery .videos-trick .video,
+  .edit-trick #container-gallery .videos-trick .video {
+    width: 250px;
+  }
 }
 
 /* Responsive 1175px Details d'une figure */
 @media only screen and (max-width: 1175px) {
-    .details-trick #container-gallery .picture img,
-    .edit-trick #container-gallery .picture img {
-        width: 160px;
-    }
+  .details-trick #container-gallery .picture img,
+  .edit-trick #container-gallery .picture img {
+    width: 160px;
+  }
 }
 
 /* Responsive 1050px Details d'une figure */
 @media only screen and (max-width: 1050px) {
-    header nav .menu {
-        text-align: left;
-        width: 100%;
-        margin-top: 0;
-        margin-bottom: 15px;
-        background: #484b50;
-    }
+  header nav .menu {
+    text-align: left;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 15px;
+    background: #484b50;
+  }
 
-    header nav .menu li {
-        display: none;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-    }
+  header nav .menu li {
+    display: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
 
-    header nav .menu li:hover {
-        background: #54585d;
-        -moz-transition-duration: 0.5s;
-        -o-transition-duration: 0.5s;
-        -webkit-transition-duration: 0.5s;
-        transition-duration: 0.5s;
-    }
+  header nav .menu li:hover {
+    background: #54585d;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+  }
 
-    header nav .menu li a {
-        display: table;
-        width: 100%;
-        color: #fff;
-        text-decoration: none;
-        font-size: 20px;
-        padding: 20px;
-        overflow: hidden;
-        border-bottom: thin solid #555;
-    }
+  header nav .menu li a {
+    display: table;
+    width: 100%;
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 20px;
+    overflow: hidden;
+    border-bottom: thin solid #555;
+  }
 
-    /* Menu hamburger */
-    header nav .burger {
-        position: absolute;
-        top: 5px;
-        right: -25px;
-        width: 70px;
-        height: 70px;
-        background: #007bff;
-        -moz-transition: all 0.6s ease-in-out;
-        -o-transition: all 0.6s ease-in-out;
-        -webkit-transition: all 0.6s ease-in-out;
-        transition: all 0.6s ease-in-out;
-        -moz-transform: translate(-50%, 0);
-        -ms-transform: translate(-50%, 0);
-        -webkit-transform: translate(-50%, 0);
-        transform: translate(-50%, 0);
-    }
+  /* Menu hamburger */
+  header nav .burger {
+    position: absolute;
+    top: 5px;
+    right: -25px;
+    width: 70px;
+    height: 70px;
+    background: #007bff;
+    -moz-transition: all 0.6s ease-in-out;
+    -o-transition: all 0.6s ease-in-out;
+    -webkit-transition: all 0.6s ease-in-out;
+    transition: all 0.6s ease-in-out;
+    -moz-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+  }
 
-    header nav .burger i,
-    header nav .burger i:before,
-    header nav .burger i:after {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        height: 2px;
-        width: 40px;
-        content: '';
-        background: #fff;
-        -moz-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        -moz-transition: all 0.2s ease-in-out;
-        -o-transition: all 0.2s ease-in-out;
-        -webkit-transition: all 0.2s ease-in-out;
-        transition: all 0.2s ease-in-out;
-    }
+  header nav .burger i,
+  header nav .burger i:before,
+  header nav .burger i:after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 2px;
+    width: 40px;
+    content: '';
+    background: #fff;
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+  }
 
-    header nav .burger i:before {
-        margin-top: -12px;
-    }
+  header nav .burger i:before {
+    margin-top: -12px;
+  }
 
-    header nav .burger i:after {
-        margin-top: 12px;
-    }
+  header nav .burger i:after {
+    margin-top: 12px;
+  }
 
-    header nav .burger:hover {
-        background: #0056b3;
-    }
+  header nav .burger:hover {
+    background: #0056b3;
+  }
 
-    header nav .burger:hover i:before {
-        margin-top: -14px;
-    }
+  header nav .burger:hover i:before {
+    margin-top: -14px;
+  }
 
-    header nav .burger:hover i:after {
-        margin-top: 14px;
-    }
+  header nav .burger:hover i:after {
+    margin-top: 14px;
+  }
 
-    header nav .burger.active {
-        background: #007bff;
-    }
+  header nav .burger.active {
+    background: #007bff;
+  }
 
-    header nav .burger.active i {
-        background: transparent;
-    }
+  header nav .burger.active i {
+    background: transparent;
+  }
 
-    header nav .burger.active i:before,
-    header nav .burger.active i:after {
-        left: -5px;
-        width: 50px;
-    }
+  header nav .burger.active i:before,
+  header nav .burger.active i:after {
+    left: -5px;
+    width: 50px;
+  }
 
-    header nav .burger.active i:before {
-        -moz-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        -webkit-transform: rotate(45deg);
-        transform: rotate(45deg);
-        top: 12px;
-    }
+  header nav .burger.active i:before {
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    top: 12px;
+  }
 
-    header nav .burger.active i:after {
-        -moz-transform: rotate(-45deg);
-        -ms-transform: rotate(-45deg);
-        -webkit-transform: rotate(-45deg);
-        transform: rotate(-45deg);
-        top: -12px;
-    }
+  header nav .burger.active i:after {
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    top: -12px;
+  }
 
-    header nav .burger.active:hover {
-        background: #0056b3;
-    }
+  header nav .burger.active:hover {
+    background: #0056b3;
+  }
 
-    header nav .burger.active:hover i:before,
-    header nav .burger.active:hover i:after {
-        width: 60px;
-        margin: 0;
-        left: -10px;
-        top: 0;
-    }
+  header nav .burger.active:hover i:before,
+  header nav .burger.active:hover i:after {
+    width: 60px;
+    margin: 0;
+    left: -10px;
+    top: 0;
+  }
 
-    /* Flèche pour monter */
-    .show-back-to-top {
-        bottom: 110px;
-    }
+  /* Flèche pour monter */
+  .show-back-to-top {
+    bottom: 110px;
+  }
 
-    /* Modal pour modifier l'image principal */
-    .edit-trick #editMainPicture form .pictures-container {
-        flex-direction: column;
-    }
+  /* Modal pour modifier l'image principal */
+  .edit-trick #editMainPicture form .pictures-container {
+    flex-direction: column;
+  }
 
-    .edit-trick #editMainPicture form .pictures-container .picture {
-        width: 100%;
-        text-align: center;
-    }
+  .edit-trick #editMainPicture form .pictures-container .picture {
+    width: 100%;
+    text-align: center;
+  }
 
-    /* Modal our afficher une image en grand */
-    .details-trick .modal-picture .modal-content,
-    .edit-trick .modal-picture .modal-content {
-        width: 100%;
-    }
+  /* Modal our afficher une image en grand */
+  .details-trick .modal-picture .modal-content,
+  .edit-trick .modal-picture .modal-content {
+    width: 100%;
+  }
 
-    /* Gallerie des médias */
-    .details-trick #container-gallery .pictures-trick,
-    .details-trick #container-gallery .videos-trick,
-    .edit-trick #container-gallery .pictures-trick,
-    .edit-trick #container-gallery .videos-trick {
-        align-items: center;
-        width: 100%;
-    }
+  /* Gallerie des médias */
+  .details-trick #container-gallery .pictures-trick,
+  .details-trick #container-gallery .videos-trick,
+  .edit-trick #container-gallery .pictures-trick,
+  .edit-trick #container-gallery .videos-trick {
+    align-items: center;
+    width: 100%;
+  }
 
-    .edit-trick #container-gallery .videos-trick {
-        flex-direction: column;
-    }
+  .edit-trick #container-gallery .videos-trick {
+    flex-direction: column;
+  }
 
-    /* Image */
-    .details-trick #container-gallery .pictures-trick .picture,
-    .edit-trick #container-gallery .pictures-trick .picture {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        padding: 10px;
-    }
+  /* Image */
+  .details-trick #container-gallery .pictures-trick .picture,
+  .edit-trick #container-gallery .pictures-trick .picture {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+  }
 
-    .details-trick #container-gallery .pictures-trick .picture img,
-    .edit-trick #container-gallery .pictures-trick .picture img {
-        max-width: 100%;
-        width: 100%;
-    }
+  .details-trick #container-gallery .pictures-trick .picture img,
+  .edit-trick #container-gallery .pictures-trick .picture img {
+    max-width: 100%;
+    width: 100%;
+  }
 
-    /* Vidéo */
-    .edit-trick #container-gallery .videos-trick .video-container {
-        width: 100%;
-    }
+  /* Vidéo */
+  .edit-trick #container-gallery .videos-trick .video-container {
+    width: 100%;
+  }
 
-    .details-trick #container-gallery .videos-trick .video,
-    .edit-trick #container-gallery .videos-trick .video {
-        width: 100%;
-        margin: 10px;
-    }
+  .details-trick #container-gallery .videos-trick .video,
+  .edit-trick #container-gallery .videos-trick .video {
+    width: 100%;
+    margin: 10px;
+  }
 
-    .details-trick #container-gallery .videos-trick .video iframe,
-    .edit-trick #container-gallery .videos-trick .video iframe {
-        height: 200px;
-    }
+  .details-trick #container-gallery .videos-trick .video iframe,
+  .edit-trick #container-gallery .videos-trick .video iframe {
+    height: 200px;
+  }
 
-    /* Si aucune images ou vidéos */
-    .details-trick #container-gallery .empty-picture,
-    .details-trick #container-gallery .empty-video,
-    .edit-trick #container-gallery .empty-picture,
-    .edit-trick #container-gallery .empty-video {
-        width: 100%;
-    }
+  /* Si aucune images ou vidéos */
+  .details-trick #container-gallery .empty-picture,
+  .details-trick #container-gallery .empty-video,
+  .edit-trick #container-gallery .empty-picture,
+  .edit-trick #container-gallery .empty-video {
+    width: 100%;
+  }
 
-    .edit-trick #container-gallery .empty-picture {
-        margin-bottom: 20px;
-    }
+  .edit-trick #container-gallery .empty-picture {
+    margin-bottom: 20px;
+  }
 
-    /* Bouton d'ajout */
-    .edit-trick #container-gallery .pictures-trick .add,
-    .edit-trick #container-gallery .videos-trick .add,
-    .edit-trick #container-gallery .empty-picture .add,
-    .edit-trick #container-gallery .empty-video .add {
-        width: 90%;
-        margin: auto;
-    }
+  /* Bouton d'ajout */
+  .edit-trick #container-gallery .pictures-trick .add,
+  .edit-trick #container-gallery .videos-trick .add,
+  .edit-trick #container-gallery .empty-picture .add,
+  .edit-trick #container-gallery .empty-video .add {
+    width: 90%;
+    margin: auto;
+  }
 
-    .edit-trick #container-gallery .pictures-trick .add {
-        margin-bottom: 20px;
-    }
+  .edit-trick #container-gallery .pictures-trick .add {
+    margin-bottom: 20px;
+  }
 
-    /* Icon de suppression */
-    .edit-trick #container-gallery .pictures-trick .picture .button-container {
-        top: 15px;
-        right: 25px;
-    }
+  /* Icon de suppression */
+  .edit-trick #container-gallery .pictures-trick .picture .button-container {
+    top: 15px;
+    right: 25px;
+  }
 
-    .edit-trick #container-gallery .videos-trick .button-container {
-        top: 20px;
-    }
+  .edit-trick #container-gallery .videos-trick .button-container {
+    top: 20px;
+  }
 
-    /* Infos */
-    .details-trick #container-infos .infos,
-    .edit-trick #container-infos .infos {
-        flex-direction: column;
-    }
+  /* Infos */
+  .details-trick #container-infos .infos,
+  .edit-trick #container-infos .infos {
+    flex-direction: column;
+  }
 
-    /* Boutons du formlaire de modification */
-    .edit-trick #form-edit-trick form .buttons {
-        justify-content: center;
-        margin-top: 20px;
-    }
+  /* Boutons du formlaire de modification */
+  .edit-trick #form-edit-trick form .buttons {
+    justify-content: center;
+    margin-top: 20px;
+  }
 }
 
 /* Responsive 520px Details d'une figure */
 @media only screen and (max-width: 520px) {
-    /* Header */
-    header .logo {
-        width: 100%;
-        margin: 0;
-    }
+  /* Header */
+  header .logo {
+    width: 100%;
+    margin: 0;
+  }
 
-    header .logo img {
-        width: 150px;
-    }
+  header .logo img {
+    width: 150px;
+  }
 
-    /* Menu fixé en bas */
-    header nav .burger {
-        display: none;
-    }
+  /* Menu fixé en bas */
+  header nav .burger {
+    display: none;
+  }
 
-    header nav .menu {
-        display: none;
-    }
+  header nav .menu {
+    display: none;
+  }
 
-    .responsive-menu {
-        display: block;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100px;
-        z-index: 10;
-        background-color: #484b50;
-    }
+  .responsive-menu {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 10;
+    background-color: #484b50;
+  }
 
-    .responsive-menu .menu {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        height: 100%;
-        margin: 0;
-        padding: 15px;
-    }
+  .responsive-menu .menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    padding: 15px;
+  }
 
-    .responsive-menu .menu li {
-        display: block !important;
-    }
+  .responsive-menu .menu li {
+    display: block !important;
+  }
 
-    .responsive-menu .menu img {
-        width: 35px;
-        height: 35px;
-    }
+  .responsive-menu .menu img {
+    width: 35px;
+    height: 35px;
+  }
 }
 /* Fin Responsive */
 /*// Fin Page - Details d'une figure & Modification d'une figure //*/
@@ -1095,23 +1095,23 @@ footer {
 
 /* Masque le bouton si écran supérieur et/ou égale à 1051px */
 @media only screen and (min-width: 1051px) {
-    #button-show-hidden-medias {
-        display: none;
-    }
+  #button-show-hidden-medias {
+    display: none;
+  }
 }
 
 /* Permet de conserver la mise en forme des medias quand le bouton "Afficher/Masquer les médias" est cliqué */
 @media only screen and (min-width: 1051px) {
-    .clicked {
-        display: flex !important;
-    }
+  .clicked {
+    display: flex !important;
+  }
 }
 
 /* Masque les medias si écran inférieur et/ou égale à 1050px */
 @media only screen and (max-width: 1050px) {
-    .details-trick #container-gallery,
-    .edit-trick #container-gallery {
-        display: none;
-    }
+  .details-trick #container-gallery,
+  .edit-trick #container-gallery {
+    display: none;
+  }
 }
 /*// Fin Bouton afficher/masquer les médias //*/
