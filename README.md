@@ -1,4 +1,5 @@
 # SnowTricks
+
 Creating of a collaborative snowboard site based on the Symfony framwork.
 
 ------------------------------------------------------------------------------------------------------------------------------------------
