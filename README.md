@@ -24,8 +24,13 @@ Creating of a collaborative snowboard site based on the Symfony framwork.
 
 ## Install the project
 1. Download the project clone.
+```
+git clone https://github.com/Scratchy-Show/SnowTricks.git
+```
 
 2. Download and install WampServer (or equivalent: MampServer, XampServer, LampServer).
 
 3. Put the project file in the www folder of WampServer.
+
+4. 
 
