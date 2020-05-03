@@ -23,9 +23,9 @@ Creating of a collaborative snowboard site based on the Symfony framwork.
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Install the project
-* Download the project clone.
-------------------------------------------------------------------------------------------------------------------------------------------
-* Download and install WampServer (or equivalent: MampServer, XampServer, LampServer).
-------------------------------------------------------------------------------------------------------------------------------------------
-* Put the project file in the www folder of WampServer.
-------------------------------------------------------------------------------------------------------------------------------------------
+1. Download the project clone.
+
+2. Download and install WampServer (or equivalent: MampServer, XampServer, LampServer).
+
+3. Put the project file in the www folder of WampServer.
+
