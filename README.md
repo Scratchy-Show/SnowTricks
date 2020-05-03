@@ -35,10 +35,18 @@ git clone https://github.com/Scratchy-Show/SnowTricks.git
 composer install
 ```
 
- 4. **Create the database** - Still in the root folder, execute the command :
+ 4. **Create the database** - Execute the command :
  ```
 php bin/console doctrine:database:create
 ```
 
-5.
+5. **Update database** - Execute the command :
+ ```
+php bin/console doctrine:schema:update --force
+```
+
+6. **Load fixtures** - Execute the command :
+ ```
+php bin/console doctrine:fixtures:load
+```
 
