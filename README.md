@@ -12,9 +12,9 @@ Creating of a collaborative snowboard site based on the Symfony framwork.
   * PHPUnit 9.1.4
   * Xdebug 2.9.5
   * Wampserver 3.2.0
-    * PHP 7.4.1
-    * Apache 2.4.41
-    * MySQL 8.0.18
+    - PHP 7.4.1
+    - Apache 2.4.41
+    - MySQL 8.0.18
 ------------------------------------------------------------------------------------------------------------------------------------------
 ## Install the project
 * Download the project clone.
