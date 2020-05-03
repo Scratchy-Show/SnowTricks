@@ -30,9 +30,15 @@ Creating of a collaborative snowboard site based on the Symfony framwork.
 git clone https://github.com/Scratchy-Show/SnowTricks.git
 ```
 
-3. Inside the folder, open the CLI (Command-Line Interface) and install the dependencies :
+3. **Install the dependencies** - In the root directory of the project, open the CLI (Command-Line Interface) and execute the command :
 ```
 composer install
 ```
 
+ 4. **Create the database** - Still in the root folder, run the command :
+ ```
+php bin/console doctrine:database:create
+```
+
+5.
 
