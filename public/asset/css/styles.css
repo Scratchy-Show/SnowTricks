@@ -32,7 +32,7 @@ ul {
 
 /* Mise en forme des Messages flash */
 .alert {
-  position: absolute;
+ position: absolute;
   left: 25%;
   width: 50%;
   margin: 0;
@@ -41,6 +41,15 @@ ul {
 
 .alert p {
   margin-bottom: 0;
+}
+
+.login .alert-danger {
+  position: initial;
+}
+
+.alert-success,
+.alert-danger {
+  margin-top: 5px;
 }
 
 /* Mise en forme des pages */
@@ -61,7 +70,6 @@ ul {
   min-height: 83vh;
   margin-top: 30px;
 }
-
 
 /* Modifie le contenu du bouton (Browser) généré par Bootstrap */
 .add-trick .custom-file-input ~ .custom-file-label:lang(fr)::after,
@@ -491,7 +499,8 @@ footer {
 }
 
 .details-trick #container-gallery .pictures-trick .picture img,
-.edit-trick #container-gallery .pictures-trick .picture img {
+.edit-trick #container-gallery .pictures-trick .picture img,
+.edit-trick .deleteMainPicture img {
   max-width: 190px;
   cursor: pointer;
   transition: 0.3s;
@@ -868,18 +877,24 @@ footer {
     transition: all 0.2s ease-in-out;
   }
 
-  header nav .burger i::before,
-  header nav .burger i::after {
+  header nav .burger i::before {
     margin-top: -12px;
+  }
+
+  header nav .burger i::after {
+    margin-top: 12px;
   }
 
   header nav .burger:hover {
     background: #0056b3;
   }
 
-  header nav .burger:hover i::before,
-  header nav .burger:hover i::after {
+  header nav .burger:hover i::before {
     margin-top: -14px;
+  }
+
+  header nav .burger:hover i::after {
+    margin-top: 14px;
   }
 
   header nav .burger.active {
@@ -973,6 +988,11 @@ footer {
     width: 100%;
   }
 
+  .edit-trick .deleteMainPicture img {
+    max-width: 100%;
+    max-height: 200px;
+  }
+
   /* Vidéo */
   .edit-trick #container-gallery .videos-trick .video-container {
     width: 100%;
@@ -1037,8 +1057,61 @@ footer {
   }
 }
 
+/* Responsive 920px Details d'une figure */
+@media only screen and (max-width: 920px) {
+  /* Mise en forme des Messages flash */
+  .alert {
+    width: 80%;
+  }
+
+  .alert-success,
+  .alert-danger {
+    left: 5%;
+  }
+
+  /* Page d'accueil */
+
+  /* Bannière */
+  #home-banner h1 {
+    width: 70%;
+    font-size: 1.5rem;
+  }
+
+  #home-banner h1 span {
+    font-size: 2.5rem;
+  }
+
+  /* Flèches */
+  #home-banner .descend img,
+  #home-banner .back-to-top img {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Gallerie des médias */
+
+  /* Image */
+
+  .details-trick #container-gallery .pictures-trick .picture,
+  .edit-trick #container-gallery .pictures-trick .picture {
+    max-height: 380px;
+    width: 80%;
+    margin: auto;
+  }
+
+  .edit-trick #container-gallery .pictures-trick .deletePicture img {
+    max-width: 100%;
+    max-height: 200px;
+  }
+}
+
 /* Responsive 520px Details d'une figure */
 @media only screen and (max-width: 520px) {
+  /* Mise en forme des Messages flash */
+  .alert {
+    width: 90%;
+  }
+
   /* Header */
   header .logo {
     width: 100%;
@@ -1085,6 +1158,63 @@ footer {
   .responsive-menu .menu img {
     width: 35px;
     height: 35px;
+  }
+
+  /* Page d'accueil */
+
+  /* Bannière */
+  #home-banner {
+    height: 65vh;
+  }
+
+  /* Flèche pour descendre */
+  #home-banner .descend {
+    right: 5px;
+    bottom: 120px;
+  }
+
+  /* Flèche pour monter */
+  #home-banner .show-back-to-top {
+    right: 5px;
+    bottom: 110px;
+  }
+
+  /* Image principal et titre */
+
+  /* Titre */
+  #mainPicture #title {
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+  }
+
+  .details-trick #mainPicture #title h1 {
+    margin-bottom: 0;
+    font-size: 2rem;
+  }
+}
+
+/* Responsive 420px Details d'une figure */
+@media only screen and (max-width: 420px) {
+  /* Page d'accueil */
+
+  /* Bannière */
+  #home-banner {
+    height: 75vh;
+  }
+
+  /* Flèche pour descendre */
+  #home-banner .descend {
+    bottom: 110px;
+  }
+
+  /* Gallerie des médias */
+
+  /* Image */
+
+  .details-trick #container-gallery .pictures-trick .picture,
+  .edit-trick #container-gallery .pictures-trick .picture {
+    max-height: 200px;
   }
 }
 

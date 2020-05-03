@@ -87,10 +87,6 @@ class User implements UserInterface, Serializable
      *  minHeightMessage = "La hauteur de cette image est trop petite. Elle doit faire minimum {{ min_height }} pixels",
      *  maxHeight        = 400,
      *  maxHeightMessage = "La hauteur de cette image est trop grande. Elle doit faire maximum {{ max_height }} pixels",
-     *  allowLandscape   = false,
-     *  allowLandscapeMessage = "L'image doit être un carré",
-     *  allowPortrait    = false,
-     *  allowPortraitMessage = "L'image doit être un carré",
      *  )
      */
     protected $profilPicture;

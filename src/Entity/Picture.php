@@ -29,7 +29,7 @@ class Picture
      *  maxWidthMessage  = "La largeur de cette image est trop grande. Elle doit faire maximum {{ max_width }} pixels",
      *  minHeight        = 270,
      *  minHeightMessage = "La hauteur de cette image est trop petite. Elle doit faire minimum {{ min_height }} pixels",
-     *  maxHeight        = 1200,
+     *  maxHeight        = 750,
      *  maxHeightMessage = "La hauteur de cette image est trop grande. Elle doit faire maximum {{ max_height }} pixels",
      *  )
      */
