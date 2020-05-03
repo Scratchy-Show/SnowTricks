@@ -30,7 +30,7 @@ Creating of a collaborative snowboard site based on the Symfony framwork.
 git clone https://github.com/Scratchy-Show/SnowTricks.git
 ```
 
-3. Configure the `DATABASE_URL` environment variable to connect to your database and the` MAILER_URL` environment variable to be able to send emails.
+3. Configure the `DATABASE_URL` environment variable to connect to your database and the`MAILER_URL` environment variable to be able to send emails.
 
 4. **Install the dependencies** - In the root directory of the project, open the CLI (Command-Line Interface) and execute the command :
 ```
@@ -50,5 +50,15 @@ php bin/console doctrine:schema:update --force
 7. **Load fixtures** - Execute the command :
  ```
 php bin/console doctrine:fixtures:load
+```
+
+8. **Run the Symfony server** - Execute the command :
+ ```
+symfony server:start
+```
+
+9. **Access the site** - Enter the address indicated by the web server in your browser :
+ ```
+Example: http://127.0.0.1:8000
 ```
 
