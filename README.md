@@ -30,7 +30,7 @@ Creating of a collaborative snowboard site based on the Symfony framwork.
 git clone https://github.com/Scratchy-Show/SnowTricks.git
 ```
 
-3. Inside the file, open the CLI (Command-Line Interface) and install the dependencies :
+3. Inside the folder, open the CLI (Command-Line Interface) and install the dependencies :
 ```
 composer install
 ```
