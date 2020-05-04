@@ -53,9 +53,9 @@ php bin/console doctrine:fixtures:load
 ```
 
 8. **Run the Symfony server** - Execute the command :
- ```
+ ``
 symfony server:start
-```
+``
 
 9. **Access the site** - Enter the address indicated by the web server in your browser :
   ``
