@@ -26,18 +26,19 @@ Creating of a collaborative snowboard site based on the Symfony framwork.
  1. Download and install WampServer (or equivalent: MampServer, XampServer, LampServer).
 
  2. Download the project clone in the www folder of WampServer :
-```
-git clone https://github.com/Scratchy-Show/SnowTricks.git
-```
+ ```
+ git clone https://github.com/Scratchy-Show/SnowTricks.git
+ ```
 
  3. Configure the `DATABASE_URL` environment variable to connect to your database and the`MAILER_URL` environment variable to be able to send emails.
+ 
  4. **Install the dependencies** - In the root directory of the project, open the CLI (Command-Line Interface) and execute the command :
-```
-composer install
-```
+    ```
+    composer install
+     ```
 
  5. **Create the database** - Execute the command :
-```
+ ```
 php bin/console doctrine:database:create
 ```
 
