@@ -97,7 +97,7 @@ class Trick
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trick", orphanRemoval=true)
      */
-    private $comments;
+    protected $comments;
 
 
     public function __construct()
