@@ -66,7 +66,14 @@
                                         {% for picture in pictures %}
                                             {% if trick.mainPicture.id is defined  %}
                                                 <!-- Si une image principale est défini -->
-                                                {% if picture.id != trick.mainPicture.id %}
+                                                {% if pictures|length == 1 %}
+                                                    <!-- Si il y a uniquement l'image principale -->
+                                                    <div class="empty-picture">
+                                                        <p class="font-weight-bold">La gallerie d'image est vide</p>
+                                                    </div>
+                                                {% elseif pictures|length > 1 %}
+                                                    <!-- Si il y a plus que l'image principale -->
+                                                    {% if picture.id != trick.mainPicture.id %}
                                                     <!-- Evite d'afficher l'image principale dans la gallerie -->
                                                     <div class="picture p-1">
                                                         <input id="editMainPicture" type="radio"
@@ -80,6 +87,7 @@
                                                         </label>
                                                     </div>
                                                 {% endif %}
+                                            {% endif %}
                                             {% elseif trick.mainPicture.id is not defined %}
                                                 <!-- Si une image principale n'est pas défini -->
                                                 <div class="picture p-1">
