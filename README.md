@@ -10,19 +10,19 @@ Creating of a collaborative snowboard site based on the Symfony framwork.
 ------------------------------------------------------------------------------------------------------------------------------------------
 ## Environment used for development
 
-*Symfony 4.14.3
+* Symfony 4.14.3
 
-*Composer 1.9.1
+* Composer 1.9.1
 
-*Bootstrap 4.4.1
+* Bootstrap 4.4.1
 
-*jQuery 3.4.1
+* jQuery 3.4.1
 
-*PHPUnit 9.1.4
+* PHPUnit 9.1.4
 
-*Xdebug 2.9.5
+* Xdebug 2.9.5
 
-*Wampserver 3.2.0
+* Wampserver 3.2.0
      * PHP 7.4.1
      * Apache 2.4.41
      * MySQL 8.0.18
