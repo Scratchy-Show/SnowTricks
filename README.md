@@ -58,6 +58,4 @@ symfony server:start
 ```
 
 9. **Access the site** - Enter the address indicated by the web server in your browser :
- ```
-Example: <http://127.0.0.1:8000>
-```
+ <Example: http://127.0.0.1:8000>
