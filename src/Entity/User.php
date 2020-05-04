@@ -104,7 +104,7 @@ class User implements UserInterface, Serializable
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $token;
+    protected $token;
 
     /**
      * @ORM\Column(type="boolean")
@@ -114,7 +114,7 @@ class User implements UserInterface, Serializable
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    protected $roles = [];
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Trick", mappedBy="user")
@@ -124,7 +124,7 @@ class User implements UserInterface, Serializable
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user", orphanRemoval=true)
      */
-    private $comments;
+    protected $comments;
 
     public function __construct()
     {

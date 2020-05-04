@@ -17,14 +17,12 @@ class Category
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
     protected $name;
-
-    protected $add;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Trick", mappedBy="category")
@@ -51,18 +49,6 @@ class Category
         $this->name = $name;
 
         return $this;
-    }
-
-    public function getAdd()
-    {
-        return $this->add;
-    }
-
-    public function setAdd($add)
-    {
-        $this->add = $add;
-
-        return $add;
     }
 
     /**
