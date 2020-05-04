@@ -126,44 +126,46 @@
             </div>
         </div>
 
-        <!-- Modal pour la suppression de l'image principale -->
-        <div class="modal-container" >
-            <div class="deleteMainPicture modal fade"
-                 id="deleteMainPicture{{ trick.mainPicture.id }}"
-                 tabindex="-1"
-                 role="dialog"
-                 aria-labelledby="modalDeleteMainPicture{{ trick.mainPicture.id }}"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="h4 modal-title" id="modalDeleteMainPicture{{ trick.mainPicture.id }}">
-                                Supprimer l'image ?
-                            </h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="picture text-center">
-                                <img class="rounded"
-                                     src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}"
-                                     alt="{{ trick.name }}"
-                                />
+        {% if trick.mainPicture.id is defined  %}
+            <!-- Modal pour la suppression de l'image principale -->
+            <div class="modal-container" >
+                <div class="deleteMainPicture modal fade"
+                     id="deleteMainPicture{{ trick.mainPicture.id }}"
+                     tabindex="-1"
+                     role="dialog"
+                     aria-labelledby="modalDeleteMainPicture{{ trick.mainPicture.id }}"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="h4 modal-title" id="modalDeleteMainPicture{{ trick.mainPicture.id }}">
+                                    Supprimer l'image ?
+                                </h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                Annuler
-                            </button>
-                            <a href="{{ path('trick_picture_delete', {'pictureId': trick.mainPicture.id, 'trickId': trick.id}) }}">
-                                <button type="button" class="btn btn-danger">Supprimer</button>
-                            </a>
+                            <div class="modal-body">
+                                <div class="picture text-center">
+                                    <img class="rounded"
+                                         src="{{ asset(trick.mainPicture.path ~ '/' ~ trick.mainPicture.name) }}"
+                                         alt="{{ trick.name }}"
+                                    />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                    Annuler
+                                </button>
+                                <a href="{{ path('trick_picture_delete', {'pictureId': trick.mainPicture.id, 'trickId': trick.id}) }}">
+                                    <button type="button" class="btn btn-danger">Supprimer</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
 
         <!-- Modal affiche en grand une image -->
         <div class="modal-picture">
