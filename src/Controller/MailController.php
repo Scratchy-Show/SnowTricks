@@ -62,8 +62,8 @@ class MailController extends AbstractController // Permet d'utiliser la méthode
                     "Votre compte a été activé. Vous pouvez maintenant vous connecter."
                 );
 
-                // Redirection vers la page d'accueil
-                return $this->redirectToRoute('home');
+                // Redirection vers la page de connexion
+                return $this->redirectToRoute('login');
             } else // Si le jeton ne correspond pas à l'utilisateur
             {
                 $this->addFlash(
