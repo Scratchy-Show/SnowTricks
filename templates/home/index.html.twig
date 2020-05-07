@@ -42,26 +42,28 @@
                         <div class="title-buttons-container">
                             <a class="trick-title p-2 rounded-lg" href="{{ path('trick_details', {'slug': trick.slug, page: '1'}) }}">{{ trick.name }}</a>
                             {% if app.user.username is defined %}
-                                <div class="buttons d-flex">
-                                    <button type="button" class="btn" title="Modifier la figure">
-                                        <a href="{{ path('trick_edit', {'slug': trick.slug}) }}">
-                                            <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
-                                        </a>
-                                    </button>
-                                    <button type="button"
-                                            class="btn"
-                                            title="Supprimer la figure"
-                                            data-toggle="modal"
-                                            data-target="#deleteTrick{{ trick.id }}"
-                                            data-whatever="@deleteTrick">
-                                        <a href="#"
-                                           data-toggle="modal"
-                                           data-target="#deleteTrick{{ trick.id }}"
-                                           data-whatever="@deleteTrick">
-                                            <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer la figure" />
-                                        </a>
-                                    </button>
-                                </div>
+                                {% if app.user.id == trick.user.id %}
+                                    <div class="buttons d-flex">
+                                        <button type="button" class="btn" title="Modifier la figure">
+                                            <a href="{{ path('trick_edit', {'slug': trick.slug}) }}">
+                                                <img src="{{ asset('img/icons/edit.png') }}" alt="Modifier la figure" />
+                                            </a>
+                                        </button>
+                                        <button type="button"
+                                                class="btn"
+                                                title="Supprimer la figure"
+                                                data-toggle="modal"
+                                                data-target="#deleteTrick{{ trick.id }}"
+                                                data-whatever="@deleteTrick">
+                                            <a href="#"
+                                               data-toggle="modal"
+                                               data-target="#deleteTrick{{ trick.id }}"
+                                               data-whatever="@deleteTrick">
+                                                <img src="{{ asset('img/icons/delete.png') }}" alt="Supprimer la figure" />
+                                            </a>
+                                        </button>
+                                    </div>
+                                {% endif %}
                             {% endif %}
                         </div>
                     </div>

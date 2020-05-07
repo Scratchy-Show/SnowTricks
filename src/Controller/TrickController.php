@@ -227,6 +227,19 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
         // Si une figure correspond à l'id
         if ($trick != null) {
+
+            // Vérifie que l'utilisateur qui veut modifier et celui qui a créer la figure
+            if ($this->getUser() != $trick->getuser()) {
+                // Message d'erreur
+                $this->addFlash(
+                    'danger',
+                    "Vous ne pouvez pas modifier cette figure."
+                );
+
+                // Redirection vers la page d'accueil
+                return $this->redirectToRoute('home');
+            }
+
             // Création du formulaire de figure
             $formTrickType = $this->createForm(TrickType::class, $trick);
 
@@ -349,6 +362,19 @@ class TrickController extends AbstractController // Permet d'utiliser la méthod
 
         // Si une figure correspond à l'id
         if ($trick != null) {
+
+            // Vérifie que l'utilisateur qui veut supprimer et celui qui a créer la figure
+            if ($this->getUser() != $trick->getuser()) {
+                // Message d'erreur
+                $this->addFlash(
+                    'danger',
+                    "Vous ne pouvez pas supprimer cette figure."
+                );
+
+                // Redirection vers la page d'accueil
+                return $this->redirectToRoute('home');
+            }
+
             // Supprime l'image en tant qu'image principale
             $trick->setMainPicture(null);
 
