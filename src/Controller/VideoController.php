@@ -34,6 +34,19 @@ class VideoController extends AbstractController // Permet d'utiliser la méthod
 
         // Si une figure correspond au slug
         if ($trick != null) {
+
+            // Vérifie que l'utilisateur est celui qui a créer la figure
+            if ($this->getUser() != $trick->getuser()) {
+                // Message d'erreur
+                $this->addFlash(
+                    'danger',
+                    "Vous ne pouvez pas modifier cette figure."
+                );
+
+                // Redirection vers la page d'accueil
+                return $this->redirectToRoute('home');
+            }
+
             // Création du formulaire des videos
             $form = $this->createForm(VideoType::class);
 

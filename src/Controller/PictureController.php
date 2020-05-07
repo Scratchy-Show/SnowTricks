@@ -38,6 +38,19 @@ class PictureController extends AbstractController // Permet d'utiliser la méth
 
         // Si une figure correspond à l'id
         if ($trick != null) {
+
+            // Vérifie que l'utilisateur est celui qui a créer la figure
+            if ($this->getUser() != $trick->getuser()) {
+                // Message d'erreur
+                $this->addFlash(
+                    'danger',
+                    "Vous ne pouvez pas modifier cette figure."
+                );
+
+                // Redirection vers la page d'accueil
+                return $this->redirectToRoute('home');
+            }
+
             // Création du formulaire d'image
             $form = $this->createForm(PictureType::class);
 
