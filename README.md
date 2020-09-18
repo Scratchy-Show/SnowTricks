@@ -10,7 +10,7 @@ Creating of a collaborative snowboard site based on the Symfony framwork.
 ------------------------------------------------------------------------------------------------------------------------------------------
 ## Environment used for development
 
-* Symfony 4.4.8
+* Symfony 5.0.8
 
 * Composer 1.9.1
 
